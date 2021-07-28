@@ -1,0 +1,167 @@
+*{
+    user-select: none;
+}
+#bg_img{
+    transition: filter 1s;
+    width:100%;
+    z-index:0;
+    position: absolute;
+    transform:scale(1);
+    height: 100vh;
+    min-height: 500px;
+}
+#login_bar{
+    position: relative;
+    width:900px;
+    height: 450px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow:0 0 20px 4px black;
+    display: flex;
+    animation: login_bar 1.5s ease;
+    opacity: 0.9;
+}
+@keyframes login_bar {
+    from{
+        transform:translateY(100px);
+        opacity: 0;
+    }
+    to{
+        transform:translateY(0px);
+        opacity: 0.9;
+    }
+}
+#login_name{
+    position: absolute;
+    left: 10%;
+    right:10%;
+    top:-100px;
+    font-size: 40px;
+    font-weight: 950;
+    font-family:sans-serif;
+    color: whitesmoke;
+    text-align: center;
+}
+#left_login{
+    width:65%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#EDF1F4;
+    border-top-left-radius:20px;
+    border-bottom-left-radius:20px;
+    transition: all 0.6s;
+}
+#left_login_img{
+    margin-top: 120px;
+    width: 55%;
+    height:90%;
+    transition: all 0.6s;
+}
+#left_login_img:hover{
+    transform:scale(1.1)
+}
+#right_login{
+    width:35%;
+    transition:all 0.6s;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+#right_login:hover{
+    width: 40%;
+   
+}
+#right_login_top{
+    position: relative;
+    display: flex;
+    width: 300px;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+#right_login_top div{
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:color 0.6s
+}
+#right_login_top div:hover{
+    color:#0091FF
+}
+
+#right_login_top :nth-child(4){
+    position: absolute;
+    width: 100%;
+    height:3px;
+    background-color: #E0E7EC;
+    top:30px
+}
+#right_login_top :nth-child(5){
+    position: absolute;
+    width:33.33%;
+    height:3px;
+    top:30px;
+    background-color: #0091FF;
+    left:0px;
+    transition: left 0.6s ease;
+}
+#right_login_input{
+    width: 80%;
+    margin-top: 60px;
+}
+
+#right_login_input>div{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#right_login_input>input{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #DDDDDD;
+    width:100%;
+    height: 30px;
+    font-size: 16px;
+    transition: all 0.4s;
+}
+#right_login_input>input:focus{
+    border-bottom: 1px solid #0091FF;
+    color:#0091FF;
+    font-size: 16px;
+}
+#right_login_input>p{
+    color:red;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+#right_login_input :nth-child(7){
+    margin-top: 25px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #46bdfd;
+    height: 50px;
+    line-height: 50px;
+    cursor: pointer;
+    color: white;
+    transition:all 0.6s ease;
+}
+#right_login_input :nth-child(7):hover{
+    background-color:#0091FF ;
+}
+
+#right_login_input>h6{
+    text-align: center;
+    margin-top: 35px;
+    font-size: 13px;
+}
+#loading{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color:gainsboro ;
+    opacity: 0.5;
+}
+
+
+

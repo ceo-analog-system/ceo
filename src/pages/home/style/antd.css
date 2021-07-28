@@ -1,0 +1,10 @@
+.ant-spin-text{
+    font-size: 12px;
+    font-weight: 600;
+    font-family:inherit;
+}
+#loading>div{
+    position: fixed;
+    right:5%;
+    bottom: 10%;
+}
