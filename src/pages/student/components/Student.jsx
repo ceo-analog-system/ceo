@@ -86,7 +86,7 @@ export default class SiderDemo extends React.Component {
             <p>您确定要退出吗？</p>
           </Modal>
           <section id="section">
-            <Route path="/user_student/application" component={Application} />
+            <Route path="/user_student/application/" component={Application} />
             <Route path="/user_student/company" component={Company}/>
             <Route path="/user_student/files" component={Files}/>
             <Redirect to="/user_student/application"/>
