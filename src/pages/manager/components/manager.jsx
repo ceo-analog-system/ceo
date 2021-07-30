@@ -92,7 +92,7 @@ export default class SiderDemo extends React.Component {
             <Redirect to="/user_manager/application"/>
           </section>
           <footer id="footer">
-            版权所有 极客工作室
+            版权所有 勤奋蜂&极客工作室
           </footer>
         </Layout>
       </Layout>
