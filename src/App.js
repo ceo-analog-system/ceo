@@ -1,6 +1,6 @@
 import { Redirect, Switch } from "react-router-dom"
 import Guard from "./guard/router_guard"
-import student from "./pages/student/components/Student"
+import student_ceo from "./pages/student/components/Student_ceo"
 import teacher from "./pages/teacher/components/teacher"
 import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
@@ -17,11 +17,10 @@ function App() {
   else default_url = "/login"
 
 
-  
   return (
     <div className="App">
       <Switch>
-        <Guard path="/user_student" component={student} />
+        <Guard path="/user_student" component={student_ceo} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />

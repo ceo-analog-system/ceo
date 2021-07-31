@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Link, Redirect } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
-import Application from "./Application"
-import Company from './Company';
-import Files from './Files';
+import Application from "./Application_ceo"
+import Company from './Company_ceo';
+import Files from './Files_ceo';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -52,38 +52,38 @@ export default class SiderDemo extends React.Component {
             <div className="logo" />
             <Menu defaultSelectedKeys={['1']} mode="inline" theme="light">
               <Menu.Item key="1" icon={<PieChartOutlined />}>
-                <Link to="/user_student/application">
+                <Link to="/user_student/application_ceo">
                   申请
                 </Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<DesktopOutlined />}>
-              <Link to="/user_student/company">
+              <Link to="/user_student/company_ceo">
                   公司
                 </Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<FileOutlined />}>
-              <Link to="/user_student/files">
+              <Link to="/user_student/files_ceo">
                   文件
                 </Link>
               </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            <header id="header">
-              <span>CEO 李富莲</span>
+            <header id="Student-ceo_header">
+              <span id='Student-ceo_cname' >CEO 李富莲</span>
               <Button type="primary" size="large" shape="round" icon={<PoweroffOutlined />} onClick={this.open_model}>退出登录</Button>
             </header>
             <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
               <p>您确定要退出吗？</p>
             </Modal>
             <section id="section">
-              <Route path="/user_student/application" component={Application} />
-              <Route path="/user_student/company" component={Company}/>
-              <Route path="/user_student/files" component={Files}/>
-              <Redirect to="/user_student/application"/>
+              <Route path="/user_student/application_ceo" component={Application} />
+              <Route path="/user_student/company_ceo" component={Company}/>
+              <Route path="/user_student/files_ceo" component={Files}/>
+              <Redirect to="/user_student/application_ceo"/>
             </section>
             <footer id="footer">
-              版权所有 极客工作室
+              版权所有 勤奋蜂&极客工作室
             </footer>
           </Layout>
         </Layout>

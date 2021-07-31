@@ -1,0 +1,11 @@
+.Student-ceo_application{
+    padding-left: 20px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,.85);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
