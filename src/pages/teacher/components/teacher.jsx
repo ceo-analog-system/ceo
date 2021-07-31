@@ -1,25 +1,32 @@
 import React from 'react'
-import { Route, Link, Redirect } from "react-router-dom"
+import { Route, Link, Redirect, Switch } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
-import Application from "./Application"
-import Company from './Company';
-import Files from './Files';
+// import Application from "./Application"
+// import Company from './Company';
+// import Files from './Files';
 import {
+  BarsOutlined,
   DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-  PoweroffOutlined
+  EditOutlined,
+  ContactsOutlined,
+  MailOutlined
 } from '@ant-design/icons';
+import Students from '../pages/students/students'
+import Company from '../pages/company/company';
+import Vote from '../pages/vote/vote';
+import Message from '../pages/message/message';
+import Sign from '../pages/sign/sign';
+import Modify  from '../pages/modify/modify';
+import Check from '../pages/check/check';
 import 'antd/dist/antd.css'
 import "../style/All.css"
+import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
+// import { Content } from 'antd/lib/layout/layout';
 
 
-const { Sider } = Layout;
-const { SubMenu } = Menu;
-
+const { Header, Footer, Sider, Content } = Layout;
 export default class SiderDemo extends React.Component {
   state = {
     collapsed: false,
@@ -52,47 +59,67 @@ export default class SiderDemo extends React.Component {
           <div className="logo" />
           <Menu  defaultSelectedKeys={['1']} mode="inline" theme="light">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              <Link to="/user_teacher/application">
-                申请
+              <Link to="/user_teacher/students">
+                学生信息
               </Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<DesktopOutlined />}>
-            <Link to="/user_teacher/company">
-                公司
+            <Menu.Item key="2" icon={<BarsOutlined />}>
+              <Link to="/user_teacher/company">
+                公司情况
               </Link>
             </Menu.Item>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="用户">
-              <Menu.Item key="3">张三</Menu.Item>
-              <Menu.Item key="4">李四</Menu.Item>
-              <Menu.Item key="5">王麻子</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub2" icon={<TeamOutlined />} title="团队">
-              <Menu.Item key="6">团队 1</Menu.Item>
-              <Menu.Item key="8">团队 2</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9" icon={<FileOutlined />}>
-            <Link to="/user_teacher/files">
-                文件
+            <Menu.Item key="3" icon={<EditOutlined />}>
+              <Link to="/user_teacher/vote">
+                投票情况
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="4" icon={<BarsOutlined  />}>
+              <Link to="/user_teacher/message">
+                消息
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="5" icon={<ContactsOutlined />}>
+              <Link to="/user_teacher/sign">
+                签到
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="6" icon={<DesktopOutlined />}>
+              <Link to="/user_teacher/modify">
+                修改配置
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="7" icon={<MailOutlined />}>
+              <Link to="/user_teacher/check">
+                查看宣讲文件
               </Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <header id="header">
-            <Button type="primary" size="large" shape="round" icon={<PoweroffOutlined />} onClick={this.open_model}>退出登录</Button>
-          </header>
+          <Header id="header">
+            <span style={{marginRight:'500px'}}>仿真辅助系统</span>
+            <span>欢迎你，田帅辉</span>
+            <Button type='primary'>更改班级</Button>
+            <Button type="primary" onClick={this.open_model}>退出登录</Button>
+          </Header>
           <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
             <p>您确定要退出吗？</p>
           </Modal>
-          <section id="section">
-            <Route path="/user_teacher/application" component={Application} />
+          <Content className='content' >
+          <Switch>
+            <Route path="/user_teacher/students" component={Students} />
             <Route path="/user_teacher/company" component={Company}/>
-            <Route path="/user_teacher/files" component={Files}/>
-            <Redirect to="/user_teacher/application"/>
-          </section>
-          <footer id="footer">
-            版权所有 极客工作室
-          </footer>
+            <Route path="/user_teacher/vote" component={Vote}/>
+            <Route path="/user_teacher/message" component={Message}/>
+            <Route path="/user_teacher/sign" component={Sign}/>
+            <Route path="/user_teacher/modify" component={Modify}/>
+            <Route path="/user_teacher/check" component={Check}/>
+            <Redirect to="/user_teacher/students"/>
+            </Switch>
+          </Content>
+          <Footer id="footer">
+            版权所有 勤奋蜂&极客工作室
+          </Footer>
         </Layout>
       </Layout>
     );
