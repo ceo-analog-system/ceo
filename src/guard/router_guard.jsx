@@ -22,7 +22,6 @@ export default function Guard({ component, path}) {
         else if(student_auth&&path!=="/user_student"){
             return <Redirect to="/user_student"/>
         }
-
         if(teacher_auth&&path==="/user_teacher"){
             return <Route path={path} component={component}/> 
         }
@@ -30,14 +29,12 @@ export default function Guard({ component, path}) {
         else if(teacher_auth&&path!=="/user_teacher"){
             return <Redirect to="/user_teacher"/>
         }
-
         if(manager_auth&&path==="/user_manager"){
             return <Route path={path} component={component}/> 
         }
         else if(manager_auth&&path!=="/user_manager"){
             return <Redirect to="/user_manager"/>
         }
-
     }} />
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Link, Redirect } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
-import Application from "./Application"
-import Company from './Company';
+import Application from "./Application_ceo"
+import Company from './Student_ceo/Company_ceo';
 import Files from './Files';
 import {
   DesktopOutlined,

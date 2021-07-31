@@ -1,0 +1,13 @@
+.Student-ceo_file{
+    display: flex;
+    justify-content: space-between;
+}
+.Student-ceo_application{
+    color: rgba(0,0,0,.85);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
