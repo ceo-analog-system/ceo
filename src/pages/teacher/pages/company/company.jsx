@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Button, Card,Table } from 'antd'
+import { Button, Card } from 'antd'
 import {DownloadOutlined} from '@ant-design/icons'
 export default class Company extends Component {
     render() {

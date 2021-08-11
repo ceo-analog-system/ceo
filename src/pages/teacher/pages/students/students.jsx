@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
-import { Button, Card,Table } from 'antd'
-import {DownloadOutlined} from '@ant-design/icons'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import { Card,Table } from 'antd'
+// import localStorage_login from '../../../../guard/localStorage'
+// import { reqExitClass } from '../../api'
+// import {DownloadOutlined} from '@ant-design/icons'
 export default class Students extends Component {
+    state={
+        openClassVisible:true
+    }
     render() {
+      
         const title=(
             <h2>学生信息</h2>
         )
         const extra=(
-            <Button type='primary' shape="round" icon={<DownloadOutlined />}>导出Excle表格</Button>
+            <ReactHTMLTableToExcel
+            id="test-table-xls-button"
+            // className="download-table-xls-button"
+            className="ant-btn"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="导出Excle表格"
+            />
         )
-        const dataSource=[
 
+        const dataSource=[
+          
         ]
         const columns=[
             {
@@ -36,9 +52,13 @@ export default class Students extends Component {
         ]
         return (
             <Card title={title} extra={extra} style={{width:'100%',height:'100%'}}>
-               <Table columns={columns}>
+                 <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
+                    <Table 
+                      ref='table' columns={columns} dataSource={dataSource}
 
-               </Table>
+                    ></Table>
+                </table>
+
             </Card>
         )
     }

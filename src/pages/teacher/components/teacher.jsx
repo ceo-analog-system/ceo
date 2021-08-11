@@ -1,4 +1,5 @@
 import React from 'react'
+// import WebSocket from 'react-websocket';
 import { Route, Link, Redirect, Switch } from "react-router-dom"
 import { Layout, Menu, Button, Modal,Table } from 'antd';
 // import Application from "./Application"
@@ -23,6 +24,12 @@ import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
+import { reqExitClass } from '../api';
+// import { websocket } from '../api/webSocket';
+// import {createWebSocket,closeWebSocket,websocket} from '../api/webSocket'
+// import { reqExitClass } from '../api';
+// import createWebSocket from '../api/webSocket'
+// import { reqExitClass } from '../api';
 // import { Content } from 'antd/lib/layout/layout';
 
 
@@ -34,7 +41,6 @@ export default class SiderDemo extends React.Component {
     showClassVisible:false,
     openClassVisible:true
   };
-
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
@@ -53,16 +59,12 @@ export default class SiderDemo extends React.Component {
     this.setState({ isModalVisible: false })
   }
   
-
-
-  //首次登录显示的班级选择
+  //首次登录选择班级的提示框
   handleClassModal=()=>{
     this.setState({ openClassVisible: false })
     localStorage_login.removeLogin_auth()
     this.props.history.replace("/login")
   }
-
-
 
 
   //更改班级的对话框
@@ -72,22 +74,33 @@ export default class SiderDemo extends React.Component {
   handleShowClass=()=>{
     this.setState({showClassVisible:false})
   }
+
+
+  reqClass=async ()=>{
+     const result =await reqExitClass('tiansh')
+     console.log(result);
+  }
+componentDidMount(){
+  this.reqClass()
+}
   render() {
     const { collapsed } = this.state;
-    const columns=[
+    const columnsLogin=[
       {
         title:'teachclass',
-        dataIndex:'teachclass'
+        dataIndex:'teachclass',
+        align: 'center'
       },
       {
         title:'操作',
         dataIndex:'操作',
+        align: 'center',
         render:()=>(
             <Button type='primary' onClick={()=>{this.setState({openClassVisible: false})}}>进入班级</Button>
         )
       }
     ]
-    const dataSource=[
+    const dataSourceLogin=[
       {
         teachclass:'1321546456'
       }
@@ -143,33 +156,26 @@ export default class SiderDemo extends React.Component {
             <Button type="primary" onClick={this.open_model}>退出登录</Button>
           </Header>
         {/* 修改班级 */}
+          
+
+           {/* 首次登录选择班级 */}
           <Modal 
-          width='850px'
-          title='请选择的班级' 
-          cancelText='取消选择' 
-          footer={
-            <Button type='primary' onClick={this.handleShowClass}>取消选择</Button>
-          } 
-          visible={this.state.showClassVisible} 
-          onCancel={this.handleShowClass}
-          >
-            <Table columns={columns} dataSource={dataSource} >
+                    width='850px'
+                    title='请选择的班级'
+                    visible={this.state.openClassVisible}
+                    footer={
+                      <Button type='primary' onClick={this.handleClassModal}>退出登录</Button>
+                    }  >
+                        <Table columns={columnsLogin} dataSource={dataSourceLogin}>
 
-            </Table>
-          </Modal>
+                        </Table>
+                </Modal>
+         
 
-          {/* 首次登录选择班级 */}
-          <Modal 
-          width='850px'
-          title='请选择的班级'
-          visible={this.state.openClassVisible}
-          footer={
-            <Button type='primary' onClick={this.handleClassModal}>退出登录</Button>
-          }  >
-              <Table columns={columns} dataSource={dataSource} >
 
-              </Table>
-          </Modal>
+
+
+
           <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
             <p>您确定要退出吗？</p>
           </Modal>
