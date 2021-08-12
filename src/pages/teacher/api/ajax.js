@@ -1,12 +1,21 @@
-
 import axios from 'axios'
 import {message} from 'antd'
-// const headers={
-//   "content-type": "multipart/form-data",
-//   "token": localStorage.getItem("token")
-// }
-// axios.defaults.headers.common["Authorization"] =  localStorage.getItem('token')
-axios.defaults.headers.common["Authorization"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjgzNTE2MTJ9.fMiIqhUnyENoR61jcK1E9bNWK5vDj_wdPJzNXAklctM"
+// Content-Type: "application/json;charset=utf-8"
+
+axios.defaults.headers['Content-Type'] = "application/json;charset=utf-8"
+axios.defaults.headers['Accept'] = "application/json, text/html"
+axios.interceptors.request.use(function (config) {
+    // let token = window.localStorage.getItem("accessToken")
+    let token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2Mjg4Mjk1OTN9.JWjLCC6DJ1YTvYATaDbI_J5rArUhDa2pXIBPj_K46_4"
+    config.headers.accessToken = token; 
+    console.log(config);
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
+
 export default function ajax(url, data={}, type='GET') {
 
   return new Promise((resolve, reject) => {
@@ -31,4 +40,3 @@ export default function ajax(url, data={}, type='GET') {
 
 
 }
-
