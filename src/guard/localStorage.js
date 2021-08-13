@@ -11,7 +11,7 @@ const localStorage_login={
     //删除localStorage
     removeLogin_auth(){
        localStorage.removeItem("login_auth")
-    }
+    },
 }
 //暴露封装localStorage方法
 export default localStorage_login

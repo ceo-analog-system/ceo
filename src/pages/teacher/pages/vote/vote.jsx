@@ -12,23 +12,28 @@ export default class Vote extends Component {
         const columns=[
             {
                 title:'姓名',
-                dataIndex:'name'
+                dataIndex:'name',
+                key:'1'
             },
             {
                 title:'学号',
-                dataIndex:''
+                dataIndex:'',
+                key:'2'
             },
             {
                 title:'教学班',
-                dataIndex:''   
+                dataIndex:''   ,
+                key:'3'
             },
             {
                 title:'票数',
-                dataIndex:''
+                dataIndex:'',
+                key:'4'
             },
             {
                 title:'操作',
-                dataIndex:''
+                dataIndex:'',
+                key:'5'
             }
         ]
         return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Type from './pages/type/type'
 import Name from './pages/name/name'
-import {Card,Table} from 'antd'
+import {Card} from 'antd'
 import { Link, Switch,Route, Redirect } from 'react-router-dom'
 export default class Message extends Component {
     render() {

@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { Spin, message } from "antd"
 //引入antd css文件
 import 'antd/dist/antd.css'
-// import axios from "axios"
+import axios from "axios"
 import { useState } from 'react'
 import { auth } from "../../../guard/guard_config"
 import "../style/home.css"
@@ -14,6 +14,8 @@ import img_02 from "../style/04.png"
 
 //登录界面
 export default function Home(props) {
+    //发送axios请求的时候是否需要终止请求
+    let cancelPost
     const [bg_filter, setBg_filter] = useState(true)
     const [login_options_state, setLogin_options_state] = useState("student")
     //设置发送登录请求时的加载动画状态
@@ -68,6 +70,7 @@ export default function Home(props) {
     }
     //当点击不同的登录端的时候，更换当前登录的权限
     let changeLogin_options_state_stu = () => {
+        
         setLogin_options_state(() => "student")
     }
     let changeLogin_options_state_teac = () => {
@@ -76,21 +79,20 @@ export default function Home(props) {
     let changeLogin_options_state_manager = () => {
         setLogin_options_state(() => "manager")
     }
-    
+
     //设置请求的统一路径
     // const _axios = axios.create({
     //     baseURL: "http://localhost:3000"
     // })
 
-    //按下enter键后登陆
-    document.onkeyup = (e)=>{
-        if(e.key==="Enter"){
-            login()
-        }
-    }
+
 
     //登录的回调
     let login = () => {
+        //请求时间超过6秒则终止请求
+        setTimeout(() => {
+            cancelPost()
+        }, 6000)
         const { current: { value: user } } = username
         const { current: { value: pass } } = password
         //页面判断输入信息
@@ -100,27 +102,55 @@ export default function Home(props) {
         }
         //服务器返回端判断输入信息
         else {
+            let CancelToken = axios.CancelToken
+
+            //判断当前请求的是那个路径
+            let postPath = login_options_state === "student" ? "student" : "teacher"
             //当点击登录时打开等待动画
             setWait_animation(() => true)
-            //模拟登录时请求的等待时间
-            setTimeout(() => {
-                if (user === "1291573405" && pass === "123") {
+            axios.post(`http://localhost:3000/api/login/${postPath}`,
+                { userId: user, password: pass }, {
+                    //终止请求的配置项
+                cancelToken: new CancelToken(function executor(c) {
+                    cancelPost = c
+                })
+            }).then(res => {
+                const { data } = res
+                if (data.flag) {
+                    let path
+                    //重data中取出message
+                    const {message:mes} = data
+                    if(mes === "管理员登录")path = "manager"
+                    else if(mes === "老师登录")path = "teacher"
+                    else path = "student"
+                    //登录成功将返回的token放到localStorage当中
+                    localStorage.setItem("login_token", JSON.stringify(data.token))
+                    //登录成功将返回的数据放到localStorage当中
+                    localStorage.setItem("login_data", JSON.stringify(data))
                     //关闭等待动画
                     setWait_animation(() => false)
                     //设置当前用户选择的登录权限
-                    auth.set_auth(login_options_state + "_auth")
+                    auth.set_auth(path + "_auth")
                     //提示用户登录成功
-                    message.success("登陆成功")
+                    message.success("登录成功")
                     //跳转到指定的页面
-                    props.history.push("/user_" + login_options_state, { pathname: window.location.pathname })
-                }
-                else {
+                    props.history.push("/user_" + path, { pathname: window.location.pathname })
+                } else {
+                    console.log(data);
                     //提示用户输入错误
-                    message.error("用户名或密码错误！！")
+                    message.error(data.message)
+                    
                     //关闭等待动画
                     setWait_animation(() => false)
                 }
-            }, 2000)
+            }).catch(err => {
+                message.warning("请求超时,可能是网络原因！！")
+                console.log(err);
+                console.log(111);
+                //关闭等待动画
+                setWait_animation(() => false)
+            })
+
         }
 
 
@@ -137,7 +167,7 @@ export default function Home(props) {
             minWidth: "950px",
             borderRadius: "20px",
             minHeight: "0px"
-        }}>
+        }} onKeyUp={(e) => { if (e.key === "Enter") login() }}>
             {/* 加载页面 */}
             <div id="loading" style={{ display: wait_animation ? "block" : "none" }}>
                 <Spin size="large" spinning={wait_animation} tip="加载中..." />
@@ -203,7 +233,7 @@ export default function Home(props) {
                         /
                         >
                         <p style={{ visibility: pas_user.password ? "" : "hidden" }}>密码不能为空</p>
-                        <div onClick={login}>登录</div>
+                        <div onClick={login} >登录</div>
                         <h6>版权所有  勤奋蜂&极客工作室</h6>
                     </div>
 

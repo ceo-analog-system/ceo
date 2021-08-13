@@ -5,23 +5,28 @@ export default class Unsigned extends Component {
         this.columns=[
             {
                 title:'名字',
-                dataIndex:''
+                dataIndex:'',
+                key:'1'
             },
             {
                 title:'学号',
-                dataIndex:''
+                dataIndex:'',
+                key:'2'
             },
             {
                 title:'状态',
-                dataIndex:''
+                dataIndex:'',
+                key:'3'
             },
             {
                 title:'时间',
-                dataIndex:''
+                dataIndex:'',
+                key:'4'
             },
             {
                 title:'操作',
-                dataIndex:''
+                dataIndex:'',
+                key:'5'
             },
         ]
     }

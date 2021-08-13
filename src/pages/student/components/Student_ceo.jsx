@@ -36,7 +36,7 @@ export default class SiderDemo extends React.Component {
     //退出提示点击确定跳转到登录页面并且修改用户权限
     handleOk = () => {
       this.setState({ isModalVisible: false })
-      localStorage_login.removeLogin_auth()
+      localStorage.clear()
       this.props.history.replace("/login")
     }
     //退出提示点击取消则关闭询问框
