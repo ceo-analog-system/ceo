@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
-import { Card,Table,Modal,Button,message} from 'antd'
+import { Card} from 'antd'
 import axios from 'axios'
 import localStorage_login from '../../../../guard/localStorage'
 import PubSub from 'pubsub-js'
@@ -20,7 +20,8 @@ export default class Students extends Component {
         teacherClass:'',
         exitClass:[],
         classStudents:[],
-        changeClassVisible:false
+        changeClassVisible:false,
+        selectedClass:''
     }
 
     //处理首次登录选择班级
@@ -29,55 +30,59 @@ export default class Students extends Component {
         localStorage_login.removeLogin_auth()
         this.props.history.replace("/login")
       }
-    reqSelectCLass=(values)=>{
-        // if(this.state.exitClass!==null){return}
-        this.setState({ openClassVisible:false})
-        PubSub.publish('class',{classes:this.state.exitClass})
+    reqSelectCLass=()=>{
         axios({
             method:'POST',
             url:'http://120.79.147.32:8089/teacher/students',
             data:{
                 start:'1',
                 pageSize:"5",
-                teacherClass:values
+                teacherClass:this.state.selectedClass
             },
         }).then((res)=>{
-            this.setState({ classStudents:res.data.data.list})
+            console.log(res);
+            // this.setState({ classStudents:res.data.data.list})
         })
     }
 
 
-    reqExitClass=()=>{      
-        // if(this.state.exitClass !==null){return}
-        return new Promise((resolve,rekect)=>{
-            let promise
-            promise=axios({
-                method:'POST',
-                url:'http://120.79.147.32:8089/teacher/exitClass',
-                data:{
-                    userId:'tiansh'
-                },
-            })
-            promise.then(res=>{
+    // reqExitClass=()=>{      
+    //     // if(this.state.exitClass !==null){return}
+    //     return new Promise((resolve,rekect)=>{
+    //         let promise
+    //         promise=axios({
+    //             method:'POST',
+    //             url:'http://120.79.147.32:8089/teacher/exitClass',
+    //             data:{
+    //                 userId:'tiansh'
+    //             },
+    //         })
+    //         promise.then(res=>{
     
-                resolve(res)
-            }).catch(error => {
-                // reject(error)
-                message.error('请求出错了: ' + error.message)
-              })
+    //             resolve(res)
+    //         }).catch(error => {
+    //             // reject(error)
+    //             message.error('请求出错了: ' + error.message)
+    //           })
+    //     })
+
+    //  }
+
+    componentDidMount(){
+       this.token= PubSub.subscribe('class',(_,values)=>{
+            this.setState({  selectedClass:values})
         })
+    // console.log(this.props);
+        this.reqSelectCLass()
+        // const result =await  this.reqExitClass()
+        // this.setState({exitClass:result.data.data})
 
-     }
-
-
-   async componentDidMount(){
-        const result =await  this.reqExitClass()
-        this.setState({exitClass:result.data.data})
-
+    }
+    componentWillUnmount(){
+        // PubSub.unsubscribe(this.token)
     }
     render() {
-        // if(this.state.exitClass!==null){return}
-        // console.log(this.state);
+        console.log(this.state);
         const title=(
             <h2>学生信息</h2>
         )
@@ -92,48 +97,57 @@ export default class Students extends Component {
             buttonText="导出Excle表格"
             />
         )
-        const columnsLogin=[
-            {
-              title:'teachclass',
-              dataIndex:'',
-              align: 'center'
-            },
-            {
-              title:'操作',
-              dataIndex:'',
-              align: 'center',
-              render:(values)=>(
-                  <Button type='primary' onClick={()=>{this.reqSelectCLass(values)}}>进入班级</Button>
-              )
-            }
-          ]
+        // const columnsLogin=[
+        //     {
+        //       title:'teachclass',
+        //       dataIndex:'',
+        //       key:'1',
+        //       align: 'center'
+        //     },
+        //     {
+        //       title:'操作',
+        //       dataIndex:'',
+        //       key:'2',
+        //       align: 'center',
+        //       render:(values)=>(
+        //           <Button type='primary' onClick={()=>{this.reqSelectCLass(values)}}>进入班级</Button>
+        //       )
+        //     }
+        //   ]
     
-        const columns=[
-            {
-            title:'姓名',
-            dataIndex:'userName'
-            },
-            {
-                title:'学号',
-                dataIndex:'userId'
-            },
-            {
-                title:'专业',
-                dataIndex:'discipline'   
-            },
-            {
-                title:'公司',
-                dataIndex:'companyId'
-            },
-            {
-                title:'总分',
-                dataIndex:'score'
-            }
-        ]
-        const {exitClass,classStudents}=this.state
+        // const columns=[
+        //     {
+        //     title:'姓名',
+        //     dataIndex:'userName',
+        //     key:"userName"
+        //     },
+        //     {
+        //         title:'学号',
+        //         dataIndex:'userId',
+        //         key:"userId"
+        //     },
+        //     {
+        //         title:'专业',
+        //         dataIndex:'discipline',
+        //         key:"discipline"   
+        //     },
+        //     {
+        //         title:'公司',
+        //         dataIndex:'companyId',
+        //         key:"companyId"  
+        //     },
+        //     {
+        //         title:'总分',
+        //         dataIndex:'score',
+        //         key:"score"
+        //     }
+        // ]
+        // const dataSource=[]
+        
         return (
             <Card title={title} extra={extra} style={{width:'100%',height:'100%'}}>
-                <Modal 
+
+                {/* <Modal 
                     width='850px'
                     title='请选择的班级'
                     visible={this.state.openClassVisible}
@@ -144,16 +158,16 @@ export default class Students extends Component {
                         <Table columns={columnsLogin} dataSource={exitClass}>
 
                         </Table>
-            </Modal>
-                 <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
+            </Modal> */}
+                 {/* <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
                     <Table 
                     //   ref='table' 
                       columns={columns} 
-                      dataSource={classStudents} 
+                      dataSource={dataSource} 
                        pagination={{defaultPageSize: 5, showQuickJumper: true}}
 
                     ></Table>
-                </table>
+                </table> */}
 
             </Card>
         )

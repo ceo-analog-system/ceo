@@ -53,11 +53,13 @@
     transition: all 0.6s;
 }
 #left_login_img{
+    min-width:321.75px;
     margin-top: 120px;
     width: 55%;
     height:90%;
     transition: all 0.6s;
 }
+
 #left_login_img:hover{
     transform:scale(1.1)
 }

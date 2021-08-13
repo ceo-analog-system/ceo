@@ -11,16 +11,20 @@ export default class Check extends Component {
         )
         const columns=[
             {
-                title:'学号'
+                title:'学号',
+                key:'1'
             },
             {
-                title:'教学班号'
+                title:'教学班号',
+                key:'2'
             },
             {
-                title:'文件名'
+                title:'文件名',
+                key:'3'
             },
             {
-                title:'删除'
+                title:'删除',
+                key:'4'
             },
         ]
         return (
