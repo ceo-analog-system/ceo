@@ -104,7 +104,7 @@ export default function Home(props) {
         else {
             let CancelToken = axios.CancelToken
 
-            //判断当前请求的是那个路径
+            //判断当前请求的是哪个路径
             let postPath = login_options_state === "student" ? "student" : "teacher"
             //当点击登录时打开等待动画
             setWait_animation(() => true)
@@ -118,7 +118,7 @@ export default function Home(props) {
                 const { data } = res
                 if (data.flag) {
                     let path
-                    //重data中取出message
+                    //从data中取出message
                     const {message:mes} = data
                     if(mes === "管理员登录")path = "manager"
                     else if(mes === "老师登录")path = "teacher"
