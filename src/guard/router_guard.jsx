@@ -6,7 +6,6 @@ import localStorage_login from './localStorage'
 export default function Guard({ component, path}) {
     return <Route render={() => {
         const { student_auth, teacher_auth, manager_auth } = localStorage_login.getLogin_auth()
-        
         //当没有登录令牌的时候重定向到登录页面
         if((!student_auth&&!teacher_auth&&!manager_auth)||localStorage_login.getLogin_auth()==={}){
             //当输入其他三个路由时会再次进入，判断路径不同跳转到指定的地方

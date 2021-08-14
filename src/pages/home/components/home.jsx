@@ -103,7 +103,6 @@ export default function Home(props) {
         //服务器返回端判断输入信息
         else {
             let CancelToken = axios.CancelToken
-
             //判断当前请求的是那个路径
             let postPath = login_options_state === "student" ? "student" : "teacher"
             //当点击登录时打开等待动画
@@ -124,9 +123,10 @@ export default function Home(props) {
                     else if(mes === "老师登录")path = "teacher"
                     else path = "student"
                     //登录成功将返回的token放到localStorage当中
-                    localStorage.setItem("login_token", JSON.stringify(data.token))
+                    localStorage.setItem("login_token", JSON.parse(data.token))
                     //登录成功将返回的数据放到localStorage当中
-                    localStorage.setItem("login_data", JSON.stringify(data))
+                    localStorage.setItem("login_data", JSON.parse(data))
+                    console.log(JSON.stringify(data));
                     //关闭等待动画
                     setWait_animation(() => false)
                     //设置当前用户选择的登录权限
