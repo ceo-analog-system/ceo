@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Table,Empty,Card,Space} from "antd"
-import '../style/Student_ceo/Company_ceo.css'
+import '../../style/Student_ceo/Company_ceo.css'
 import 'antd/dist/antd.css'
 import { Link } from 'react-router-dom'
 

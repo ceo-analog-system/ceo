@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 //import {Empty} from "antd"
 import { Table, Space, Tag } from 'antd';
 import 'antd/dist/antd.css'
-import "../style/Student_ceo/Application_ceo.css"
+import "../../style/Student_ceo/Application_ceo.css"
 import { Link } from 'react-router-dom';
 
 const agree =true
