@@ -6,6 +6,8 @@ import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
 import localStorage_login from "./guard/localStorage"
 import { Provider } from 'react-redux';
+import student from './pages/student_normal';
+
 import Home from "./pages/home/components/home.jsx"
 import store from "./pages/teacher/redux/store"
 function App() {
