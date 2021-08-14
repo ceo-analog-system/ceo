@@ -1,7 +1,6 @@
 import React from 'react'
-// import WebSocket from 'react-websocket';
 import { Route, Link, Redirect, Switch } from "react-router-dom"
-import { Layout, Menu, Button, Modal,Table,message} from 'antd';
+import { Layout, Menu, Button, Modal,Table } from 'antd';
 // import Application from "./Application"
 // import Company from './Company';
 // import Files from './Files';
@@ -13,7 +12,6 @@ import {
   ContactsOutlined,
   MailOutlined
 } from '@ant-design/icons';
-import axios from 'axios'
 import Students from '../pages/students/students'
 import Company from '../pages/company/company';
 import Vote from '../pages/vote/vote';
@@ -24,22 +22,22 @@ import Check from '../pages/check/check';
 import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
-// import localStorage_login from '../../../guard/localStorage'
-import PubSub from 'pubsub-js'
-axios.defaults.headers["token"]="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2Mjg4Mjk1OTN9.JWjLCC6DJ1YTvYATaDbI_J5rArUhDa2pXIBPj_K46_4"
+import localStorage_login from '../../../guard/localStorage'
+import {getExitClassAction} from '../redux/actionCreators'
+import { connect } from 'react-redux'
+import PubSub from 'pubsub-js';
+// import { Content } from 'antd/lib/layout/layout';
+
 
 const { Header, Footer, Sider, Content } = Layout;
-export default class SiderDemo extends React.Component {
+class SiderDemo extends React.Component {
   state = {
     collapsed: false,
     isModalVisible: false,
     showClassVisible:false,
-    openClassVisible:true,
-    //查看教学班的编号
-    teacherClass:'',
-    selectedClass:'',
-    exitClass:[]
+    openClassVisible:true
   };
+
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
@@ -50,7 +48,7 @@ export default class SiderDemo extends React.Component {
   //退出提示点击确定跳转到登录页面并且修改用户权限
   handleOk = () => {
     this.setState({ isModalVisible: false })
-    localStorage.clear()
+    localStorage_login.removeLogin_auth()
     this.props.history.replace("/login")
   }
   //退出提示点击取消则关闭询问框
@@ -58,11 +56,21 @@ export default class SiderDemo extends React.Component {
     this.setState({ isModalVisible: false })
   }
   
+
+
+  //首次登录显示的班级选择
   handleClassModal=()=>{
-    this.setState({ openClassVisible:false})
-    localStorage.clear()
+    this.setState({ openClassVisible: false })
+    localStorage_login.removeLogin_auth()
     this.props.history.replace("/login")
   }
+
+  selectedClass=(values)=>{
+    console.log(values);
+    this.setState({ openClassVisible: false })
+    // PubSub.publish('classes',{classNum:values})
+  }
+
 
 
   //更改班级的对话框
@@ -73,70 +81,31 @@ export default class SiderDemo extends React.Component {
     this.setState({showClassVisible:false})
   }
 
-//首次进入选择的班级传给students组件
-  SelectedCLass=(values)=>{
-    this.setState({ openClassVisible:false,selectedClass:values})
-    PubSub.publish('class',{classes:values})
-}
-//请求存在的班级
-reqExitClass=()=>{      
-  // if(this.state.exitClass !==null){return}
-  return new Promise((resolve,rekect)=>{
-      let promise
-      promise=axios({
-          method:'POST',
-          url:'http://120.79.147.32:8089/teacher/exitClass',
-          data:{
-              userId:'tiansh'
-          },
-      })
-      promise.then(res=>{
-// console.log(res);
-this.setState({exitClass:res.data.data})
-          resolve(res)
-      }).catch(error => {
-          // reject(error)
-          message.error('请求出错了: ' + error.message)
-        })
-  })
-
-}
-
-
   componentDidMount(){
-    // PubSub.publish('class',(_,classes)=>{
-    //   this.setState({exitClass:classes})
-    // })
-    this.reqExitClass()
-    // console.log(this.state);
+    this.props.getExitClass()
   }
   render() {
-    // console.log(this.state);
-    const { collapsed,exitClass} = this.state;
-    const columnsLogin=[
-      {      
+    const { collapsed } = this.state;
+    const columns=[
+      {
         title:'teachclass',
-        dataIndex:'',
-        key:"1",
-        align: 'center'
+        align:"center",
       },
-      { 
+      {
         title:'操作',
-        dataIndex:'',
-        key:"2",
-        align: 'center',
+        align:"center",
         render:(values)=>(
-            <Button type='primary' onClick={()=>{this.SelectedCLass(values)}}>进入班级</Button>
+            <Button type='primary' onClick={()=>{this.selectedClass(values)}}>进入班级</Button>
         )
       }
     ]
-    var a=0;
+  let a =0
+  // console.log(this.props);
     return (
       
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} theme="light">
           <div className="logo" />
-         
           <Menu  defaultSelectedKeys={['1']} mode="inline" theme="light">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
               <Link to="/user_teacher/students">
@@ -182,37 +151,34 @@ this.setState({exitClass:res.data.data})
             <Button type='primary' onClick={this.showClass}>更改班级</Button>&nbsp;&nbsp;&nbsp;
             <Button type="primary" onClick={this.open_model}>退出登录</Button>
           </Header>
-                {/* 修改班级 */}
-                <Modal   
-                width='850px' 
-                title='请选择的班级'
-                visible={this.state.showClassVisible}
-                onCancel={this.handleShowClass}
-                footer={
-                      <Button type='primary' onClick={()=>{this.setState({showClassVisible:false})}}>取消选择</Button>
-                } 
-                >
-                <Table columns={columnsLogin} dataSource={this.state.exitClass.classes}> 
+        {/* 修改班级 */}
+          <Modal 
+          width='850px'
+          title='请选择的班级' 
+          cancelText='取消选择' 
+          footer={
+            <Button type='primary' onClick={this.handleShowClass}>取消选择</Button>
+          } 
+          visible={this.state.showClassVisible} 
+          onCancel={this.handleShowClass}
+          >
+            <Table columns={columns} dataSource={this.props.exitClass} rowKey={()=>a++}>
 
-                 </Table>
-                </Modal>
-                {/* //首次进入选择班级 */}
-                <Modal 
-                    width='850px'
-                    title='请选择的班级'
-                    visible={this.state.openClassVisible}
-                    onCancel={this.handleClassModal}
-                    footer={
-                      <Button type='primary' onClick={this.handleClassModal}>退出登录</Button>
-                    }  >
-                        <Table columns={columnsLogin} dataSource={exitClass} rowKey={()=>a++}>
+            </Table>
+          </Modal>
 
-                        </Table>
-               </Modal>
+          {/* 首次登录选择班级 */}
+          <Modal 
+          width='850px'
+          title='请选择的班级'
+          visible={this.state.openClassVisible}
+          footer={
+            <Button type='primary' onClick={this.handleClassModal}>退出登录</Button>
+          }  >
+              <Table columns={columns} dataSource={this.props.exitClass} rowKey={()=>a++} >
 
-
-
-
+              </Table>
+          </Modal>
           <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
             <p>您确定要退出吗？</p>
           </Modal>
@@ -236,3 +202,16 @@ this.setState({exitClass:res.data.data})
     );
   }
 }
+const mapStateToProps=(state)=>{
+    return {
+        exitClass:state.exitClass
+    }
+}
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        getExitClass(){
+            dispatch(getExitClassAction())
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(SiderDemo)

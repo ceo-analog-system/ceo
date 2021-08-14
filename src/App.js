@@ -5,8 +5,9 @@ import teacher from "./pages/teacher/components/teacher"
 import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
 import localStorage_login from "./guard/localStorage"
-
+import { Provider } from 'react-redux';
 import Home from "./pages/home/components/home.jsx"
+import store from "./pages/teacher/redux/store"
 function App() {
   //如果地址栏输入的网址错误跳转到当前所在权限的页面
   let default_url;
@@ -19,13 +20,16 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
+    <Provider store={store}>
+    <Switch>
         <Guard path="/user_student" component={student_ceo} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
         <Redirect to={default_url} />
       </Switch>
+    </Provider>
+     
     </div>
 
   );

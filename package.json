@@ -17,8 +17,10 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-thunk": "^1.0.0",
     "react-websocket": "^2.1.0",
-    "redux": "^4.1.0",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -27,6 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy":"http://120.79.147.32:8089",
   "eslintConfig": {
     "extends": [
       "react-app",
