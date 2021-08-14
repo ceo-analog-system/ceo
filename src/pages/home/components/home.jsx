@@ -124,10 +124,9 @@ export default function Home(props) {
                     else if(mes === "老师登录")path = "teacher"
                     else path = "student"
                     //登录成功将返回的token放到localStorage当中
-                    localStorage.setItem("login_token", JSON.parse(data.token))
+                    localStorage.setItem("login_token", JSON.stringify(data.token))
                     //登录成功将返回的数据放到localStorage当中
-                    localStorage.setItem("login_data", JSON.parse(data))
-                    console.log(JSON.stringify(data));
+                    localStorage.setItem("login_data", JSON.stringify(data))
                     //关闭等待动画
                     setWait_animation(() => false)
                     //设置当前用户选择的登录权限
@@ -147,7 +146,6 @@ export default function Home(props) {
             }).catch(err => {
                 message.warning("请求超时,可能是网络原因！！")
                 console.log(err);
-                console.log(111);
                 //关闭等待动画
                 setWait_animation(() => false)
             })

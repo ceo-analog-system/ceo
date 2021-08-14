@@ -9,9 +9,8 @@ import {
   TeamOutlined,
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
-import ".././student/style/All.css"
 import { Application, Company, Ceo, Members } from "./component";
-import localStorage_login from '../../guard/localStorage';
+import localStorage_login from '../../../../guard/localStorage';
 
 const { Sider } = Layout;
 

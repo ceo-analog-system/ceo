@@ -1,12 +1,12 @@
 import { Redirect, Switch } from "react-router-dom"
 import Guard from "./guard/router_guard"
-import student_ceo from "./pages/student/components/Student_ceo/Student_ceo.jsx"
+// import student_ceo from "./pages/student/components/Student_ceo/Student_ceo.jsx"
 import teacher from "./pages/teacher/components/teacher"
 import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
 import localStorage_login from "./guard/localStorage"
 import { Provider } from 'react-redux';
-// import student from './pages/student_normal';
+import student from './pages/student/components/student_normal';
 
 import Home from "./pages/home/components/home.jsx"
 import store from "./pages/teacher/redux/store"
@@ -34,7 +34,7 @@ function App() {
     <div className="App">
     <Provider store={store}>
     <Switch>
-        <Guard path="/user_student" component={student_ceo} />
+        <Guard path="/user_student" component={student} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
