@@ -1,12 +1,12 @@
 import axios from 'axios'
-import {getExitClass,getClassStudents,getClassCompany,getChangeCompany} from '../api/index'
+import {getExitClass,getClassStudents,getClassCompany,getChangeCompany} from '../../../pages/teacher/api/index'
 import {GET_EXIT_CLASS,
     GET_SELECT_STUDENTS,
     GET_SELECT_COMPANY,
     DEFAULT_PAGE_SIZE,
     GET_SELECTED_CLASS,
     GET_CHANGE_COMPANY
-} from './actionTypes'
+} from '../../constant'
 axios.defaults.headers["token"]= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxMDI0Mzl9.v09gmudq1-a0t0Xhdk6abYmImg-Ki5RXPP31YS52KmU"
 //首次进入弹出的可选择的班级
 export const getExitClassAction=()=>{

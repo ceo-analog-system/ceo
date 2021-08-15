@@ -23,7 +23,7 @@ import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
-import {getExitClassAction,getSelectedClassAction} from '../redux/actionCreators'
+import {getExitClassAction,getSelectedClassAction} from '../../../redux/actions/teacher/actionCreators'
 import { connect } from 'react-redux'
 import PubSub from 'pubsub-js';
 // import { Content } from 'antd/lib/layout/layout';

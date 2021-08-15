@@ -4,7 +4,7 @@ import {GET_EXIT_CLASS
     ,GET_SELECT_COMPANY
     ,GET_SELECTED_CLASS,
     GET_CHANGE_COMPANY
-} from './actionTypes'
+} from '../../constant'
 const defaultState={
     exitClass:[],
     selectedClass:'',

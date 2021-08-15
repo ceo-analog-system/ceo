@@ -1,6 +1,6 @@
 //穆达超
 import {createStore,applyMiddleware,compose} from 'redux'
-import reducer from './reducers'
+import reducer from './reducers/teacher/reducers'
 import thunk from 'redux-thunk'
 const composeEnhancers =
   typeof window === 'object' &&

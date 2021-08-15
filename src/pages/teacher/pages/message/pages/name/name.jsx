@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Table} from 'antd'
 import { connect } from 'react-redux'
-import { getChangeCompanyAction } from '../../../../redux/actionCreators'
+import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/actionCreators'
  class Name extends Component {
     initColums=()=>{
         this.columns=[

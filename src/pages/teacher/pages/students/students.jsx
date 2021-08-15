@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import { Card,Table} from 'antd'
 import axios from 'axios'
-import localStorage_login from '../../../../guard/localStorage'
+// import localStorage_login from '../../../../guard/localStorage'
 import { connect } from 'react-redux'
-import { getClassStudentsAction } from '../../redux/actionCreators'
-import {DEFAULT_PAGE_SIZE} from '../../redux/actionTypes'
+import { getClassStudentsAction } from '../../../../redux/actions/teacher/actionCreators'
+import {DEFAULT_PAGE_SIZE} from '../../../../redux/constant'
 axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxMDI0Mzl9.v09gmudq1-a0t0Xhdk6abYmImg-Ki5RXPP31YS52KmU"
 const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
 ws.onopen = async function () {

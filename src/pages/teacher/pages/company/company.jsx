@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Button, Card, Table  ,Badge} from 'antd'
 import {DownloadOutlined} from '@ant-design/icons'
 import { connect } from 'react-redux'
-import {getClassCompanyAction} from '../../redux/actionCreators'
+import {getClassCompanyAction} from '../../../../redux/actions/teacher/actionCreators'
  class Company extends Component {
   componentDidMount(){
     this.props.getSelectedCompany(this.props.selectedClass)
