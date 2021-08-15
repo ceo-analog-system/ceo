@@ -1,3 +1,4 @@
+import React from "react"
 import { Redirect, Switch } from "react-router-dom"
 import Guard from "./guard/router_guard"
 // import student_ceo from "./pages/student/components/Student_ceo/Student_ceo.jsx"
@@ -17,7 +18,10 @@ function App() {
   if (login_auth.teacher_auth) default_url = "/user_teacher"
   else if (login_auth.student_auth) default_url = "/user_student"
   else if (login_auth.manager_auth) default_url = "/user_manager"
-  else default_url = "/login"
+  else default_url = "/login";
+
+
+ 
 
   //判断是否为CEO
   // let ceo
@@ -34,7 +38,11 @@ function App() {
     <div className="App">
     <Provider store={store}>
     <Switch>
+<<<<<<< HEAD
         <Guard path="/user_student" component={student} />
+=======
+        <Guard path="/user_student" component={IsCeo} />
+>>>>>>> b055c77745d05971f08cd92f02666286e94b7722
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
