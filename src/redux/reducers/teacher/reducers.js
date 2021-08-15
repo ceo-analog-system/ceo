@@ -1,5 +1,5 @@
 
-import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from './actionTypes'
+import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../'
 const defaultState={
     exitClass:[],
     classStudents:[]

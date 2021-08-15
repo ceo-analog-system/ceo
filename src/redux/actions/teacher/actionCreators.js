@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from './actionTypes'
+import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../constant'
 axios.defaults.headers["token"]= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkwMTA5NDV9.gKoi2thakB3yXKKwBKGc55mWAh0w1LWWJGJBjmBpErI"
 export const getExitClassAction=()=>{
     return (dispatch)=>{axios({
