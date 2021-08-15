@@ -68,7 +68,9 @@ class SiderDemo extends React.Component {
   selectedClass=(values)=>{
     console.log(values);
     this.setState({ openClassVisible: false })
-    // PubSub.publish('classes',{classNum:values})
+    PubSub.publish('classes',{classNum:values})
+    // <Redirect to="/user_teacher/students"/>
+    this.props.history.replace(`/user_teacher/students/${values}` )
   }
 
 
@@ -184,14 +186,14 @@ class SiderDemo extends React.Component {
           </Modal>
           <Content className='teacher-content' >
           <Switch>
-            <Route path="/user_teacher/students" component={Students} />
+            <Route path="/user_teacher/students/:id" component={Students} name="123456"/>
             <Route path="/user_teacher/company" component={Company}/>
             <Route path="/user_teacher/vote" component={Vote}/>
             <Route path="/user_teacher/message" component={Message}/>
             <Route path="/user_teacher/sign" component={Sign}/>
             <Route path="/user_teacher/modify" component={Modify}/>
             <Route path="/user_teacher/check" component={Check}/>
-            <Redirect to="/user_teacher/students"/>
+            {/* <Redirect to="/user_teacher/students"/> */}
             </Switch>
           </Content>
           <Footer id="teacher-footer">

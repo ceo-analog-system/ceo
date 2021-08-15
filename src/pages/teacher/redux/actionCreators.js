@@ -20,18 +20,21 @@ export const getExitClassAction=()=>{
  }
 }
 export const getClassStudentsAction=(classNum)=>{
-    return (dispatch)=>{axios({
+    // console.log(classNum);
+    return (dispatch)=>{
+        // console.log(classNum,22);
+        axios({
         url:'http://120.79.147.32:8089/teacher/students',
         method:'POST',
         data:{
             start:"1",
-            pageSize:"5",
+            pageSize:"3",
             teacherClass:classNum
         }
     }).then((res)=>{
-        console.log(22);
-        // console.log(res);
-        const classStudents=res.data.data
+        // console.log(22);
+        console.log(res);
+        const classStudents=res.data.data.list
         dispatch({
             type:GET_SELECT_STUDENTS,
             classStudents
