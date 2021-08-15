@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {Table} from 'antd'
-export default class Name extends Component {
+import { connect } from 'react-redux'
+import { getChangeCompanyAction } from '../../../../redux/actionCreators'
+ class Name extends Component {
     initColums=()=>{
         this.columns=[
             {
@@ -34,15 +36,30 @@ export default class Name extends Component {
         this.initColums()
     }
     render() {
+        console.log(this.props.changeCompany);
         const dataSource=[
             {
-
+                
             }
         ]
+        let a=0
         return (
-            <Table dataSource={dataSource} columns={this.columns}>
+            <Table dataSource={dataSource} columns={this.columns} rowKey={()=>a++}>
                
             </Table>
         )
     }
 }
+const mapStateToProps=(state)=>{
+    return{
+        changeCompany:state.changeCompany
+    }
+}
+const mapDispatchToProps=(dispatch)=>{
+    return{
+        getChangeCompany(){
+            dispatch(getChangeCompanyAction())
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Name)

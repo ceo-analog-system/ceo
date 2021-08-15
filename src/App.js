@@ -38,11 +38,7 @@ function App() {
     <div className="App">
     <Provider store={store}>
     <Switch>
-<<<<<<< HEAD
         <Guard path="/user_student" component={student} />
-=======
-        <Guard path="/user_student" component={IsCeo} />
->>>>>>> b055c77745d05971f08cd92f02666286e94b7722
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
