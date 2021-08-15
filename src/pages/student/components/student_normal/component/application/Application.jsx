@@ -1,6 +1,7 @@
 import { Tabs, Table, Button } from 'antd';
 import React from 'react';
 import styles from './Application.module.css';
+import '../members/index'
 
 const { TabPane } = Tabs;
 const applicationColumns = [

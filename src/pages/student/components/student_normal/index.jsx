@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link, Redirect } from "react-router-dom"
+import { Route, Link, Redirect ,withRouter} from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
 import {
   DesktopOutlined,
@@ -12,13 +12,15 @@ import 'antd/dist/antd.css'
 import { Application, Company, Ceo, Members } from "./component";
 import localStorage_login from '../../../../guard/localStorage';
 
+
 const { Sider } = Layout;
 
-export default class SiderDemo extends React.Component {
+ class Student extends React.Component {
   state = {
     collapsed: false,
     isModalVisible: false
   };
+
 
   onCollapse = collapsed => {
     console.log(collapsed);
@@ -89,3 +91,4 @@ export default class SiderDemo extends React.Component {
     );
   }
 }
+export default withRouter(Student)
