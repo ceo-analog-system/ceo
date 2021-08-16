@@ -1,9 +1,6 @@
 import React from 'react'
 import { Route, Link, Switch } from "react-router-dom"
 import { Layout, Menu, Button, Modal,Table } from 'antd';
-// import Application from "./Application"
-// import Company from './Company';
-// import Files from './Files';
 import {
   BarsOutlined,
   DesktopOutlined,
@@ -25,8 +22,6 @@ import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
 import {getExitClassAction,getSelectedClassAction} from '../../../redux/actions/teacher/actionCreators'
 import { connect } from 'react-redux'
-import PubSub from 'pubsub-js';
-// import { Content } from 'antd/lib/layout/layout';
 
 
 const { Header, Footer, Sider, Content } = Layout;

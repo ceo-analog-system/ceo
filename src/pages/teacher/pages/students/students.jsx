@@ -6,7 +6,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { getClassStudentsAction } from '../../../../redux/actions/teacher/actionCreators'
 import {DEFAULT_PAGE_SIZE} from '../../../../redux/constant'
-axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxMDI0Mzl9.v09gmudq1-a0t0Xhdk6abYmImg-Ki5RXPP31YS52KmU"
+axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxOTAzNzB9.h4ss5YPliHm1TBm86eocvNCrWLe-CZKHu19r60WZ1hM"
 const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
 ws.onopen = async function () {
     console.log("连接成功");
