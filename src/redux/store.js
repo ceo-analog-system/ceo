@@ -1,7 +1,10 @@
-//穆达超
 import {createStore,applyMiddleware,compose} from 'redux'
-import reducer from './reducers'
+import reducer from './reducers/teacher/reducers'
 import thunk from 'redux-thunk'
+
+
+
+//穆达超
 const composeEnhancers =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
@@ -20,6 +23,8 @@ export default store
 
 //周文轩
 
+
 //沈若凤
+
 
 //郑涵译

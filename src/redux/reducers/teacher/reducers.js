@@ -1,5 +1,5 @@
 
-import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../'
+import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../constant'
 const defaultState={
     exitClass:[],
     classStudents:[]
