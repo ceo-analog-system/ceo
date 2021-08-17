@@ -7,7 +7,7 @@ import {GET_EXIT_CLASS,
     GET_CHANGE_COMPANY,
 
 } from '../../constant'
-axios.defaults.headers["token"]= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxOTIzNTl9.AFezIqcfDTzGPY-kraMrEIFF8m4jhYKlweM45b10Fp4"
+axios.defaults.headers["token"]=localStorage.getItem("login_token")
 //首次进入弹出的可选择的班级
 export const getExitClassAction=()=>{
     return async(dispatch)=>{
@@ -54,12 +54,3 @@ export const getChangeCompanyAction=(classNum)=>{
         })
     }   
 }
-
-// export const getChangeCompanyTypeAction=(classNum)=>{
-//     return (dispatch)=>{
-//         dispatch({
-//             type:GET_CHANGE_COMPANY_TYPE,
-//             changeCompanyType
-//         })
-//     }
-// }
