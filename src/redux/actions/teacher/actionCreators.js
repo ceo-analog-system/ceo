@@ -1,41 +1,56 @@
 import axios from 'axios'
-import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../constant'
-axios.defaults.headers["token"]= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkwMTA5NDV9.gKoi2thakB3yXKKwBKGc55mWAh0w1LWWJGJBjmBpErI"
+import {getExitClass,getClassStudents,getClassCompany,getChangeCompany} from '../../../pages/teacher/api/index'
+import {GET_EXIT_CLASS,
+    GET_SELECT_STUDENTS,
+    GET_SELECT_COMPANY,
+    GET_SELECTED_CLASS,
+    GET_CHANGE_COMPANY,
+
+} from '../../constant'
+axios.defaults.headers["token"]=localStorage.getItem("login_token")
+//首次进入弹出的可选择的班级
 export const getExitClassAction=()=>{
-    return (dispatch)=>{axios({
-        url:'http://120.79.147.32:8089/teacher/exitClass',
-        method:'POST',
-        data:{
-            userId:"tiansh",
-        }
-    }).then((res)=>{
-        console.log(res);
-        // console.log(111);
-        const classes=res.data.data
+    return async(dispatch)=>{
+        const result= await getExitClass('tiansh');
         dispatch({
             type:GET_EXIT_CLASS,
-            classes
+            classes:result.data
         })
-    })
- }
+    }
 }
+//将选择的班级存在状态里
+export const getSelectedClassAction=(selectedClass)=>{
+    return {type: GET_SELECTED_CLASS,selectedClass}
+}   
+//请求选择班级的学生信息
 export const getClassStudentsAction=(classNum)=>{
-    return (dispatch)=>{axios({
-        url:'http://120.79.147.32:8089/teacher/students',
-        method:'POST',
-        data:{
-            start:"1",
-            pageSize:"5",
-            teacherClass:classNum
-        }
-    }).then((res)=>{
-        console.log(22);
-        // console.log(res);
-        const classStudents=res.data.data
+    return async(dispatch)=>{
+        const result= await getClassStudents(classNum);
         dispatch({
             type:GET_SELECT_STUDENTS,
-            classStudents
+            classStudents:result.data.list
         })
-    })
- }
+    }
+}
+//请求选择班级的公司
+export const getClassCompanyAction=(classNum)=>{
+    return async(dispatch)=>{
+        const result= await getClassCompany(classNum);
+        dispatch({
+            type:GET_SELECT_COMPANY,
+            classCompany:result.data.list
+        })
+    }
+}
+
+//请求更改公司类型或名称申请的公司的信息
+export const getChangeCompanyAction=(classNum)=>{
+    return async(dispatch)=>{
+        const result =await getChangeCompany(classNum)
+        console.log(result);
+        dispatch({
+            type:GET_CHANGE_COMPANY,
+            changeCompany:result.data
+        })
+    }   
 }
