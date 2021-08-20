@@ -25,7 +25,6 @@ import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
 import {getExitClassAction} from '../../../redux/actions/teacher/actionCreators.js'
 import { connect } from 'react-redux'
-import PubSub from 'pubsub-js';
 // import { Content } from 'antd/lib/layout/layout';
 
 

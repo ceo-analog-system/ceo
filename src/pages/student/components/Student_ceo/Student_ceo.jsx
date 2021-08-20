@@ -4,6 +4,7 @@ import { Layout, Menu, Button, Modal } from 'antd';
 import Application from "./Application_ceo"
 import Company from './Company_ceo';
 import Files from './Files_ceo';
+import { ceoAxios,studentAxios } from '../../api/createAxios';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -30,7 +31,6 @@ const { Sider } = Layout;
     componentDidMount(){
        let localmessage=JSON.parse(localStorage.getItem('login_data')).data
        this.setState({name:localmessage.userName})
-
     }
 
     onCollapse = collapsed => {
