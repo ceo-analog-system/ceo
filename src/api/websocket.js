@@ -15,7 +15,7 @@
             // alertTip("该浏览器不支持WebSocket，请切换浏览器或升级后再试");
             return;
         }
-        this.connect();
+        this.connect(); 
     }
     connect(data) {
         this.ws = new WebSocket(this.url);
