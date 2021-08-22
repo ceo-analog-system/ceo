@@ -1,77 +1,68 @@
 import React from 'react';
 import { Button, Table } from 'antd';
-// import '../../../../style/Student.css';
+import { connect } from 'react-redux';
+import { showCeoVoterActionCreator, applyCeoActionCreator } from '../../../../../../redux/actions/student/actionCreators';
 
 const columns = [
     {
-        title: '票数',
-        dataIndex: 'votes',
-        key: 'votes',
-    },
-    {
         title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'userName',
+        key: 'userName',
     },
     {
-        title: '学号',
-        dataIndex: 'id',
-        key: 'id',
+        title: '票数',
+        dataIndex: 'count',
+        key: 'count',
     },
     {
         title: '分数',
         dataIndex: 'score',
         key: 'score',
     },
-    {
-        title: '操作',
-        dataIndex: 'do',
-        key: 'do',
-    },
+    // {
+    //     title: '操作',
+    //     dataIndex: 'do',
+    //     key: 'do',
+    // },
 ];
-const data = [
-    {
-        key: '1',
-        votes: '20',
-        id: 2020,
-        do: '暂无',
-      },
-      {
-        key: '2',
-        votes: '220',
-        id: 2021,
-        do: '暂无',
-      },
-]
 
 // const { voteUserId } = localStorage.getItem("login_data")
+const mapStateToProps = (state) => {
+    return {
+        loading: state.student.loading,
+        error: state.student.error,
+        voter: state.student.voter, // CEO竞选 名单
+        applyRes: state.student.applyResult,    // 申请CEO竞选 结果
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showCeoVoter: () => {
+            dispatch(showCeoVoterActionCreator());
+        },
+        applyCeo: () => {
+            dispatch(applyCeoActionCreator());
+        }, 
+    }
+}
 
-export class Ceo extends React.Component {
-    constructor(props) {
-        super(props);
-            this.state = {
-                selectedRowKeys: [], // Check here to configure the default column
-                loading: false,
-                data: [],
-            }
+class CeoComponent extends React.Component {
+    componentDidMount() {
+        console.log('componentDidMount')
+        this.props.showCeoVoter();
+    }
+    state = {
+        selectedRowKeys: [],
     }
 
     start = () => {
-        this.setState({ loading: true });
         // ajax request after empty completing
-        // const { flag } = await axios.post(
-        //     `120.79.147.32:8089/student/voteForCeo`, {
-        //         voteUserId: voteUserId,
-        //         // votedUserId: ,
-        //         // teacherClass: ,
-        //     }
-        // )
         setTimeout(() => {
           this.setState({
             selectedRowKeys: [],
-            loading: false,
           });
         }, 1000);
+        alert(this.props.error);
     };
 
     onSelectChange = selectedRowKeys => {
@@ -80,11 +71,15 @@ export class Ceo extends React.Component {
     
 
     beCeo = () => {
-        console.log('Want to be CEO')
+        this.props.applyCeo();
+        alert(this.props.applyResult);
     };
 
     render() {
-        const { loading, selectedRowKeys } = this.state;
+        { console.log('render') }
+        const { loading, voter } = this.props;
+        const { selectedRowKeys } = this.state;
+        
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -97,7 +92,7 @@ export class Ceo extends React.Component {
                     竞选CEO
                 </Button>
                 <div style={{ marginBottom: 16, marginTop: 20 }}>
-                    <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+                    <Button type="primary" onClick={this.start} disabled={!hasSelected}>
                         投票
                     </Button>
                     <span style={{ marginLeft: 8 }}>
@@ -107,10 +102,11 @@ export class Ceo extends React.Component {
                 <Table 
                     rowSelection={rowSelection}
                     columns={columns} 
-                    dataSource={data}
+                    dataSource={voter}
                     bordered
                 />
             </div>
         )
     }
 }
+export const Ceo = connect(mapStateToProps, mapDispatchToProps)(CeoComponent)

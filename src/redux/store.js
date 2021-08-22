@@ -1,4 +1,5 @@
-import {createStore,applyMiddleware,compose} from 'redux'
+import studentReducer from './reducers/student/reducers';
+import {createStore,applyMiddleware,compose, combineReducers} from 'redux'
 import reducer from './reducers/teacher/reducers'
 import thunk from 'redux-thunk'
 
@@ -14,8 +15,14 @@ const composeEnhancers =
 const enhancer = composeEnhancers(
     applyMiddleware(thunk),                                       
   );
-const store =createStore(reducer,enhancer)
-export default store
+
+const rootReducer = combineReducers({
+    student:  studentReducer,
+    reducer: reducer,   // ?
+})
+
+const store = createStore(rootReducer, enhancer);
+export default store;
 
 
 //曾闻捷
