@@ -124,7 +124,7 @@ export default function Home(props) {
                     else if(mes === "老师登录")path = "teacher"
                     else path = "student"
                     //登录成功将返回的token放到localStorage当中
-                    localStorage.setItem("login_token", JSON.stringify(data.token))
+                    localStorage.setItem("login_token", data.token)
                     //登录成功将返回的数据放到localStorage当中
                     localStorage.setItem("login_data", JSON.stringify(data))
                     //关闭等待动画

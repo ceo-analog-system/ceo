@@ -7,7 +7,7 @@ import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
 import localStorage_login from "./guard/localStorage"
 import { Provider } from 'react-redux';
-import student from './pages/student/components/student_normal';
+import IsCeo from "./pages/student"
 
 import Home from "./pages/home/components/home.jsx"
 import store from "./redux/store"
@@ -38,7 +38,7 @@ function App() {
     <div className="App">
     <Provider store={store}>
     <Switch>
-        <Guard path="/user_student" component={student} />
+        <Guard path="/user_student" component={IsCeo} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />

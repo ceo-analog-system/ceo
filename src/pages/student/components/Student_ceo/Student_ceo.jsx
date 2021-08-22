@@ -2,9 +2,9 @@ import React from 'react'
 import { Route, Link, Redirect,withRouter } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
 import Application from "./Application_ceo"
+import {ceoAxios} from '../../api/createAxios';
 import Company from './Company_ceo';
 import Files from './Files_ceo';
-import { ceoAxios,studentAxios } from '../../api/createAxios';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -15,11 +15,9 @@ import {
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/All.css"
-import axios from 'axios';
-
-
-
 const { Sider } = Layout;
+
+
 
  class Student_ceo extends React.Component {
     state = {
@@ -31,6 +29,14 @@ const { Sider } = Layout;
     componentDidMount(){
        let localmessage=JSON.parse(localStorage.getItem('login_data')).data
        this.setState({name:localmessage.userName})
+        ceoAxios.post('showApplicationToCeo',{
+          "start":'1',
+          "pageSize":'1',
+          "userId":'2017211019'
+        }).then((res) => {
+          console.log(res)
+        })
+  
     }
 
     onCollapse = collapsed => {
@@ -84,6 +90,7 @@ const { Sider } = Layout;
             <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
               <p>您确定要退出吗？</p>
             </Modal>
+
             <section id="section">
               <Route path="/user_student/application_ceo" component={Application} />
               <Route path="/user_student/company_ceo" component={Company}/>

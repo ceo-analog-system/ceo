@@ -67,8 +67,6 @@ class SiderDemo extends React.Component {
     this.props.history.replace(`/user_teacher/students/${values}`)
   }
 
-
-
   //更改班级的对话框
   showClass=()=>{
     this.setState({showClassVisible:true})

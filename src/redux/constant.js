@@ -5,3 +5,5 @@ export const DEFAULT_PAGE_SIZE='5'
 export const GET_SELECTED_CLASS='getSelectedClass'
 export const GET_CHANGE_COMPANY='getChangeCompany'
 // export const GET_CHANGE_COMPANY_TYPE='getChangeCompanyType'
+
+//ceo
