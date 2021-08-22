@@ -24,6 +24,7 @@ export const showCompaniesSuccessActionCreator = (data) => {
         payload: data,
     }
 }
+
 export const showCeoVoterSuccessActionCreator = (data) => {
     return {
         type: SHOW_CEO_VOTER_SUCCESS,
@@ -67,6 +68,7 @@ export const showCompaniesActionCreator = () => async (dispatch, getState) => {
     })
 };
 
+// 查看 CEO 竞选名单
 export const showCeoVoterActionCreator = () => async(dispatch, getState) => {
     dispatch(postStartActionCreator());
     console.log(1)
@@ -90,6 +92,7 @@ export const showCeoVoterActionCreator = () => async(dispatch, getState) => {
     }).catch(err => console.log(err))
 }
 
+// 申请 CEO 竞选
 export const applyCeoActionCreator = () => async(dispatch, getState) => {
     dispatch(postStartActionCreator);
 

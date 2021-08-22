@@ -31,8 +31,8 @@ const mapStateToProps = (state) => {
     return {
         loading: state.student.loading,
         error: state.student.error,
-        voter: state.student.voter,
-        applyRes: state.student.applyResult,
+        voter: state.student.voter, // CEO竞选 名单
+        applyRes: state.student.applyResult,    // 申请CEO竞选 结果
     }
 };
 const mapDispatchToProps = (dispatch) => {
