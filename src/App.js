@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import IsCeo from "./pages/student"
 
 import Home from "./pages/home/components/home.jsx"
-import store from "./pages/teacher/redux/store"
+import store from "./redux/store";
 function App() {
   //如果地址栏输入的网址错误跳转到当前所在权限的页面
   let default_url;

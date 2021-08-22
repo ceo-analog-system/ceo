@@ -5,7 +5,7 @@ import axios from 'axios'
 import localStorage_login from '../../../../guard/localStorage'
 import PubSub from 'pubsub-js'
 import { connect } from 'react-redux'
-import {getClassStudentsAction} from '../../redux/actionCreators'
+import {getClassStudentsAction} from '../../../../redux/actions/teacher/actionCreators'
 // import axios from 'axios'
 axios.defaults.headers["token"]="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkwMTA5NDV9.gKoi2thakB3yXKKwBKGc55mWAh0w1LWWJGJBjmBpErI"
 // import { reqClass } from '../../api'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Student_ceo from './components/Student_ceo/Student_ceo'
+import StudentCeo from './components/Student_ceo/Student_ceo'
 import Student from './components/student_normal/index'
 
 export default class IsCeo extends Component {
@@ -16,7 +16,7 @@ export default class IsCeo extends Component {
 
         return (
             <div>
-                {this.state.isceo?<Student_ceo/>:<Student/>}
+                {this.state.isceo?<StudentCeo/>:<Student/>}
             </div>
         )
     }

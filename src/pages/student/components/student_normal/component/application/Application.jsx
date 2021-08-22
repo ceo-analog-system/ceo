@@ -1,5 +1,7 @@
 import { Tabs, Table, Button } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
+import { showCompaniesActionCreator } from '../../../../../../redux/actions/student/actionCreators'
 
 const { TabPane } = Tabs;
 const applicationColumns = [
@@ -40,79 +42,94 @@ export const companyColumns = [
         key: 'ceoId',
     },
 ]
-export const companyData = [
-    {
-        companyName: '22227',
-        typeName: '物流企业',
-        ceoId: '2017211019',
-        key: '1',
-    },
-    {
-        companyName: 'halibote',
-        typeName: '银行',
-        ceoId: '2017211025',
-        key: '2',
-    },
-];
 
-export class Application extends React.Component {
+const mapStateToProps = (state) => {
+    return {
+        loading: state.student.loading,
+        error: state.student.error,
+        company: state.student.company,
+    }
+    // applyResult: state.addApplication.application,
+    // selectedRowKeys: state.addApplication, ？
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showCompany: () => {  
+            dispatch(showCompaniesActionCreator());
+        },
+        // showApplication: () => {
+        //     dispatch(showApplicationActionCreator());
+        // },
+    }
+}
+
+export class ApplicationComponent extends React.Component {
     state = {
         selectedRowKeys: [],
-        loading: false,
     }
+
+    componentDidMount() {
+        this.props.showCompany();
+        // this.props.showApplication();
+    }
+    
     start = () => {
-        this.setState({ loading: true });
+        // this.setState({ loading: true });
         // Ajax request
         setTimeout(() => {
             this.setState({
                 selectedRowKeys: [],
-                loading: false,
+                // loading: false,
             });
         }, 1000);
     };
 
-    onSelectChange = selectedRowKeys => {
+    onSelectChange = (selectedRowKeys) => {
         this.setState({ selectedRowKeys });
     };
 
     render() {
-        const { loading, selectedRowKeys } = this.state;
+        const { loading, company } = this.props;
+        const { selectedRowKeys } = this.state;
+
         const rowSelection = {
-        selectedRowKeys,
-        onChange: this.onSelectChange,
+            selectedRowKeys,
+            onChange: this.onSelectChange,
         };
-        const hasSelected = selectedRowKeys.length > 0;
+        const hasSelected = selectedRowKeys.length > 0; // 被选中列表
 
         return (            
             <div className='site-page-header-ghost-wrapper'>
-                <Tabs defaultActiveKey="1">
+                <Tabs defaultActiveKey="2">
                 <TabPane tab="我的申请" key="1">
                     <Table
                         columns={applicationColumns}
                         dataSource={applicationData}
                         bordered
                     />
-                </TabPane>
-                <TabPane tab="申请加入公司" key="2">
-                    <div>
-                        <div style={{ marginBottom: 16 }}>
-                        <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                            申请加入
-                        </Button>
-                        <span style={{ marginLeft: 8 }}>
-                            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-                        </span>
+                    </TabPane>
+                    <TabPane tab="申请加入公司" key="2">
+                        <div>
+                            <div style={{ marginBottom: 16 }}>
+                            <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+                                申请加入
+                            </Button>
+                            <span style={{ marginLeft: 8 }}>
+                                {hasSelected ? `Selected ${selectedRowKeys.length} companies` : ''}
+                            </span>
+                            </div>
+                            <Table 
+                                rowSelection={rowSelection}
+                                columns={companyColumns} 
+                                dataSource={company}
+                                bordered
+                            />
                         </div>
-                        <Table 
-                            rowSelection={rowSelection}
-                            columns={companyColumns} 
-                            dataSource={companyData}
-                            bordered
-                        />
-                    </div>
-                </TabPane>
-        </Tabs>
+                    </TabPane>
+                </Tabs>
             </div>
-      )
-         }
+        )
+    }
 }
+
+export const Application = connect(mapStateToProps, mapDispatchToProps)(ApplicationComponent);
