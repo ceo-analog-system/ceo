@@ -10,11 +10,7 @@ import { Provider } from 'react-redux';
 import student from './pages/student/components/student_normal';
 
 import Home from "./pages/home/components/home.jsx"
-<<<<<<< HEAD
-import store from "./redux/store";
-=======
 import store from "./redux/store"
->>>>>>> 8212b17b173bcae201511a3a146c20bbd530e369
 function App() {
   //如果地址栏输入的网址错误跳转到当前所在权限的页面
   let default_url;

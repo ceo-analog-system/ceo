@@ -4,16 +4,9 @@ import { Card,Table} from 'antd'
 import axios from 'axios'
 // import localStorage_login from '../../../../guard/localStorage'
 import { connect } from 'react-redux'
-<<<<<<< HEAD
-import {getClassStudentsAction} from '../../../../redux/actions/teacher/actionCreators'
-// import axios from 'axios'
-axios.defaults.headers["token"]="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkwMTA5NDV9.gKoi2thakB3yXKKwBKGc55mWAh0w1LWWJGJBjmBpErI"
-// import { reqClass } from '../../api'
-=======
 import { getClassStudentsAction } from '../../../../redux/actions/teacher/actionCreators'
 import {DEFAULT_PAGE_SIZE} from '../../../../redux/constant'
 axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxOTAzNzB9.h4ss5YPliHm1TBm86eocvNCrWLe-CZKHu19r60WZ1hM"
->>>>>>> 8212b17b173bcae201511a3a146c20bbd530e369
 const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
 ws.onopen = async function () {
     console.log("连接成功");

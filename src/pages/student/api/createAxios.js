@@ -20,7 +20,7 @@ export const studentAxios = axios.create({
     timeout:2000,
 })
 
-ceoAxios.interceptors.request.use(
+studentAxios.interceptors.request.use(
     (config) => {
         const token =localStorage.getItem('login_token')
         if(token){

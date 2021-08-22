@@ -20,11 +20,7 @@ import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
-<<<<<<< HEAD
-import {getExitClassAction} from '../../../redux/actions/teacher/actionCreators'
-=======
 import {getExitClassAction,getSelectedClassAction} from '../../../redux/actions/teacher/actionCreators'
->>>>>>> 8212b17b173bcae201511a3a146c20bbd530e369
 import { connect } from 'react-redux'
 
 

@@ -37,7 +37,7 @@ export const applyCeoSuccessActionCreator = (data) => {
     }
 }
 
-// const login_data = JSON.parse(localStorage.getItem("login_data"))
+const login_data = JSON.parse(localStorage.getItem("login_data"))
 
 export const showCompaniesActionCreator = () => async (dispatch, getState) => {
     dispatch(postStartActionCreator());
@@ -46,12 +46,12 @@ export const showCompaniesActionCreator = () => async (dispatch, getState) => {
     axios.post(`http://120.79.147.32:8089/student/showCompanies`, {
             start: "1",
             pageSize: "7",
-            // teacherClass: "login_data.teachclass"
-            teacherClass: "SJ00201A2031780001"
+            teacherClass: "login_data.teachclass"
+            // teacherClass: "SJ00201A2031780001"
     },{
         headers: {
-            // token: login_data.token,
-            token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjI5MzQwMDUyfQ.VlWhYzWwNR-mUlKwQIbm4tIig9MDYvFrnxFvSzQu5R8'
+            token: login_data.token,
+            // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjI5MzQwMDUyfQ.VlWhYzWwNR-mUlKwQIbm4tIig9MDYvFrnxFvSzQu5R8'
         }
     }).then(res => {
         const { data } = res;

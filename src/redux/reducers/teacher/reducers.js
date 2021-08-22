@@ -1,14 +1,10 @@
 
-<<<<<<< HEAD
-import {GET_EXIT_CLASS,GET_SELECT_STUDENTS} from '../../constant'
-=======
 import {GET_EXIT_CLASS
     ,GET_SELECT_STUDENTS
     ,GET_SELECT_COMPANY
     ,GET_SELECTED_CLASS,
     GET_CHANGE_COMPANY
 } from '../../constant'
->>>>>>> 8212b17b173bcae201511a3a146c20bbd530e369
 const defaultState={
     exitClass:[],
     selectedClass:'',

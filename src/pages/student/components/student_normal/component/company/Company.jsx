@@ -27,10 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 export class CompanyCompoent extends React.Component {    
     componentDidMount() {
         this.props.showCompany();
-        if (this.props.error === '资源访问受限!请重新登录！') {
-            console.log('Token 过期')
-            
-        }
     }
     reLogin() {
         this.props.history.push('home');
@@ -39,10 +35,6 @@ export class CompanyCompoent extends React.Component {
 
         const { company, loading, error } = this.props;
         console.log(error)
-        if (this.props.error === '资源访问受限!请重新登录！')
-        {
-            this.reLogin();
-        }
         
         return (
             <div className='site-page-header-ghost-wrapper'>
