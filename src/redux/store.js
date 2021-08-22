@@ -1,7 +1,7 @@
-//穆达超
-import {createStore,applyMiddleware,compose} from 'redux'
-import reducer from './reducers/teacher/reducers'
-import thunk from 'redux-thunk'
+import studentReducer from './reducers/student/reducers';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import thunk from "redux-thunk";
+
 const composeEnhancers =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
@@ -11,8 +11,18 @@ const composeEnhancers =
 const enhancer = composeEnhancers(
     applyMiddleware(thunk),                                       
   );
-const store =createStore(reducer,enhancer)
-export default store
+
+const rootReducer = combineReducers({
+    student:  studentReducer,
+})
+
+const store = createStore(rootReducer, enhancer);
+export default store;
+//穆达超
+
+// import reducer from './reducers/teacher/reducers'
+// import thunk from 'redux-thunk'
+// export default store
 
 
 //曾闻捷
