@@ -1,9 +1,6 @@
 import React from 'react'
-import { Route, Link, Redirect, Switch } from "react-router-dom"
+import { Route, Link, Switch } from "react-router-dom"
 import { Layout, Menu, Button, Modal,Table } from 'antd';
-// import Application from "./Application"
-// import Company from './Company';
-// import Files from './Files';
 import {
   BarsOutlined,
   DesktopOutlined,
@@ -23,10 +20,12 @@ import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
+<<<<<<< HEAD
 import {getExitClassAction} from '../../../redux/actions/teacher/actionCreators'
+=======
+import {getExitClassAction,getSelectedClassAction} from '../../../redux/actions/teacher/actionCreators'
+>>>>>>> 8212b17b173bcae201511a3a146c20bbd530e369
 import { connect } from 'react-redux'
-import PubSub from 'pubsub-js';
-// import { Content } from 'antd/lib/layout/layout';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -35,7 +34,8 @@ class SiderDemo extends React.Component {
     collapsed: false,
     isModalVisible: false,
     showClassVisible:false,
-    openClassVisible:true
+    openClassVisible:true,
+
   };
 
   onCollapse = collapsed => {
@@ -66,9 +66,9 @@ class SiderDemo extends React.Component {
   }
 
   selectedClass=(values)=>{
-    console.log(values);
     this.setState({ openClassVisible: false })
-    // PubSub.publish('classes',{classNum:values})
+    this.props.storeSelectedClass(values)
+    this.props.history.replace(`/user_teacher/students/${values}`)
   }
 
 
@@ -184,14 +184,14 @@ class SiderDemo extends React.Component {
           </Modal>
           <Content className='teacher-content' >
           <Switch>
-            <Route path="/user_teacher/students" component={Students} />
+            <Route path="/user_teacher/students" component={Students} name="123456"/>
             <Route path="/user_teacher/company" component={Company}/>
             <Route path="/user_teacher/vote" component={Vote}/>
             <Route path="/user_teacher/message" component={Message}/>
             <Route path="/user_teacher/sign" component={Sign}/>
             <Route path="/user_teacher/modify" component={Modify}/>
             <Route path="/user_teacher/check" component={Check}/>
-            <Redirect to="/user_teacher/students"/>
+            {/* <Redirect to="/user_teacher/students"/> */}
             </Switch>
           </Content>
           <Footer id="teacher-footer">
@@ -204,13 +204,17 @@ class SiderDemo extends React.Component {
 }
 const mapStateToProps=(state)=>{
     return {
-        exitClass:state.exitClass
+        exitClass:state.exitClass,
+        selectedClass:state.selectedClass
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return {
         getExitClass(){
             dispatch(getExitClassAction())
+        },
+        storeSelectedClass(selectedClass){
+          dispatch(getSelectedClassAction(selectedClass))
         }
     }
 }

@@ -4,6 +4,7 @@ import { Layout, Menu, Button, Modal } from 'antd';
 import Application from "./Application_ceo"
 import Company from './Company_ceo';
 import Files from './Files_ceo';
+import { ceoAxios,studentAxios } from '../../api/createAxios';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -14,6 +15,7 @@ import {
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/All.css"
+import axios from 'axios';
 
 
 
@@ -22,8 +24,15 @@ const { Sider } = Layout;
  class Student_ceo extends React.Component {
     state = {
       collapsed: false,
-      isModalVisible: false
+      isModalVisible: false,
+      name:''
     };
+    
+    componentDidMount(){
+       let localmessage=JSON.parse(localStorage.getItem('login_data')).data
+       this.setState({name:localmessage.userName})
+    }
+
     onCollapse = collapsed => {
       console.log(collapsed);
       this.setState({ collapsed });
@@ -44,7 +53,7 @@ const { Sider } = Layout;
     }
   
     render() {
-      const { collapsed } = this.state;
+      const { collapsed ,name} = this.state;
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} theme="light">
@@ -69,7 +78,7 @@ const { Sider } = Layout;
           </Sider>
           <Layout className="site-layout">
             <header id="Student-ceo_header">
-              <span id='Student-ceo_cname' >CEO 李富莲</span>
+              <span id='Student-ceo_cname' >CEO {name}</span>
               <Button type="primary" size="large" shape="round" icon={<PoweroffOutlined />} onClick={this.open_model}>退出登录</Button>
             </header>
             <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
