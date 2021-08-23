@@ -1,48 +1,77 @@
 import React, { Component } from 'react'
-import {Table} from 'antd'
-export default class Name extends Component {
+import {Button, Table} from 'antd'
+import { connect } from 'react-redux'
+import {DEFAULT_PAGE_SIZE} from '../../../../../../redux/constant'
+import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/actionCreators'
+ class Name extends Component {
     initColums=()=>{
         this.columns=[
             {
                 title:'申请人姓名',
-                dataIndex:'',
-                key:'1'
+                dataIndex:["company","ceoName"],
+                key:'1',
+                align:'center'
             },  
             {
                 title:'申请人学号',
-                dataIndex:'',
-                key:'2'
+                dataIndex:["company","ceoId"],
+                key:'2',
+                align:'center'
             },
             {
                 title:'原公司名',
-                dataIndex:'',
-                key:'3'
+                dataIndex:["company","companyName"],
+                key:'3',
+                align:'center'
             },
             {
                 title:'修改后公司名',
-                dataIndex:'',
-                key:'4'
+                dataIndex:'changeName',
+                key:'4',
+                align:'center'
             },
             {
                 title:'操作',
-                dataIndex:'',
-                key:'5'
+                key:'5',
+                align:'center',
+                render:()=>(
+                    <span>
+                        <Button type="primary">同意</Button>&nbsp;&nbsp;
+                        <Button type="primary">拒绝</Button>
+                    </span>
+                )
             },
         ]
     }
-    componentWillMount(){
+    componentDidMount(){
         this.initColums()
+        console.log(this.props.selectedClass);
+        this.props.getChangeCompany(this.props.selectedClass)
     }
     render() {
-        const dataSource=[
-            {
-
-            }
-        ]
+        const dataSource=this.props.changeCompany.filter(item=>{
+            return item.changeName!==null
+        })
         return (
-            <Table dataSource={dataSource} columns={this.columns}>
+            <Table dataSource={dataSource} columns={this.columns} rowKey="id"
+             pagination={{defaultPageSize: DEFAULT_PAGE_SIZE, showQuickJumper: true}}
+            >
                
             </Table>
         )
     }
 }
+const mapStateToProps=(state)=>{
+    return{
+        changeCompany:state.changeCompany,
+        selectedClass:state.selectedClass
+    }
+}
+const mapDispatchToProps=(dispatch)=>{
+    return{
+        getChangeCompany(classNum){
+            dispatch(getChangeCompanyAction(classNum))
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Name)

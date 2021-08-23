@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import { Card,Table} from 'antd'
 import axios from 'axios'
-import localStorage_login from '../../../../guard/localStorage'
-import PubSub from 'pubsub-js'
+// import localStorage_login from '../../../../guard/localStorage'
 import { connect } from 'react-redux'
-import { getClassStudentsAction } from '../../redux/actionCreators'
-// import axios from 'axios'
-axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkwMTA5NDV9.gKoi2thakB3yXKKwBKGc55mWAh0w1LWWJGJBjmBpErI"
-// import { reqClass } from '../../api'
+import { getClassStudentsAction } from '../../../../redux/actions/teacher/actionCreators'
+import {DEFAULT_PAGE_SIZE} from '../../../../redux/constant'
+axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxOTAzNzB9.h4ss5YPliHm1TBm86eocvNCrWLe-CZKHu19r60WZ1hM"
 const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
 ws.onopen = async function () {
     console.log("连接成功");
@@ -23,29 +21,20 @@ class Students extends Component {
         exitClass: [],
         classStudents: [],
         changeClassVisible: false,
-        selectedClass: ''
     }
 
     //处理首次登录选择班级
-    handleClassModal = () => {
-        this.setState({ openClassVisible: false })
-        localStorage_login.removeLogin_auth()
-        this.props.history.replace("/login")
-    }
-    // token= PubSub.subscribe('classes',(_,values)=>{
-    //     this.setState({selectedClass:values.classNum})
-    // })
+    // handleClassModal = () => {
+    //     this.setState({ openClassVisible: false })
+    //     localStorage_login.removeLogin_auth()
+    //     this.props.history.replace("/login")
+    // }
     componentDidMount() {
-        const id = this.props.match.params.id
-        this.setState({ selectedClass: id }, ()=>{
-            this.props.getSelectedStudents(this.state.selectedClass)
-        })
-       
+        this.props.getSelectedStudents(this.props.selectedClass)
+
     }
   
     render() {
-        // console.log(this.props);
-        // console.log(this.state);
         const title = (
             <h2>学生信息</h2>
         )
@@ -90,7 +79,14 @@ class Students extends Component {
         ]
         return (
             <Card title={title} extra={extra} style={{ width: '100%', height: '100%' }}>
-                <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
+                    <Table 
+                        rowKey="id"
+                        columns={columns} 
+                        dataSource={this.props.classStudents} 
+                        pagination={{defaultPageSize: DEFAULT_PAGE_SIZE, showQuickJumper: true}}
+                        
+                    ></Table>
+                {/* <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
                     <Table 
                     // rowke="id"
                     //   ref='table' 
@@ -100,7 +96,7 @@ class Students extends Component {
                        pagination={{defaultPageSize: 3, showQuickJumper: true}}
                         
                     ></Table>
-                </table>
+                </table> */}
 
             </Card>
         )
@@ -108,7 +104,8 @@ class Students extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        classStudents: state.classStudents
+        classStudents: state.classStudents,
+        selectedClass:state.selectedClass
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Members.module.css';
 import { Table } from "antd";
 
 const columns = [
@@ -51,7 +50,7 @@ const data = [
 export class Members extends React.Component {
     render() {
         return (
-            <div className={styles['site-page-header-ghost-wrapper']}>
+            <div className='site-page-header-ghost-wrapper'>
                 <Table 
                     columns={columns}
                     dataSource={data}  

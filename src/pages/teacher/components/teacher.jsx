@@ -1,9 +1,6 @@
 import React from 'react'
-import { Route, Link, Redirect, Switch } from "react-router-dom"
+import { Route, Link, Switch } from "react-router-dom"
 import { Layout, Menu, Button, Modal,Table } from 'antd';
-// import Application from "./Application"
-// import Company from './Company';
-// import Files from './Files';
 import {
   BarsOutlined,
   DesktopOutlined,
@@ -23,10 +20,8 @@ import 'antd/dist/antd.css'
 import "../style/All.css"
 import '../style/Application.css'
 import localStorage_login from '../../../guard/localStorage'
-import {getExitClassAction} from '../redux/actionCreators'
+import {getExitClassAction,getSelectedClassAction} from '../../../redux/actions/teacher/actionCreators'
 import { connect } from 'react-redux'
-import PubSub from 'pubsub-js';
-// import { Content } from 'antd/lib/layout/layout';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -35,7 +30,8 @@ class SiderDemo extends React.Component {
     collapsed: false,
     isModalVisible: false,
     showClassVisible:false,
-    openClassVisible:true
+    openClassVisible:true,
+
   };
 
   onCollapse = collapsed => {
@@ -66,14 +62,10 @@ class SiderDemo extends React.Component {
   }
 
   selectedClass=(values)=>{
-    console.log(values);
     this.setState({ openClassVisible: false })
-    PubSub.publish('classes',{classNum:values})
-    // <Redirect to="/user_teacher/students"/>
-    this.props.history.replace(`/user_teacher/students/${values}` )
+    this.props.storeSelectedClass(values)
+    this.props.history.replace(`/user_teacher/students/${values}`)
   }
-
-
 
   //更改班级的对话框
   showClass=()=>{
@@ -186,7 +178,7 @@ class SiderDemo extends React.Component {
           </Modal>
           <Content className='teacher-content' >
           <Switch>
-            <Route path="/user_teacher/students/:id" component={Students} name="123456"/>
+            <Route path="/user_teacher/students" component={Students} name="123456"/>
             <Route path="/user_teacher/company" component={Company}/>
             <Route path="/user_teacher/vote" component={Vote}/>
             <Route path="/user_teacher/message" component={Message}/>
@@ -206,13 +198,17 @@ class SiderDemo extends React.Component {
 }
 const mapStateToProps=(state)=>{
     return {
-        exitClass:state.exitClass
+        exitClass:state.exitClass,
+        selectedClass:state.selectedClass
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return {
         getExitClass(){
             dispatch(getExitClassAction())
+        },
+        storeSelectedClass(selectedClass){
+          dispatch(getSelectedClassAction(selectedClass))
         }
     }
 }
