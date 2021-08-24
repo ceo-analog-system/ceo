@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {Table,Empty,Card,Space,Modal,Button,Input,Radio} from "antd"
-// import { ceoAxios } from '../../api/createAxios'
+import { studentAxios,ceoAxios } from '../../api/createAxios'
 import '../../style/Student_ceo/Company_ceo.css'
 import 'antd/dist/antd.css'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+
 
 
 const columns = [
@@ -87,7 +89,7 @@ const columns = [
     { label: '税务局', value: 'bureau' },
   ];
 
-export default class Company extends Component {
+ class Company extends Component {
     state={
       companyVisible:false,
       companyValue: 'commercialCompany'
@@ -101,6 +103,18 @@ export default class Company extends Component {
     changeCompany =(e) => {
       this.setState({companyValue:e.target.value})
     }
+    setUpCompany =  async () =>  {
+       await studentAxios.post('addCeoVote',{
+        typeName:'贸易公司',
+        typeCode:1,
+        companyName:'commercialCompany',
+        ceoId:'2017211019',
+      }).then((res) => {
+        console.log(res);
+      })
+      this.setState({ companyVisible: false })
+
+    }
     render() {
       const {companyVisible,companyValue} =this.state
         return (
@@ -109,15 +123,14 @@ export default class Company extends Component {
               <Modal
                 width='520px'
                 visible={companyVisible}
+                onOk={this.setUpCompany}
                 onCancel={this.handleCancel}
-                footer={
-                  [
-                    <Button key='提交' type='primary'>创建</Button>
-                  ]
-                }
+                okText="创建"
+                cancelText="取消"
+
               >
               <Input placeholder='公司名' style={{marginTop:'20px'} }></Input>
-              <Radio.Group options={options} onChange={this.changeCompany} value={companyValue} optionType='button' buttonStyle='solid'>
+              <Radio.Group options={options} onChange={this.changeCompany}  value={companyValue} optionType='button' buttonStyle='solid' >
 
               </Radio.Group>
 
@@ -145,3 +158,12 @@ export default class Company extends Component {
         )
     }
 }
+
+export default connect(
+  state =>({
+
+  }),
+  {
+
+  }
+)(Company)

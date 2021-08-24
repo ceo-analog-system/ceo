@@ -17,3 +17,6 @@ export const SHOW_CEO_VOTER_SUCCESS = 'SHOW_CEO_VOTER_SUCCESS';
 
 // 申请 CEO 竞选
 export const APPLY_CEO_SUCCESS = 'APPLY_CEO_SUCCESS'; 
+
+//申请查看
+export const APPLY_FOR_CHECK= 'applyForCheck'
