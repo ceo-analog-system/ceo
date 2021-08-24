@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 //import {Empty} from "antd"
+import { ceoAxios } from '../../api/createAxios';
 import { Table, Space, Tag } from 'antd';
 import 'antd/dist/antd.css'
 import "../../style/Student_ceo/Application_ceo.css"
@@ -59,6 +60,17 @@ const columns = [
 export default class Application extends Component {
     state={
       
+    }
+
+    componentDidMount(){
+      ceoAxios.post('showApplicationToCeo',{
+        "start":'1',
+        "pageSize":'1',
+        "userId":'2017211019'
+      }).then((res) => {
+        console.log(res)
+      })
+
     }
     render() {
         return (
