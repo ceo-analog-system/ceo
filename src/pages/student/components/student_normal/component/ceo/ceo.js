@@ -76,8 +76,7 @@ class CeoComponent extends React.Component {
     };
 
     render() {
-        { console.log('render') }
-        const { loading, voter } = this.props;
+        const {voter } = this.props;
         const { selectedRowKeys } = this.state;
         
         const rowSelection = {
