@@ -10,6 +10,8 @@ export const applyCeo = () => studentAxios({
         teacherClass,
     },
     url: "/student/addCeoVote"
+}).then(() => {
+    alert('成功申请竞选CEO！')
 }).catch(err => {
     console.log(err);
 })
