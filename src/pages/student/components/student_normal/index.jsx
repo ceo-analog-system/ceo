@@ -23,7 +23,6 @@ const { Sider } = Layout;
 
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
   //点击退出登录打开询问面板

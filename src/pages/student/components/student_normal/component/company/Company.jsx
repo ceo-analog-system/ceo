@@ -1,16 +1,12 @@
 import React from "react";
-import { Table, Spin } from "antd"
-import { companyColumns } from '../application/Application';
+import { Table } from "antd"
 import '../../../../style/Student.css';
-import { showCompaniesActionCreator } from '../../../../../../redux/actions/student/actionCreators';
+import { showCompaniesActionCreator,  } from '../../../../../../redux/actions/student/actionCreators';
 import { connect } from 'react-redux';
-import { withRouter, Route } from "react-router-dom";
-import Home from "../../../../../home/components/home";
+import { voteCompany } from "../../../../api/studentApi";
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.student.loading,
-        error: state.student.error,
         company: state.student.company,
     }
 };
@@ -18,50 +14,61 @@ const mapDispatchToProps = (dispatch) => {
     return {
         showCompany: () => {  
             dispatch(showCompaniesActionCreator());
-        }, 
+        },
     }
 }
-
-
 
 export class CompanyCompoent extends React.Component {    
     componentDidMount() {
         this.props.showCompany();
     }
-    reLogin() {
-        this.props.history.push('home');
-    }
-    render() {
 
-        const { company, loading, error } = this.props;
-        console.log(error)
-        
+    render() {
+        const columns = [
+            {
+                title: '公司名称',
+                dataIndex: 'companyName',
+                key: 'companyName',
+            },
+            {
+                title: '公司类型',
+                dataIndex: 'typeName',
+                key: 'typename',
+            },
+            {
+                title: 'CEO 学号',
+                dataIndex: 'ceoId',
+                key: 'ceoId',
+            },
+            {
+                title: '公司ID',
+                dataIndex: 'companyId',
+                key: 'companyId',
+            },
+            {
+                title: 'Action',
+                key: 'action',
+                render: (_, record) => (
+                    // companyId数字转字符串
+                    // eslint-disable-next-line
+                    <a onClick={voteCompany(record.companyId + "")}>为 {record.companyName} 投票</a>
+                    // onClick={() => voteCompany(record.companyId)}
+                )
+            },
+        ]
+
+        const { company } = this.props;
+    
         return (
             <div className='site-page-header-ghost-wrapper'>
-                {error && 
-                    <div style={{
-                        marginBottom: 20
-                    }}>出错啦：{error}</div>
-                }
-                { loading ? (
-                    <Spin 
-                        size='large'
-                        style={{
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                            width: '100%',
-                        }}
-                    />
-                ) : (<Table 
-                        columns={companyColumns} 
-                        dataSource={company}
-                        bordered
-                    />)
-                } 
-                <Route path="/login" component={Home} />
+                <Table 
+                    columns={columns} 
+                    dataSource={company}
+                    bordered
+                />
             </div>
         )
     }
 }
 
-export const Company = connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyCompoent));
+export const Company = connect(mapStateToProps, mapDispatchToProps)(CompanyCompoent);

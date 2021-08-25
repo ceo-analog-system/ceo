@@ -1,31 +1,11 @@
-import { Tabs, Table, Button } from 'antd';
+import { Tabs, Table, Button, Popconfirm } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import { showCompaniesActionCreator } from '../../../../../../redux/actions/student/actionCreators'
+import { showCompaniesActionCreator, addCompanyApplicationActionCreator } from '../../../../../../redux/actions/student/actionCreators';
+import { applyJoinCompany } from "../../../../api/studentApi";
 
 const { TabPane } = Tabs;
-const applicationColumns = [
-    {
-        title: '学生学号',
-        dataIndex: 'userId',
-        key: 'userId',
-    },
-    {
-        title: '公司名称',
-        dataIndex: 'companyName',
-        key: 'companyName',
-    },
-    {
-        title: '公司ID',
-        dataIndex: 'companyId',
-        key: 'companyId',
-    },
-];
-const applicationData = [
-    
-];
-
-export const companyColumns = [
+const companyColumns = [
     {
         title: '公司名称',
         dataIndex: 'companyName',
@@ -45,78 +25,89 @@ export const companyColumns = [
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.student.loading,
-        error: state.student.error,
         company: state.student.company,
+        companyApplication: state.student.companyApplication,
     }
-    // applyResult: state.addApplication.application,
-    // selectedRowKeys: state.addApplication, ？
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         showCompany: () => {  
             dispatch(showCompaniesActionCreator());
         },
-        // showApplication: () => {
-        //     dispatch(showApplicationActionCreator());
-        // },
+        addCompanyApplication: (application) => {
+            dispatch(addCompanyApplicationActionCreator(application));
+        }
     }
 }
 
 export class ApplicationComponent extends React.Component {
     state = {
         selectedRowKeys: [],
+        applicationData: [],
     }
 
     componentDidMount() {
+        console.log('componentDidMount')
         this.props.showCompany();
-        // this.props.showApplication();
+
     }
     
-    start = () => {
-        // this.setState({ loading: true });
-        // Ajax request
+    apply = () => {
+        // eslint-disable-next-line
+        this.state.selectedRowKeys.map((key) => {
+            this.state.applicationData.push(this.props.company[key]);
+        })
+        applyJoinCompany(this.state.applicationData);
+        this.props.addCompanyApplication(this.state.applicationData);
+
         setTimeout(() => {
             this.setState({
                 selectedRowKeys: [],
-                // loading: false,
             });
         }, 1000);
     };
 
     onSelectChange = (selectedRowKeys) => {
-        this.setState({ selectedRowKeys });
+        this.setState({ selectedRowKeys }); // 被选中的行 key值列表
     };
 
     render() {
-        const { loading, company } = this.props;
+        console.log('render')
+        const { company, companyApplication } = this.props;
         const { selectedRowKeys } = this.state;
 
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        const hasSelected = selectedRowKeys.length > 0; // 被选中列表
+        const hasSelected = selectedRowKeys.length === 6; // 被选中列表
 
         return (            
             <div className='site-page-header-ghost-wrapper'>
                 <Tabs defaultActiveKey="2">
                 <TabPane tab="我的申请" key="1">
                     <Table
-                        columns={applicationColumns}
-                        dataSource={applicationData}
+                        columns={companyColumns}
+                        dataSource={companyApplication}
                         bordered
                     />
                     </TabPane>
                     <TabPane tab="申请加入公司" key="2">
                         <div>
                             <div style={{ marginBottom: 16 }}>
-                            <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                申请加入
-                            </Button>
-                            <span style={{ marginLeft: 8 }}>
-                                {hasSelected ? `Selected ${selectedRowKeys.length} companies` : ''}
-                            </span>
+                                <Popconfirm 
+                                    title="确定提交申请吗？"
+                                    onConfirm={this.apply}
+                                    // onCancel={}    
+                                >
+                                    <Button type="primary" disabled={!hasSelected}>
+                                        申请加入
+                                    </Button>
+                                </Popconfirm>
+
+                                <span style={{ marginLeft: 8 }}>
+                                    {hasSelected ? `Selected ${selectedRowKeys.length} companies` : '请选择6个公司提交申请（重复提交将重置申请）'}
+                                </span>
                             </div>
                             <Table 
                                 rowSelection={rowSelection}

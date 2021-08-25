@@ -1,110 +1,70 @@
 import { 
-    POST_START, 
-    SHOW_COMPANIES_SUCCESS, 
-    POST_FAIL, 
-    SHOW_CEO_VOTER_SUCCESS,
-    APPLY_CEO_SUCCESS,
+    SHOW_COMPANIES_SUCCESS,  
+    ADD_COMPANY_APPLICATION,
 } from '../../constant';
-import axios from 'axios';
+import { showCompany } from '../../../pages/student/api/studentApi';
 
-export const postStartActionCreator = () => {
-    return {
-        type: POST_START, 
-    }
-}
-export const postFailActionCreator = (error) => {
-    return {
-        type: POST_FAIL,
-        payload: error,
-    }
-}
-export const showCompaniesSuccessActionCreator = (data) => {
-    return {
-        type: SHOW_COMPANIES_SUCCESS,
-        payload: data,
-    }
-}
+// const login_data = JSON.parse(localStorage.getItem("login_data"))
 
-export const showCeoVoterSuccessActionCreator = (data) => {
-    return {
-        type: SHOW_CEO_VOTER_SUCCESS,
-        payload: data,
-    }
-}
-export const applyCeoSuccessActionCreator = (data) => {
-    return {
-        type: APPLY_CEO_SUCCESS,
-        payload: data.data, // `成功参选`
-    }
-}
-
-const login_data = JSON.parse(localStorage.getItem("login_data"))
-
+// 查看所有公司
 export const showCompaniesActionCreator = () => async (dispatch, getState) => {
-    dispatch(postStartActionCreator());
-
+    const { data } = await showCompany()
     
-    axios.post(`http://120.79.147.32:8089/student/showCompanies`, {
-            start: "1",
-            pageSize: "7",
-            teacherClass: "login_data.teachclass"
-            // teacherClass: "SJ00201A2031780001"
-    },{
-        headers: {
-            token: login_data.token,
-            // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjI5MzQwMDUyfQ.VlWhYzWwNR-mUlKwQIbm4tIig9MDYvFrnxFvSzQu5R8'
-        }
-    }).then(res => {
-        const { data } = res;
-        if (data.flag) {
-             // eslint-disable-next-line
-            data.data.list.map((item, index) => {   // 给公司列表每个对象加上 key
-                item.key = index;
-            })
-            dispatch(showCompaniesSuccessActionCreator(data));
-        } else {
-            dispatch(postFailActionCreator(data.message));
-        }
-    })
+    if (data.flag) {
+        // eslint-disable-next-line
+        data.data.list.map((item, index) => {   // 给公司列表每个对象加上 key
+            item.key = index;
+        })
+        dispatch({
+            type: SHOW_COMPANIES_SUCCESS,
+            payload: data.data,
+        });
+    } else {
+        alert(`查看公司失败：${data.smg}`)
+    }
 };
 
-// 查看 CEO 竞选名单
-export const showCeoVoterActionCreator = () => async(dispatch, getState) => {
-    dispatch(postStartActionCreator());
-    console.log(1)
-    axios.post(`https://120.79.147.32:8089/student/addCeo`, {
-        "userId":"2017211018",
-        "usename":"姜震",
-        "teacherClass":"SJ00201A2031780001"
-    }).then(res => {
-        console.log(2)
-        const { data } = res;
-        if (data.flag) {
-            dispatch(showCeoVoterSuccessActionCreator(data));
-        } else {
-            console.log(3)
-            if (data.message) {
-                dispatch(postFailActionCreator(data.message));
-            } else {
-                console.log(4)
-            }
-        }
-    }).catch(err => console.log(err))
+// 保存公司申请
+export const  addCompanyApplicationActionCreator = (application) => {
+    return {
+        type: ADD_COMPANY_APPLICATION,
+        payload: application,
+    }
 }
+// export const applyCompanyActionCreator = (application) => async(dispatch, getState) => {
+//     const { data } = await applyJoinCompany()
+    
+//     if (data.flag) {
+//         dispatch({
+//             type: APPLY_COMPANY,
+//             payload: application,
+//         });
+//     } else {
+//         alert(`申请失败：${data.smg}`)
+//     }
+// }
 
-// 申请 CEO 竞选
-export const applyCeoActionCreator = () => async(dispatch, getState) => {
-    dispatch(postStartActionCreator);
 
-    axios.post(`120.79.147.32:8089/student/addCeoVote`, {
-        "userId":"2017211018",
-        "teacherClass":"SJ00201A2031780001"
-    }).then(res => {
-        const { data } = res;
-        if (data.flag) {
-            dispatch(applyCeoSuccessActionCreator(data));
-        } else {
-            dispatch(postFailActionCreator(data.msg));
-        }
-    }).catch(err => console.log(err));
-}
+ // 申请 CEO 竞选
+// export const applyCeoActionCreator = () => async(dispatch, getState) => {
+//     const { data } = applyCeo();
+
+//     if (data.flag) {
+//         alert(data.data);
+//     } else {
+//         alert(data.msg);
+//     }
+// }
+
+// 为CEO投票
+// export const voteCeoActionCreator = (votedUserId) => async(dispatch, getState) => {
+//     const { data } = await voteCeo(votedUserId);
+
+//     if (data.flag) {
+//         alert(data.data);
+//     } else {
+//         alert(data.msg);
+//     }
+// } 
+
+
