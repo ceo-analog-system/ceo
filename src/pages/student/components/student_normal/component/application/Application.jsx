@@ -82,7 +82,7 @@ export class ApplicationComponent extends React.Component {
 
         return (            
             <div className='site-page-header-ghost-wrapper'>
-                <Tabs defaultActiveKey="2">
+                <Tabs defaultActiveKey="1">
                 <TabPane tab="我的申请" key="2">
                     <Table
                         columns={companyColumns}
