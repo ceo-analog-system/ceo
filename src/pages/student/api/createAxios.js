@@ -9,7 +9,7 @@ ceoAxios.interceptors.request.use(
     (config) => {
         let token =localStorage.getItem('login_token')
         if(token){
-            config.headers.token = token
+            config.headers.accessToken = token
             return config;
         }
     },(error)=>{
@@ -40,23 +40,6 @@ studentAxios.interceptors.request.use(  // 拦截器
     }
 )
 
-export const wsAxios = axios.create({
-    baseURL:'http://localhost:3000/api:/connect/userId/',
-    timeout:2000,
-})
-wsAxios.interceptors.request.use(
-    (config) => {
-        let token =localStorage.getItem('login_token')
-        if(token){
-            config.headers.token = token
-            return config
-        }
-        
-    },(error)=>{
-        return Promise.reject(error)
-    }
-)
-
 studentAxios.interceptors.response.use(response => {
     console.log(response.data)
     switch (response.data.message) {
@@ -71,3 +54,20 @@ studentAxios.interceptors.response.use(response => {
     console.log(err.response)
     return Promise.reject(err.response.statusText)
 })
+
+export const wsAxios = axios.create({
+    baseURL:'http://localhost:3000/api:/connect/userId/',
+    timeout:2000,
+})
+wsAxios.interceptors.request.use(
+    (config) => {
+        let token =localStorage.getItem('login_token')
+        if(token){
+            config.headers.accessToken = token
+            return config
+        }
+        
+    },(error)=>{
+        return Promise.reject(error)
+    }
+)
