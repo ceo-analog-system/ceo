@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { DownloadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/Student_ceo/Files_ceo.css"
+import { connect } from 'react-redux';
 
 const limit =true
 const columns = [
@@ -53,7 +54,7 @@ const columns = [
    
   ];
 
-export default class Files extends Component {
+ class Files extends Component {
     render() {
         return (
             <div className="Student_ceo-content">
@@ -68,3 +69,12 @@ export default class Files extends Component {
         )
     }
 }
+
+export default connect(
+  state =>({
+
+  }),
+  {
+
+  }
+)(Files)

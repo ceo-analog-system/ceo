@@ -15,3 +15,6 @@ export const APPLY_CEO_SUCCESS = 'APPLY_CEO_SUCCESS';
 export const VOTE_CEO_SUCCESS = 'VOTE_CEO_SUCCESS';
 // 提交公司申请
 export const ADD_COMPANY_APPLICATION = 'ADD_COMPANY_APPLICATION';
+
+//申请查看
+export const APPLY_FOR_CHECK= 'applyForCheck'
