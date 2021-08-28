@@ -47,7 +47,6 @@ export class ApplicationComponent extends React.Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
         this.props.showCompany();
 
     }
@@ -72,7 +71,6 @@ export class ApplicationComponent extends React.Component {
     };
 
     render() {
-        console.log('render')
         const { company, companyApplication } = this.props;
         const { selectedRowKeys } = this.state;
 
@@ -85,20 +83,19 @@ export class ApplicationComponent extends React.Component {
         return (            
             <div className='site-page-header-ghost-wrapper'>
                 <Tabs defaultActiveKey="2">
-                <TabPane tab="我的申请" key="1">
+                <TabPane tab="我的申请" key="2">
                     <Table
                         columns={companyColumns}
                         dataSource={companyApplication}
                         bordered
                     />
                     </TabPane>
-                    <TabPane tab="申请加入公司" key="2">
+                    <TabPane tab="申请加入公司" key="1">
                         <div>
                             <div style={{ marginBottom: 16 }}>
                                 <Popconfirm 
                                     title="确定提交申请吗？"
-                                    onConfirm={this.apply}
-                                    // onCancel={}    
+                                    onConfirm={this.apply}    
                                 >
                                     <Button type="primary" disabled={!hasSelected}>
                                         申请加入

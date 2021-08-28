@@ -6,11 +6,9 @@ import teacher from "./pages/teacher/components/teacher"
 import manager from "./pages/manager/components/manager"
 import "./style_static/reset.css"
 import localStorage_login from "./guard/localStorage"
-import { Provider } from 'react-redux';
-import student from './pages/student/components/student_normal';
-
+import IsCeo from "./pages/student"
 import Home from "./pages/home/components/home.jsx"
-import store from "./redux/store"
+
 function App() {
   //如果地址栏输入的网址错误跳转到当前所在权限的页面
   let default_url;
@@ -21,31 +19,15 @@ function App() {
   else default_url = "/login";
 
 
- 
-
-  //判断是否为CEO
-  // let ceo
-  // let localmessage=JSON.parse(localStorage.getItem('login_data'))
-  // console.log(localmessage);
-  // // if(localmessage==='ceo登录'){
-  // //   ceo=true
-  // // }else{
-  // //   ceo =false
-  // // }
-
-
   return (
     <div className="App">
-    <Provider store={store}>
     <Switch>
-        <Guard path="/user_student" component={student} />
+        <Guard path="/user_student" component={IsCeo} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
         <Redirect to={default_url} />
       </Switch>
-    </Provider>
-     
     </div>
 
   );

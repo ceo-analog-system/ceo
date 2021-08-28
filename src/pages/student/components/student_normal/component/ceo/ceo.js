@@ -22,16 +22,12 @@ const columns = [
 export class Ceo extends React.Component {
     componentDidMount() {
         const { data } =showCeoVoter();
-        if (!data) {
-            alert(`请求失败`);
-        } else if (data.flag) {
+        if (data && data.flag) {
             const voter = data.data.list;
             // eslint-disable-next-line
             voter.map((item, index) => {   // 给列表每个对象加上 key
                 item.key = index;
             });
-        } else {
-            alert(`查看CEO竞选名单失败：${data.msg}`);
         }
     }
 
@@ -39,7 +35,7 @@ export class Ceo extends React.Component {
         selectedRowKeys: [],
     }
 
-    start = () => {
+    vote = () => {
         // this.props.voteCeo();
 
         setTimeout(() => {
@@ -69,7 +65,7 @@ export class Ceo extends React.Component {
                     竞选CEO
                 </Button>
                 <div style={{ marginBottom: 16, marginTop: 20 }}>
-                    <Button type="primary" onClick={this.start} disabled={!hasSelected}>
+                    <Button type="primary" onClick={this.vote} disabled={!hasSelected}>
                         投票
                     </Button>
                     <span style={{ marginLeft: 8 }}>
