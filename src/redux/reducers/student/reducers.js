@@ -5,6 +5,7 @@ import {
 
 const defaultState = {
     company: [],
+    companyTotal: 0,
     companyApplication: [],
 }
 
@@ -13,8 +14,8 @@ function reducer(state = defaultState, action) {
         // 查看公司
         case SHOW_COMPANIES_SUCCESS:
             return Object.assign({}, state, {
-                loading: false,
                 company: action.payload.list,
+                companyTotal:action.payload.total
             })
         // 提交公司申请
         case ADD_COMPANY_APPLICATION:

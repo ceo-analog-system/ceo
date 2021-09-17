@@ -8,6 +8,7 @@ import { voteCompany } from "../../../../api/studentApi";
 const mapStateToProps = (state) => {
     return {
         company: state.student.company,
+        companyTotal: state.student.companyTotal,
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -19,6 +20,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export class CompanyCompoent extends React.Component {    
+    state = {
+        page: '1',
+    }
+
     componentDidMount() {
         this.props.showCompany();
     }
@@ -57,14 +62,19 @@ export class CompanyCompoent extends React.Component {
             },
         ]
 
-        const { company } = this.props;
-    
+        const { company, companyTotal } = this.props;
+        const paginationProps = {
+            total: companyTotal,
+            showTotal: (companyTotal => `共${companyTotal}条`),
+            pageSize: 8,
+        }
         return (
             <div className='site-page-header-ghost-wrapper'>
                 <Table 
                     columns={columns} 
                     dataSource={company}
                     bordered
+                    pagination={paginationProps}
                 />
             </div>
         )

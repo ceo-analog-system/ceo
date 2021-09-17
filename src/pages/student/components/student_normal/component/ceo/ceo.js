@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Table } from 'antd';
-import { showCeoVoter, applyCeo } from '../../../../../../pages/student/api/studentApi';
+import { showCeoVoter, applyCeo, voteCeo } from '../../../../../../pages/student/api/studentApi';
 
 const columns = [
     {
@@ -17,63 +17,46 @@ const columns = [
             multiple: 1,
         }
     },
+    {
+        title: 'Action',
+        key: 'vote',
+        render: (_, record) => (
+            // eslint-disable-next-line
+            <a onClick={() => voteCeo(record.userName)}>为 {record.userName} 投票</a>
+        )
+    }
 ];
 
 export class Ceo extends React.Component {
-    componentDidMount() {
-        const { data } =showCeoVoter();
+    constructor(props) {
+        super(props);
+        this.state = {
+            voter: [],
+        }
+    }
+    
+    async componentDidMount() {    
+        const { data } =await showCeoVoter();
         if (data && data.flag) {
-            const voter = data.data.list;
             // eslint-disable-next-line
-            voter.map((item, index) => {   // 给列表每个对象加上 key
+            data.data.list.map((item, index) => {   // 给列表每个对象加上 key
                 item.key = index;
             });
+            this.setState({
+                voter: data.data.list,
+            })
         }
     }
 
-    state = {
-        selectedRowKeys: [],
-    }
-
-    vote = () => {
-        // this.props.voteCeo();
-
-        setTimeout(() => {
-          this.setState({
-            selectedRowKeys: [],
-          });
-        }, 1000);
-    };
-
-    onSelectChange = selectedRowKeys => {
-        this.setState({ selectedRowKeys });
-    };  
-
     render() {
-        const { voter } = this.props;
-        const { selectedRowKeys } = this.state;
-        
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-          };
-        const hasSelected = selectedRowKeys.length > 0;
-        
+        const { voter } = this.state;
+
         return (
             <div className='site-page-header-ghost-wrapper'>
-                <Button type="primary" onClick={() => applyCeo()}>
+                <Button type="primary" onClick={() => applyCeo()} style={{marginBottom: 20}}>
                     竞选CEO
                 </Button>
-                <div style={{ marginBottom: 16, marginTop: 20 }}>
-                    <Button type="primary" onClick={this.vote} disabled={!hasSelected}>
-                        投票
-                    </Button>
-                    <span style={{ marginLeft: 8 }}>
-                        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-                    </span>
-                </div>
                 <Table 
-                    rowSelection={rowSelection}
                     columns={columns} 
                     dataSource={voter}
                     bordered

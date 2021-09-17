@@ -1,8 +1,10 @@
 import { studentAxios } from './createAxios';
 import { message } from "antd";
 
-const userId = "2017211018";
-const teacherClass = "SJ00201A2031780001";
+const login_data = JSON.parse(localStorage.getItem("login_data")).data;
+const userId = login_data.userId;
+const teacherClass = login_data.teacherClass;
+// const teacherClass = "SJ00201A2031780001";
 
 // 申请CEO竞选
 export const applyCeo = () => studentAxios({
@@ -19,11 +21,11 @@ export const applyCeo = () => studentAxios({
 // 查看CEO竞选名单
 export const showCeoVoter = () => studentAxios({
     data: {
-        userId,
-        usename: "姜震",
-        teacherClass,
+        start: "1",
+        pageSize: "8",
+        teacherClass: "SJ00201A2031780001",
     },
-    url: '/student/addCeo',
+    url: '/student/voteCeoList',
 }).catch(err => {
     message.warning(`查看CEO竞选名单失败：${err}`)
 })
@@ -32,9 +34,9 @@ export const voteCeo = (votedUserId) => studentAxios({
     data: {
         voteUserId: userId,
         votedUserId,
-        teacherClass,
+        teacherClass: "SJ00201A2031780001",
     },
-    url: "/student/VoteForCeo",
+    url: "/student/voteForCeo",
 }).then(() => {
     message.success('投票成功！');
 }).catch(err => {
@@ -45,7 +47,7 @@ export const showCompany = () => studentAxios({
     data: {
         start:"1", 
         pageSize:"9",
-        teacherClass,
+        teacherClass: "SJ00201A2031780001",
     },
     url: '/student/showCompanies',
 }).catch(err => {
@@ -70,13 +72,28 @@ export const voteCompany = (companyId) => {
                 teacherClass,
             },
             url: '/student/voteForCompany',
-        }).then(() => {
-            message.success("投票成功！");
+        }).then((data) => {
+            if (data.data.flag) {
+                message.success("投票成功！");
+            } else {
+                message.error(data.data.msg)
+            }
         }).catch(err => {
             message.error(`投票失败：${err}`);
         }) 
     }
 }
+// 查看公司其他成员
+export const showCompanyMembers = () => studentAxios({
+    data: {
+        start:"1",
+        pageSize:"9",
+        userId,
+    },
+    url: '/student/showCompanyMembers',
+}).catch(err => {
+    message.warning(`查看公司成员失败：${err}`);
+})
 // 为公司其他成员投票
 export const scoreMember = (scoredUserId, score) => studentAxios({
     data: {
