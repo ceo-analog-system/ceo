@@ -1,96 +1,37 @@
 import React from 'react';
 // eslint-disable-next-line
-import { message, Table, InputNumber, Button, Modal, Form, Input } from "antd";
-import { showCompanyMembers } from '../../../../api/studentApi';
+import { message, Table, InputNumber, Button, } from "antd";
+import { scoreMember, showCompanyMembers } from '../../../../api/studentApi';
 
-const columns = [
-        {
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: '学号',
-            dataIndex: 'id',
-            key: 'id',
-        },
-        {
-            title: '公司名',
-            dataIndex: 'companyName',
-            key: 'companyName',
-        },
-        {
-            title: '专业',
-            dataIndex: 'major',
-            key: 'major',
-        },
-        {
-            title: '分数',
-            dataIndex: 'score',
-            key: 'score',
-        },
-        // {
-        //     title: '操作',
-        //     key: 'action',
-        //     render: (_, record) => {
-        //         <Button
-        //             type="primary"
-        //             onClick={() => this.setState({visible: true})}
-        //         >
-        //             打分
-        //         </Button>
-                
-        //     }
-        // }
-    ];
+const mockData = [
+    {
+        name: '测试一',
+        id: '2017211016',
+        position: '暂无',
+        major: '生物',
+        score: '70',
+    },
+    {
+        name: '测试二',
+        id: '2017211017',
+        position: '暂无',
+        major: '物',
+        score: '60',
+    }
+]
 
 export class Members extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             members: [],
-            // visible: false,
         }
     }
 
-    // form = ({ visible, onCreate, onCancel }) => {
-    //     formRef = React.createRef();
-    //     return (
-    //         <Modal
-    //             visible={visible}
-    //             title="为公司其他成员打分"
-    //             okText="Confirm"
-    //             cancelText="Cancel"
-    //             onCancel={onCancel}
-    //             onOk={() => {
-    //                 form
-    //                     .validateFields()
-    //                     .then((values) => {
-    //                         form.resetFields();
-    //                         onCreate(values);
-    //                     })
-    //                     .catch((info) => {
-    //                         message.error("Failed:", info);
-    //                     });
-    //             }}
-    //         >
-    //             <Form.Item
-    //                 name="Score："
-    //                 label="score"
-    //                 rules={[
-    //                     {
-    //                         required: true,
-    //                         message: '请输入分数'
-    //                     },{
-    //                         min: 0, max: 3, message: '请输入0~100数字！', validateTrigger: 'blur' 
-    //                     }
-    //                 ]}
-    //             >
-    //                 <Input placeholder="请输入0~100数字"/>
-    //             </Form.Item>
-    //         </Modal>
-    //     )
-    // }
+    rate = (scoredUserId, score) => {
+        scoreMember(scoredUserId, score)
+    }
+
     async componentDidMount() {
         const { data } = await showCompanyMembers();
         
@@ -109,11 +50,54 @@ export class Members extends React.Component {
 
     render() {
         const { members } = this.state;
+
+        const columns = [
+            {
+                title: '姓名',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
+                title: '学号',
+                dataIndex: 'id',
+                key: 'id',
+            },
+            {
+                title: '职位',
+                dataIndex: 'position',
+                key: 'position',
+            },
+            {
+                title: '专业',
+                dataIndex: 'major',
+                key: 'major',
+            },
+            {
+                title: '分数',
+                dataIndex: 'score',
+                key: 'score',
+            },
+            {
+                title: '操作',
+                key: 'action',
+                render: (_, record) => (
+                    <>
+                        <InputNumber min={1} max={100} controls={false} />
+                        <Button 
+                            type="primary"
+                            onClick={() => this.rate(record.id, record.score)}>
+                            打分
+                        </Button>
+                    </>
+                )
+            }
+        ];
+        
         return (
             <div className='site-page-header-ghost-wrapper'>
                 <Table 
                     columns={columns}
-                    dataSource={members}  
+                    dataSource={mockData}  
                 />
             </div>
         )

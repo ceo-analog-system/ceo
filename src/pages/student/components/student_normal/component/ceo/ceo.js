@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Table } from 'antd';
+import { Button, InputNumber, Table } from 'antd';
 import { showCeoVoter, applyCeo, voteCeo } from '../../../../../../pages/student/api/studentApi';
+import Form from 'antd/lib/form/Form';
 
 const columns = [
     {
@@ -34,7 +35,7 @@ export class Ceo extends React.Component {
             voter: [],
         }
     }
-    
+
     async componentDidMount() {    
         const { data } =await showCeoVoter();
         if (data && data.flag) {
@@ -50,17 +51,17 @@ export class Ceo extends React.Component {
 
     render() {
         const { voter } = this.state;
-
+        
         return (
             <div className='site-page-header-ghost-wrapper'>
                 <Button type="primary" onClick={() => applyCeo()} style={{marginBottom: 20}}>
                     竞选CEO
                 </Button>
-                <Table 
-                    columns={columns} 
-                    dataSource={voter}
-                    bordered
-                />
+                    <Table 
+                        columns={columns} 
+                        dataSource={voter}
+                        bordered
+                    />
             </div>
         )
     }

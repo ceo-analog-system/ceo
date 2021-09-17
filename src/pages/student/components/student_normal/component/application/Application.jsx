@@ -103,7 +103,13 @@ export class ApplicationComponent extends React.Component {
                     </TabPane>
                     <TabPane tab="申请加入公司" key="1">
                         <div>
-                            <div style={{marginBottom: 20}}>
+                            <Table 
+                                columns={companyColumns} 
+                                dataSource={company}
+                                pagination={paginationProps}
+                                bordered
+                            />
+                            <div style={{marginTop: -50, marginLeft: 60}}>
                                 <Popconfirm
                                     title="确定提交申请吗？"
                                     onConfirm={() => this.apply()}
@@ -111,12 +117,7 @@ export class ApplicationComponent extends React.Component {
                                     <Button type="primary" size="large">提交所有申请</Button>
                                 </Popconfirm>
                             </div>
-                            <Table 
-                                columns={companyColumns} 
-                                dataSource={company}
-                                pagination={paginationProps}
-                                bordered
-                            />
+                            
                         </div>
                     </TabPane>
                 </Tabs>
