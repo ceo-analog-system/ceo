@@ -26,10 +26,13 @@ export const getSelectedClassAction=(selectedClass)=>{
 export const getClassStudentsAction=(classNum)=>{
     return async(dispatch)=>{
         const result= await getClassStudents(classNum);
-        dispatch({
-            type:GET_SELECT_STUDENTS,
-            classStudents:result.data.list
-        })
+        if(result.flag===true){
+            dispatch({
+                type:GET_SELECT_STUDENTS,
+                classStudents:result.data.list
+            })
+        }
+
     }
 }
 //请求选择班级的公司
@@ -47,7 +50,6 @@ export const getClassCompanyAction=(classNum)=>{
 export const getChangeCompanyAction=(classNum)=>{
     return async(dispatch)=>{
         const result =await getChangeCompany(classNum)
-        console.log(result);
         dispatch({
             type:GET_CHANGE_COMPANY,
             changeCompany:result.data
