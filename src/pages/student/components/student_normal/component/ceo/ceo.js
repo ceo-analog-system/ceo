@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Table } from 'antd';
-import { connect } from 'react-redux';
-import { showCeoVoterActionCreator, applyCeoActionCreator } from '../../../../../../redux/actions/student/actionCreators';
+import { showCeoVoter, applyCeo } from '../../../../../../pages/student/api/studentApi';
 
 const columns = [
     {
@@ -13,70 +12,45 @@ const columns = [
         title: '票数',
         dataIndex: 'count',
         key: 'count',
+        sorter: {
+            compare: (a, b) => a.count - b.count,
+            multiple: 1,
+        }
     },
-    {
-        title: '分数',
-        dataIndex: 'score',
-        key: 'score',
-    },
-    // {
-    //     title: '操作',
-    //     dataIndex: 'do',
-    //     key: 'do',
-    // },
 ];
 
-// const { voteUserId } = localStorage.getItem("login_data")
-const mapStateToProps = (state) => {
-    return {
-        loading: state.student.loading,
-        error: state.student.error,
-        voter: state.student.voter, // CEO竞选 名单
-        applyRes: state.student.applyResult,    // 申请CEO竞选 结果
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        showCeoVoter: () => {
-            dispatch(showCeoVoterActionCreator());
-        },
-        applyCeo: () => {
-            dispatch(applyCeoActionCreator());
-        }, 
-    }
-}
-
-class CeoComponent extends React.Component {
+export class Ceo extends React.Component {
     componentDidMount() {
-        console.log('componentDidMount')
-        this.props.showCeoVoter();
+        const { data } =showCeoVoter();
+        if (data && data.flag) {
+            const voter = data.data.list;
+            // eslint-disable-next-line
+            voter.map((item, index) => {   // 给列表每个对象加上 key
+                item.key = index;
+            });
+        }
     }
+
     state = {
         selectedRowKeys: [],
     }
 
-    start = () => {
-        // ajax request after empty completing
+    vote = () => {
+        // this.props.voteCeo();
+
         setTimeout(() => {
           this.setState({
             selectedRowKeys: [],
           });
         }, 1000);
-        alert(this.props.error);
     };
 
     onSelectChange = selectedRowKeys => {
         this.setState({ selectedRowKeys });
-    };
-    
-
-    beCeo = () => {
-        this.props.applyCeo();
-        alert(this.props.applyResult);
-    };
+    };  
 
     render() {
-        const {voter } = this.props;
+        const { voter } = this.props;
         const { selectedRowKeys } = this.state;
         
         const rowSelection = {
@@ -87,11 +61,11 @@ class CeoComponent extends React.Component {
         
         return (
             <div className='site-page-header-ghost-wrapper'>
-                <Button type="primary" onClick={this.beCeo}>
+                <Button type="primary" onClick={() => applyCeo()}>
                     竞选CEO
                 </Button>
                 <div style={{ marginBottom: 16, marginTop: 20 }}>
-                    <Button type="primary" onClick={this.start} disabled={!hasSelected}>
+                    <Button type="primary" onClick={this.vote} disabled={!hasSelected}>
                         投票
                     </Button>
                     <span style={{ marginLeft: 8 }}>
@@ -108,4 +82,3 @@ class CeoComponent extends React.Component {
         )
     }
 }
-export const Ceo = connect(mapStateToProps, mapDispatchToProps)(CeoComponent)

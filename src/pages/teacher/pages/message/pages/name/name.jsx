@@ -45,12 +45,12 @@ import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/
     }
     componentDidMount(){
         this.initColums()
-        console.log(this.props.selectedClass);
+        // console.log(this.props.selectedClass);
         this.props.getChangeCompany(this.props.selectedClass)
     }
     render() {
         const dataSource=this.props.changeCompany.filter(item=>{
-            return item.changeName!==null
+            return item.changeType===null
         })
         return (
             <Table dataSource={dataSource} columns={this.columns} rowKey="id"
@@ -62,9 +62,10 @@ import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/
     }
 }
 const mapStateToProps=(state)=>{
+    const {reducer:{changeCompany,selectedClass}} = state
     return{
-        changeCompany:state.changeCompany,
-        selectedClass:state.selectedClass
+        changeCompany:changeCompany,
+        selectedClass:selectedClass
     }
 }
 const mapDispatchToProps=(dispatch)=>{

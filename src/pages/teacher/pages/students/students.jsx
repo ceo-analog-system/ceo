@@ -2,18 +2,24 @@ import React, { Component } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import { Card,Table} from 'antd'
 import axios from 'axios'
+// import socketConnect from '../../../../api/websocket'
 // import localStorage_login from '../../../../guard/localStorage'
 import { connect } from 'react-redux'
 import { getClassStudentsAction } from '../../../../redux/actions/teacher/actionCreators'
 import {DEFAULT_PAGE_SIZE} from '../../../../redux/constant'
-axios.defaults.headers["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiJ0aWFuc2giLCJleHAiOjE2MjkxOTAzNzB9.h4ss5YPliHm1TBm86eocvNCrWLe-CZKHu19r60WZ1hM"
-const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
-ws.onopen = async function () {
-    console.log("连接成功");
-}
-ws.onmessage = function (e) {
-    // console.log("返回数据",e);
-}
+axios.defaults.headers["token"] = localStorage.getItem('login_token')
+// let func=(values)=>{
+//     console.log(values+'123123')
+// }
+// const ws= new socketConnect('ws://120.79.147.32:8089/connect/userId=2017211024',func,'students')
+
+// const ws = new WebSocket('ws://120.79.147.32:8089/connect/userId=2017211024')
+// ws.onopen = async function () {
+//     console.log("连接成功");
+// }
+// ws.onmessage = function (e) {
+//     // console.log("返回数据",e);
+// }
 class Students extends Component {
     state = {
         openClassVisible: true,
@@ -31,6 +37,10 @@ class Students extends Component {
     // }
     componentDidMount() {
         this.props.getSelectedStudents(this.props.selectedClass)
+        // let func=(values)=>{
+        //     console.log(values)
+        // }
+        // ws.init()
 
     }
   
@@ -79,13 +89,13 @@ class Students extends Component {
         ]
         return (
             <Card title={title} extra={extra} style={{ width: '100%', height: '100%' }}>
-                    <Table 
-                        rowKey="id"
-                        columns={columns} 
-                        dataSource={this.props.classStudents} 
-                        pagination={{defaultPageSize: DEFAULT_PAGE_SIZE, showQuickJumper: true}}
-                        
-                    ></Table>
+                    <Table
+    rowKey="id"
+    columns={columns}
+    dataSource={this.props.classStudents}
+    pagination={{defaultPageSize: DEFAULT_PAGE_SIZE, showQuickJumper: true}}
+
+    />
                 {/* <table id="table-to-xls" style={{width:'100%',height:'100%'}}>
                     <Table 
                     // rowke="id"
@@ -103,10 +113,16 @@ class Students extends Component {
     }
 }
 const mapStateToProps = (state) => {
+    const {reducer:{classStudents,selectedClass}}=state
     return {
+<<<<<<< HEAD
         classStudents: state.classStudents,
         selectedClass:state.selectedClass,
         applicationData: state.applicationCeo
+=======
+        classStudents: classStudents,
+        selectedClass:selectedClass
+>>>>>>> 615063096c5203df501eb6f357bbbe50b892b62d
     }
 }
 const mapDispatchToProps = (dispatch) => {
