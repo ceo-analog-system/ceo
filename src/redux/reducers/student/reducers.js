@@ -1,12 +1,10 @@
 import { 
     SHOW_COMPANIES_SUCCESS,
-    ADD_COMPANY_APPLICATION,
 } from '../../constant';
 
 const defaultState = {
     company: [],
     companyTotal: 0,
-    companyApplication: [],
 }
 
 function reducer(state = defaultState, action) {
@@ -17,9 +15,6 @@ function reducer(state = defaultState, action) {
                 company: action.payload.list,
                 companyTotal:action.payload.total
             })
-        // 提交公司申请
-        case ADD_COMPANY_APPLICATION:
-            return { ...state, companyApplication: action.payload }
         default:
             return state;
     }

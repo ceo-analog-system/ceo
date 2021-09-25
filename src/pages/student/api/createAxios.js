@@ -22,7 +22,7 @@ export const studentAxios = axios.create({
     timeout:2000,   
     method: 'post',
     headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMxOTQyODQ1fQ.rdLDAEX7m3CXZfLRfNzGqJTqGNt8ms0ai5L14A2_Zpc'
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMyNjUwMzgxfQ.f3m0mk8kMvZu431jkOdqY25tsJPhtJusqkdyhbvFLMI'
     }
 })
 

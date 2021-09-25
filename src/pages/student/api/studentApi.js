@@ -123,3 +123,12 @@ export const scoreMember = (scoredUserId, score) => studentAxios({
 }).catch((err) => {
     message.error(`打分失败：${err}`);
 })
+// 公司申请状态
+export const showApplication = () => studentAxios({
+    data: {
+        userId:"2017211037",
+    },
+    url: 'student/showApplicationState',
+}).catch(err => {
+    message.warning(`查看公司申请失败：${err}`);
+})

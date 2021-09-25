@@ -1,6 +1,5 @@
 import { 
     SHOW_COMPANIES_SUCCESS,  
-    ADD_COMPANY_APPLICATION,
 } from '../../constant';
 import { showCompany } from '../../../pages/student/api/studentApi';
 import { message } from 'antd';
@@ -22,11 +21,3 @@ export const showCompaniesActionCreator = () => async (dispatch, getState) => {
         message.warning(data.msg)
     }
 };
-
-// 保存公司申请
-export const  addCompanyApplicationActionCreator = (application) => {
-    return {
-        type: ADD_COMPANY_APPLICATION,
-        payload: application,
-    }
-}

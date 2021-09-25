@@ -1,8 +1,8 @@
 import { Tabs, Table, Button, Popconfirm, message } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import { showCompaniesActionCreator, addCompanyApplicationActionCreator } from '../../../../../../redux/actions/student/actionCreators';
-import { applyJoinCompany } from "../../../../api/studentApi";
+import { showCompaniesActionCreator, } from '../../../../../../redux/actions/student/actionCreators';
+import { applyJoinCompany, showApplication } from "../../../../api/studentApi";
 
 const { TabPane } = Tabs;
 
@@ -10,7 +10,6 @@ const mapStateToProps = (state) => {
     return {
         company: state.student.company,
         companyTotal: state.student.companyTotal,
-        companyApplication: state.student.companyApplication,
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -18,9 +17,6 @@ const mapDispatchToProps = (dispatch) => {
         showCompany: () => {  
             dispatch(showCompaniesActionCreator());
         },
-        addCompanyApplication: (application) => {
-            dispatch(addCompanyApplicationActionCreator(application));
-        }
     }
 }
 
@@ -30,9 +26,10 @@ export class ApplicationComponent extends React.Component {
         level: 1,
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.showCompany();
-
+        const { data } = await showApplication() 
+        this.setState({applicationData: data.data});
     }
     // 增加志愿填报
     addApplication = (key) => { 
@@ -41,7 +38,7 @@ export class ApplicationComponent extends React.Component {
         this.props.company[key].userId = login_data.userId;
         this.props.company[key].level = this.state.level;   // 志愿顺序
         this.state.applicationData.push(this.props.company[key]);
-        this.setState({level: ++this.state.level})
+        this.setState({level: this.state.level+1})
     };
     // 提交所有志愿
     apply = () => {
@@ -54,7 +51,7 @@ export class ApplicationComponent extends React.Component {
     } 
 
     render() {
-        const { company, companyApplication, companyTotal } = this.props;
+        const { company, companyTotal } = this.props;
 
         const paginationProps = {
             total: companyTotal,
@@ -83,21 +80,36 @@ export class ApplicationComponent extends React.Component {
                 render: (_, record) => (
                     <Popconfirm 
                         title="确认"
-                        onConfirm={() => this.addApplication5(record.key)}    
+                        onConfirm={() => this.addApplication(record.key)}    
                     >
-                        <a>确认为第 {this.state.level} 志愿</a>
+                        { /* eslint-disable-next-line */ }
+                        <a href="#">确认为第 {this.state.level} 志愿</a>
                     </Popconfirm>
                 )
             }
-        ]
+        ];
+        const applicationColumns = [{
+                title: '公司名称',
+                dataIndex: 'companyName',
+                key: 'companyName',
+            },{
+                title: '志愿等级',
+                dataIndex: 'level',
+                key: 'level',
+            },{
+                title: '审核状态（0代表待审核，1代表申请通过，2拒绝，3自动拒绝）',
+                dataIndex: 'state',
+                key: 'state',
+            }
+        ];
         
         return (            
             <div className='site-page-header-ghost-wrapper'>
-                <Tabs defaultActiveKey="1">
+                <Tabs defaultActiveKey="2">
                 <TabPane tab="我的申请" key="2">
                     <Table
-                        columns={companyColumns}
-                        dataSource={companyApplication}
+                        columns={applicationColumns}
+                        dataSource={this.state.applicationData}
                         bordered
                     />
                     </TabPane>
