@@ -26,14 +26,9 @@ const enhancer = composeEnhancers(
 
 const allReducers = combineReducers({
   student:  studentReducer,
-<<<<<<< HEAD
   reducer: reducer,   // ?
   
   applicationCeo:applicationCeoReducer,
-=======
-  reducer: reducer,   
-  application_ceo,
->>>>>>> 615063096c5203df501eb6f357bbbe50b892b62d
 })
 
 export default createStore(allReducers,enhancer)
