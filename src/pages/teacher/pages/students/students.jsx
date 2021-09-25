@@ -105,7 +105,8 @@ class Students extends Component {
 const mapStateToProps = (state) => {
     return {
         classStudents: state.classStudents,
-        selectedClass:state.selectedClass
+        selectedClass:state.selectedClass,
+        applicationData: state.applicationCeo
     }
 }
 const mapDispatchToProps = (dispatch) => {

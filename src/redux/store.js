@@ -3,7 +3,7 @@ import {createStore,applyMiddleware,compose, combineReducers} from 'redux'
 import reducer from './reducers/teacher/reducers'
 import thunk from 'redux-thunk'
 //引入为Application_ceo组件服务的reducer
-import application_ceo from './reducers/ceo/Application_ceo';
+import applicationCeoReducer from './reducers/ceo/Application_ceo';
 
 //穆达超
 const composeEnhancers =
@@ -27,7 +27,8 @@ const enhancer = composeEnhancers(
 const allReducers = combineReducers({
   student:  studentReducer,
   reducer: reducer,   // ?
-  application_ceo,
+  
+  applicationCeo:applicationCeoReducer,
 })
 
 export default createStore(allReducers,enhancer)
