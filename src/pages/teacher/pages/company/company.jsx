@@ -3,19 +3,36 @@ import React, { Component } from 'react'
 import {Button, Card, Table, Badge} from 'antd'
 import {DownloadOutlined} from '@ant-design/icons'
 import { connect } from 'react-redux'
-import {getClassCompanyAction} from '../../../../redux/actions/teacher/actionCreators'
+import {getClassCompanyAction, getUnCompanyStudentsAction} from '../../../../redux/actions/teacher/actionCreators'
 import FixType from './fixType'
+import AddStudents from "./addStudents";
  class Company extends Component {
     state={
-        isTypeVisible:false
+        isTypeVisible:false,
+        isAddVisible:false,
+        companyId:'',
+        getSelectedClass:''
     }
-     fixType=()=>{
-        this.setState({isTypeVisible:true})
+     fixType=(record)=>{
+        this.setState({
+            isTypeVisible:true,
+            companyId:record.companyId,
+            getSelectedClass:record.teacherClass
+        })
      }
-
+     addStudents=()=>{
+        this.setState({
+            isAddVisible:true
+        })
+        this.props.getUnCompanyStudents(this.props.selectedClass)
+     }
      //取消修改类型的对话框
      isTypeUnVisible=()=>{
-         this.setState({isTypeVisible:false})
+        this.setState({isTypeVisible:false})
+     }
+     //取消添加学生的对话框
+     isAddUnVisible=()=>{
+        this.setState({isAddVisible:false})
      }
     componentDidMount(){
       this.props.getSelectedCompany(this.props.selectedClass)
@@ -75,7 +92,7 @@ import FixType from './fixType'
                       return (
                         <div >
                             <span>{record.typeName}</span>
-                            <Button type={"primary"} onClick={that.fixType}>修改类型</Button>
+                            <Button type={"primary"} onClick={()=>that.fixType(record)}>修改类型</Button>
                         </div>
                       )
                   }
@@ -93,7 +110,6 @@ import FixType from './fixType'
                   dataIndex: 'scoreTeacher',
                   width: 150,
                   render:(_,record)=>{
-                      console.log(record)
                       return (
                           <div>
                               <span>{record.scoreTeacher}</span>&nbsp;&nbsp;
@@ -106,7 +122,7 @@ import FixType from './fixType'
                   title: '添加学生',
                   render:(_,record)=>{
                       return (
-                          <Button type={"primary"}>添加</Button>
+                          <Button type={"primary"} onClick={that.addStudents}>添加</Button>
                       )
                   }
               },
@@ -134,7 +150,7 @@ import FixType from './fixType'
           
             return (
               <Table
-              rowKey="companyId"
+                rowKey="companyId"
                 className="components-table-demo-nested"
                 columns={columns}
                 expandable={{ expandedRowRender }}
@@ -149,6 +165,13 @@ import FixType from './fixType'
                 <FixType
                     isTypeVisible={this.state.isTypeVisible}
                     isTypeUnVisible={this.isTypeUnVisible}
+                    companyId={this.state.companyId}
+                    getSelectedClass={this.state.getSelectedClass}
+                />
+                <AddStudents
+                    isAddVisible={this.state.isAddVisible}
+                    isAddUnVisible={this.isAddUnVisible}
+
                 />
             </Card>
         )
@@ -165,6 +188,9 @@ const mapDispatchToProps=(dispatch)=>{
   return {
     getSelectedCompany(classNum){
       dispatch(getClassCompanyAction(classNum))
+    },
+    getUnCompanyStudents(classNum){
+        dispatch(getUnCompanyStudentsAction(classNum))
     }
   }
 }

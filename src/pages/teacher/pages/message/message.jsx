@@ -15,9 +15,9 @@ export default class Message extends Component {
         return (
             <Card title={title} style={{width:'100%',height:'100%'}}>
                 <Switch>
-                    <Route path='/user_teacher/message/Name' component={Name}></Route>
-                    <Route path='/user_teacher/message/Type' component={Type}></Route>
-                    <Redirect to='/user_teacher/message/Name'></Redirect>
+                    <Route path='/user_teacher/message/Name' component={Name}/>
+                    <Route path='/user_teacher/message/Type' component={Type}/>
+                    <Redirect to='/user_teacher/message/Name'/>
                 </Switch>
             </Card>
         )

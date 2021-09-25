@@ -190,7 +190,7 @@ componentDidCatch(error, errorInfo) {
             <p>您确定要退出吗？</p>
           </Modal>
           {this.state.hasError?<h1>网络出错,请稍后再试</h1>:[
-            <Content className='teacher-content' >
+            <Content className='teacher-content' key={"content"}>
               <Switch>
                 <Route path="/user_teacher/students" component={Students} name="123456"/>
                 <Route path="/user_teacher/company" component={Company}/>
@@ -203,18 +203,18 @@ componentDidCatch(error, errorInfo) {
             </Switch>
           </Content>
           ]}
-          {/* <Content className='teacher-content' >
-          <Switch>
-            <Route path="/user_teacher/students" component={Students} name="123456"/>
-            <Route path="/user_teacher/company" component={Company}/>
-            <Route path="/user_teacher/vote" component={Vote}/>
-            <Route path="/user_teacher/message" component={Message}/>
-            <Route path="/user_teacher/sign" component={Sign}/>
-            <Route path="/user_teacher/modify" component={Modify}/>
-            <Route path="/user_teacher/check" component={Check}/>
-      
-            </Switch>
-          </Content> */}
+        {/*<Content className='teacher-content' >*/}
+        {/*  <Switch>*/}
+        {/*    <Route path="/user_teacher/students" component={Students} name="123456"/>*/}
+        {/*    <Route path="/user_teacher/company" component={Company}/>*/}
+        {/*    <Route path="/user_teacher/vote" component={Vote}/>*/}
+        {/*    <Route path="/user_teacher/message" component={Message}/>*/}
+        {/*    <Route path="/user_teacher/sign" component={Sign}/>*/}
+        {/*    <Route path="/user_teacher/modify" component={Modify}/>*/}
+        {/*    <Route path="/user_teacher/check" component={Check}/>*/}
+
+        {/*    </Switch>*/}
+        {/*  </Content> */}
           <Footer id="teacher-footer">
             版权所有 勤奋蜂&极客工作室
           </Footer>
