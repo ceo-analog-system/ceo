@@ -6,8 +6,6 @@ import 'antd/dist/antd.css'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-
-
 const columns = [
     {
       title: '公司名',
@@ -127,7 +125,6 @@ const columns = [
                 onCancel={this.handleCancel}
                 okText="创建"
                 cancelText="取消"
-
               >
               <Input placeholder='公司名' style={{marginTop:'20px'} }></Input>
               <Radio.Group options={options} onChange={this.changeCompany}  value={companyValue} optionType='button' buttonStyle='solid' >
@@ -148,10 +145,6 @@ const columns = [
                     <div>
                         <span className='Student-ceo_application'>成员</span>
                         <Empty style={{marginTop:'10px'}}></Empty>
-                    </div>
-                    <div>
-                        <span className='Student-ceo_application'>所有公司</span>
-                        <Table columns={columns} dataSource={data} style={{margin:'15px'}}/>
                     </div>
                 </div>
             </div>    

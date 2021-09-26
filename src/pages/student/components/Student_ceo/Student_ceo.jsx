@@ -10,10 +10,12 @@ import {
   FileOutlined,
   //TeamOutlined,
   //UserOutlined,
-  PoweroffOutlined
+  PoweroffOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/All.css"
+import { AllCompany } from './AllCompany_ceo';
 const { Sider } = Layout;
 
 
@@ -61,10 +63,15 @@ const { Sider } = Layout;
                   申请
                 </Link>
               </Menu.Item>
-              <Menu.Item key="2" icon={<DesktopOutlined />}>
+              <Menu.Item key="2" icon={<TeamOutlined />}>
               <Link to="/user_student/company_ceo">
-                  公司
+                  我的公司
                 </Link>
+              </Menu.Item>
+              <Menu.Item key="4" icon={<DesktopOutlined />}>
+                    <Link to="/user_student/allCompany_ceo">
+                        所有公司
+                    </Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<FileOutlined />}>
               <Link to="/user_student/files_ceo">
@@ -86,6 +93,7 @@ const { Sider } = Layout;
               <Route path="/user_student/application_ceo" component={Application} />
               <Route path="/user_student/company_ceo" component={Company}/>
               <Route path="/user_student/files_ceo" component={Files}/>
+              <Route path="/user_student/allCompany_ceo" component={AllCompany} />
               <Redirect to="/user_student/application_ceo"/>
             </section>
             <footer id="footer">
