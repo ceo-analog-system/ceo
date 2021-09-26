@@ -115,14 +115,8 @@ class Students extends Component {
 const mapStateToProps = (state) => {
     const {reducer:{classStudents,selectedClass}}=state
     return {
-<<<<<<< HEAD
-        classStudents: state.classStudents,
-        selectedClass:state.selectedClass,
-        applicationData: state.applicationCeo
-=======
         classStudents: classStudents,
         selectedClass:selectedClass
->>>>>>> 615063096c5203df501eb6f357bbbe50b892b62d
     }
 }
 const mapDispatchToProps = (dispatch) => {

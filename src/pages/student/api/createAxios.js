@@ -3,6 +3,10 @@ import axios from "axios"
  export const ceoAxios = axios.create({
     baseURL:'http://localhost:3000/api/ceo/',
     timeout:2000,
+    method: 'post',
+    headers: {
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyNzA1MTI5fQ.nk34lvomf2yIb04KtYawmABEohlNIJQ8QWLmUW6Bg4g'
+    }
 })
 
 ceoAxios.interceptors.request.use(
@@ -16,6 +20,22 @@ ceoAxios.interceptors.request.use(
         return Promise.reject(error)
     }
 )
+
+ceoAxios.interceptors.response.use(response => {
+    console.log("response.data: ", response.data)
+    switch (response.data.message) {
+        case "资源访问受限!请重新登录！":
+            message.warning("请提供有效Token！");
+            break;
+        default:
+            break;
+    }
+    return response;
+}, err => {
+    console.log(err.response)
+    return Promise.reject(err.response.statusText)
+})
+
 
 export const studentAxios = axios.create({
     baseURL:'http://localhost:3000/api/',
