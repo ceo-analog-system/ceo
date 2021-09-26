@@ -2,8 +2,23 @@ import React, { Component } from 'react'
 import {Table,Button} from 'antd'
 import { connect } from 'react-redux'
 import {DEFAULT_PAGE_SIZE} from '../../../../../../redux/constant'
-import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/actionCreators'
+import {
+    agreeChangeTypeAction,
+    getChangeCompanyAction,
+    refuseeChangeTypeAction
+} from '../../../../../../redux/actions/teacher/actionCreators'
  class Type extends Component {
+     agreeChange=(record)=>{
+        //  console.log(record)
+
+         const {changeType,company:{companyId,teacherClass,typeCode}}=record
+         this.props.agreeChangeType(companyId,teacherClass,changeType,typeCode)
+     }
+     refusseChange=(record)=>{
+        //  console.log(record)
+         const {company:{companyId}}=record
+         this.props.refusseChangeType(companyId)
+     }
     initColums=()=>{
         this.columns=[
             {
@@ -35,10 +50,10 @@ import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/
                 dataIndex:'',
                 key:'5',
                 align:'center',
-                render:()=>(
+                render:(_,record)=>(
                     <span>
-                        <Button type="primary">同意</Button>&nbsp;&nbsp;
-                        <Button type="primary">拒绝</Button>
+                        <Button type="primary" onClick={()=>this.agreeChange(record)}>同意</Button>&nbsp;&nbsp;
+                        <Button type="primary" onClick={()=>this.refusseChange(record)}>拒绝</Button>
                     </span>
                 )
             },
@@ -63,15 +78,22 @@ import { getChangeCompanyAction } from '../../../../../../redux/actions/teacher/
     }
 }
 const mapStateToProps=(state)=>{
+    const {reducer:{changeCompany,selectedClass}} =state
     return{
-        changeCompany:state.changeCompany,
-        selectedClass:state.selectedClass
+        changeCompany:changeCompany,
+        selectedClass:selectedClass
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return{
         getChangeCompany(classNum){
             dispatch(getChangeCompanyAction(classNum))
+        },
+        agreeChangeType(companyId,teacherClass,changeType,TypeCode){
+            dispatch(agreeChangeTypeAction(companyId,teacherClass,changeType,TypeCode))
+        },
+        refusseChangeType(companyId){
+            dispatch(refuseeChangeTypeAction(companyId))
         }
     }
 }

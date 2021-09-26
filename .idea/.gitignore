@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+# 默认忽略的文件
+/shelf/
+/workspace.xml
+# 基于编辑器的 HTTP 客户端请求
+/httpRequests/
+=======
+# 默认忽略的文件
+/shelf/
+/workspace.xml
+# 基于编辑器的 HTTP 客户端请求
+/httpRequests/
+>>>>>>> 615063096c5203df501eb6f357bbbe50b892b62d

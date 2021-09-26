@@ -23,7 +23,7 @@ const columns = [
     {
       title: '状态',
       dataIndex: 'state',
-      key: 'staus',
+      key: 'status',
     },
     {
       title: '班级',
@@ -42,51 +42,51 @@ const columns = [
     },
   ];
   
-  const data = [
-      {
-          "id": 1,
-          "companyId": 7,
-          "userId": "2017211039",
-          "companyName": "22227",
-          "teacherClass": null,
-          "createTime": "2020-12-31",
-          "state": null,
-          "student": {
-              "id": 347,
-              "userId": "2017211039",
-              "userName": "李金晨",
-              "academy": "经济管理学院",
-              "clazz": null,
-              "discipline": "信息管理与信息系统",
-              "teacherClass": null,
-              "score": 0.0,
-              "companyId": 0,
-              "position": null,
-              "password": "6D257F9D3882DB6553E1A929746C7D38",
-              "count": null,
-              "voteList": null,
-              "hired": false,
-              "ceoVote": false,
-              "ceoVoted": false,
-              "companyVoted": false
-          }
-      }
-    // {
+  // const data = [
+  //     {
+  //         "id": 1,
+  //         "companyId": 7,
+  //         "userId": "2017211039",
+  //         "companyName": "22227",
+  //         "teacherClass": null,
+  //         "createTime": "2020-12-31",
+  //         "state": null,
+  //         "student": {
+  //             "id": 347,
+  //             "userId": "2017211039",
+  //             "userName": "李金晨",
+  //             "academy": "经济管理学院",
+  //             "clazz": null,
+  //             "discipline": "信息管理与信息系统",
+  //             "teacherClass": null,
+  //             "score": 0.0,
+  //             "companyId": 0,
+  //             "position": null,
+  //             "password": "6D257F9D3882DB6553E1A929746C7D38",
+  //             "count": null,
+  //             "voteList": null,
+  //             "hired": false,
+  //             "ceoVote": false,
+  //             "ceoVoted": false,
+  //             "companyVoted": false
+  //         }
+  //     }
+  //   // {
     //   key: '1',
     //   name: 'John Brown',
     //   academy: '经济管理学院',
-    //   staus: {agree}?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
+    //   status: {agree}?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
     //   class: ['nice', 'developer'],
     // },
     // {
     //   key: '2',
     //   name: 'Jim Green',
     //   academy: '经济管理学院',
-    //   staus: {agree}?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
+    //   status: {agree}?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
     //   class: ['loser'],
     // },
    
-  ];
+  // ];
  class Application extends Component {
     state={
       
@@ -98,14 +98,15 @@ const columns = [
         "pageSize":'7',
         "userId":JSON.parse(localStorage.getItem('login_data')).data.userId
       }).then((res) => {
-        console.log(res.data.data.list);
+        console.log(res);
+        // console.log(res.data.data.list);
         // const list =res.data.data.list
         // list.map((value,index) => {
         //   return data.push({
         //     key: value[index].id,
         //     name:value[index].student.userName ,
         //     academy: value[index].student.academy,
-        //     staus: value[index].this.state?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
+        //     status: value[index].this.state?<Tag color="red">未同意</Tag>:<Tag color="#2db7f5">已同意</Tag>,
         //     class: 123,
         //   })
         // })
@@ -118,18 +119,20 @@ const columns = [
             <div className="Student-ceo_content">
                 <div style={{marginTop:"20px"}}>
                     <div className='Student-ceo_application'>所有申请</div>
-                    <Table columns={columns} dataSource={this.props.application_ceo} style={{margin:'15px'}}/>
+                    <Table columns={columns} dataSource={this.props.applicationData} style={{margin:'15px'}}/>
                 </div>
             </div>
         )
     }
 }
-
-export default connect(
-  state =>({
-    applicationData: state.application_ceo
-  }),
-  {
-    checkApplication
+const mapStateToProps =
+   state => ({
+    applicationData: state.applicationCeo
+  })
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkApplication:(number)=>{dispatch(checkApplication(number))}
   }
-)(Application)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Application)
+
