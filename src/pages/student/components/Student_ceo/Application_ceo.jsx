@@ -79,7 +79,7 @@ class Application extends Component {
     
     render() {
         return (
-            <div className="Student-ceo_content">
+            <div className="site-page-header-ghost-wrapper">
                 <div style={{marginTop:"20px"}}>
                     <div className='Student-ceo_application'>所有申请</div>
                     <Table columns={columns} dataSource={this.state.application} style={{margin:'15px'}}/>

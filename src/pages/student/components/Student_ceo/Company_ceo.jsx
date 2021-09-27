@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Tabs, Table, Input, Radio, Form, Button } from "antd";
+import { Tabs, Table, Input, Radio, Button } from "antd";
 import '../../style/Student_ceo/Company_ceo.css'
 import 'antd/dist/antd.css'
 import { connect } from 'react-redux'

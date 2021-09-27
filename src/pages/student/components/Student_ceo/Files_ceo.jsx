@@ -28,7 +28,7 @@ class Files extends Component {
         const data = [];
         
         return (
-            <div className="Student_ceo-content">
+            <div className="site-page-header-ghost-wrapper">
                 <div style={{marginTop:"20px"}}>
                     <div className='Student-ceo_file'>
                         <span className='Student-ceo_application'>文件</span>

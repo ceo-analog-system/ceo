@@ -16,6 +16,9 @@ import {
 import 'antd/dist/antd.css'
 import "../../style/All.css"
 import { AllCompany } from './AllCompany_ceo';
+import "../../style/All.css";
+
+
 const { Sider } = Layout;
 
 
