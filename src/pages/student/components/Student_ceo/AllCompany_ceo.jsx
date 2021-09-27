@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button } from 'antd';
 import { showCompaniesActionCreator,  } from '../../../../redux/actions/student/actionCreators';
 import { connect } from 'react-redux';
+import '../../style/Student_ceo/Company_ceo.css'
 
 const mapStateToProps = (state) => {
     return {
@@ -57,7 +58,7 @@ export class AllCompanyComponent extends React.Component {
         const { company } = this.props;
     
         return (
-            <div>
+            <div className="site-page-header-ghost-wrapper">
                 <span className='Student-ceo_application'>所有公司</span>
                 <Table columns={columns} dataSource={company} style={{margin:'15px'}}/>
             </div>
