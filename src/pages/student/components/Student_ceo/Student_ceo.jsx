@@ -3,7 +3,7 @@ import { Route, Link, Redirect,withRouter } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
 import Application from "./Application_ceo"
 import Company from './Company_ceo';
-import Files from './Files_ceo';
+import { Files } from './Files_ceo';
 import {
   DesktopOutlined,
   PieChartOutlined,
