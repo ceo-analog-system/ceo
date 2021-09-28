@@ -70,14 +70,7 @@ class Company extends Component {
         return (
             <div className="site-page-header-ghost-wrapper">
                 <Tabs size="large" defaultActiveKey="2">
-                    <TabPane tab="我的公司" key="1">
-                        <Table
-                            columns={columns}
-                            dataSource={members}
-                            bordered
-                        />
-                    </TabPane>
-                    <TabPane tab="创建公司" key="2">
+                    <TabPane tab="创建公司" key="1">
                         <Input 
                             placeholder='公司名' 
                             allowClear 
@@ -101,35 +94,17 @@ class Company extends Component {
                             创建
                         </Button>
                     </TabPane>
+                    <TabPane tab="我的公司" key="2">
+                        <Table
+                            columns={columns}
+                            dataSource={members}
+                            bordered
+                        />
+                    </TabPane>
+                    <TabPane tab="设置职位" key="3">
+
+                    </TabPane>
                 </Tabs>
-              {/* <Modal
-                width='520px'
-                visible={companyVisible}
-                // onOk={() => this.setUpCompany(typeName, typeCode, companyName)}
-                onCancel={this.handleCancel}
-                okText="创建"
-                cancelText="取消"
-              >
-                </Modal>
-                    <div>
-                        <span className='Student-ceo_application'>我的公司</span>
-                        <Modal style={{display:'none'}}></Modal>
-                        <Card  
-                            extra={
-                                <Button type ='link' onClick={this.showCompany}>
-                                    创建
-                                </Button>} 
-                            style={{ width: 500 ,margin:'30px'}}>
-                            <ul>
-                                <li>未创建公司</li>
-                            </ul>
-                        </Card>
-                    </div>
-                   
-                    <div>
-                        <span className='Student-ceo_application'>成员</span>
-                        <Empty style={{marginTop:'10px'}}></Empty>
-                    </div>  */}
             </div>    
         )
     }

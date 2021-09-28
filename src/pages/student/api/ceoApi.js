@@ -60,11 +60,31 @@ export const agreeApplication = (studentId) => ceoAxios({
     }
 })
 
+// 为其他公司打分
+export const scoreCompany = (companyId, score) => ceoAxios({
+    data: {
+        // scoreCompanyId: 3,
+        scoreCompanyId: login_data.companyId,    // 会请求400
+        scoredCompanyId: companyId,
+        score,
+    },
+    url: '/addCompanyScore',
+}).then(data => {
+    if (data.data.flag) {
+        message.success(data.data.data);
+    } else {
+        message.error(data.data.msg);
+    }
+}).catch(err => {
+    message.error(err)
+})
+
+
 // 查看公司的成员
 export const showCompanyMembers = () => ceoAxios({
     data: {
         start:"1",
-        pageSize:"9",
+        pageSize:"4",
         ceoId: userId,
     },
     url: '/showCompanyMembers',

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, InputNumber, Table } from 'antd';
 import { showCeoVoter, applyCeo, voteCeo } from '../../../../../../pages/student/api/studentApi';
-import Form from 'antd/lib/form/Form';
 
 const columns = [
     {

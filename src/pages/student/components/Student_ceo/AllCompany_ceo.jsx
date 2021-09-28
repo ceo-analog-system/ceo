@@ -1,8 +1,9 @@
 import React from 'react';
-import { Table, Button } from 'antd';
-import { showCompaniesActionCreator,  } from '../../../../redux/actions/student/actionCreators';
+import { Table, Input, Button, Space } from 'antd';
+import { showCompaniesActionCreator, } from '../../../../redux/actions/student/actionCreators';
 import { connect } from 'react-redux';
 import '../../style/Student_ceo/Company_ceo.css'
+import { scoreCompany } from '../../api/ceoApi';
 
 const mapStateToProps = (state) => {
     return {
@@ -19,10 +20,27 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export class AllCompanyComponent extends React.Component {
+    state = {
+        rateData: {},
+    }
+    
     componentDidMount() {
         this.props.showCompany();
     }
     
+    // rate = () => {
+    //     this.state.rateData.push({companyId, score})
+    //     console.log(companyId, score)
+    // }  
+    onChange = (companyId, score) => {
+        // this.setState({rateData: {}});
+        this.state.rateData[companyId] = score;
+        console.log(this.state.rateData)
+    }
+    handleRate = (companyId) => {
+        // console.log(companyId, +this.state.rateData[companyId])
+        scoreCompany(companyId, 1.0*this.state.rateData[companyId]);
+    }
     render() {
         const columns = [
             {
@@ -49,9 +67,10 @@ export class AllCompanyComponent extends React.Component {
                 title: 'Action',
                 key: 'action',
                 render: (_, record) => (
-                    // eslint-disable-next-line
-                    <Button>打分</Button>
-                    
+                    <Space>
+                        <Input min={1} max={100} controls={false} onChange={(e) => this.onChange(record.companyId, e.target.value)} />
+                        <Button onClick={() => this.handleRate(record.companyId)}>提交</Button>
+                    </Space>
                 )
             },
         ]
@@ -61,7 +80,7 @@ export class AllCompanyComponent extends React.Component {
         const paginationProps = {
             total: companyTotal,
             showTotal: (companyTotal => `共${companyTotal}条`),
-            pageSize: 6,
+            pageSize: 4,
         }
 
         return (

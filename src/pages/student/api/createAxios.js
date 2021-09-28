@@ -5,7 +5,7 @@ import axios from "axios"
     timeout:2000,
     method: 'post',
     headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyODA3MDA0fQ.VahDN0p-b3xAXjljyeqDpMC-LQ5_suVhn2wnPqDgQ6U'
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyOTExNzA2fQ.HzR7ZXZPudHPZvwmeV-L77L8_UMJG_2bz6t98PG_-7k'
     }
 })
 
@@ -42,7 +42,7 @@ export const studentAxios = axios.create({
     timeout:2000,   
     method: 'post',
     headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMyODA3MTIwfQ.qMhETFyCAsrsiuhgoKX673ml0ojFBaLHx4V-jwRiupg'
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMyOTExODM1fQ.cldaUXogt6tnf3oA5aZc_uDT85MkfiL9UGCAehIb3f4'
     }
 })
 
