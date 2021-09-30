@@ -12,7 +12,7 @@ export const applyCeo = () => studentAxios({
         userId,
         teacherClass,
     },
-    url: "/student/addCeoVote"
+    url: "/addCeoVote"
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -29,7 +29,7 @@ export const showCeoVoter = () => studentAxios({
         pageSize: "8",
         teacherClass: "SJ00201A2031780001",
     },
-    url: '/student/voteCeoList',
+    url: '/voteCeoList',
 }).catch(err => {
     message.warning(`查看CEO竞选名单失败：${err}`)
 })
@@ -40,7 +40,7 @@ export const voteCeo = (votedUserId) => studentAxios({
         votedUserId,
         teacherClass: "SJ00201A2031780001",
     },
-    url: "/student/voteForCeo",
+    url: "/voteForCeo",
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -57,14 +57,14 @@ export const showCompany = () => studentAxios({
         pageSize:"9",
         teacherClass: "SJ00201A2031780001",
     },
-    url: '/student/showCompanies',
+    url: '/showCompanies',
 }).catch(err => {
     message.warning(`查看公司失败：${err}`);
 });
 // 提交公司申请
 export const applyJoinCompany = (data) => studentAxios({
     data,   // 列表型
-    url: './student/addApplication',
+    url: '/addApplication',
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -83,7 +83,7 @@ export const voteCompany = (companyId) => {
                 companyId: companyId,
                 teacherClass,
             },
-            url: '/student/voteForCompany',
+            url: '/voteForCompany',
         }).then((data) => {
             if (data.data.flag) {
                 message.success("投票成功！");
@@ -102,18 +102,21 @@ export const showCompanyMembers = () => studentAxios({
         pageSize:"9",
         userId,
     },
-    url: '/student/showCompanyMembers',
+    url: '/showCompanyMembers',
 }).catch(err => {
     message.warning(`查看公司成员失败：${err}`);
 })
 // 为公司其他成员打分
-export const scoreMember = (scoredUserId, score) => studentAxios({
+export const scoreMember = (scoredUserId, score, excellentNum, goodNum, mediumNum) => studentAxios({
     data: {
         scoreUserId: userId,
         scoredUserId,
         score,
+        excellentNum,
+        goodNum,
+        mediumNum
     },
-    url: '/student/scoreForCompanyMember',
+    url: '/scoreForCompanyMember',
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -128,7 +131,7 @@ export const showApplication = () => studentAxios({
     data: {
         userId:"2017211037",
     },
-    url: 'student/showApplicationState',
+    url: '/showApplicationState',
 }).catch(err => {
     message.warning(`查看公司申请失败：${err}`);
 })
