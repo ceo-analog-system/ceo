@@ -28,7 +28,11 @@ export class ApplicationComponent extends React.Component {
 
     async componentDidMount() {
         this.props.showCompany();
-        const { data } = await showApplication() 
+        const { data } = await showApplication()
+        data.data.map((item, index) => {
+            item["key"] = index;
+            return item;
+        })
         this.setState({applicationData: data.data});
     }
     // 增加志愿填报

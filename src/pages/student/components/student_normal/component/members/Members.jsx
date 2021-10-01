@@ -1,102 +1,7 @@
 import React from 'react';
-// eslint-disable-next-line
 import {message, Table, Button, Input, Space,} from "antd";
 import {scoreMember, showCompanyMembers} from '../../../../api/studentApi';
 
-const mockData = [
-    {
-        "id": 2,
-        "userId": "2011210012",
-        "userName": "测试",
-        "academy": null,
-        "clazz": null,
-        "discipline": null,
-        "teacherClass": "SJ00201A2031780001",
-        "personalScore": 0.0,
-        "companyScore": 0.0,
-        "ceoScore": 0.0,
-        "memberScore": 0.0,
-        "signScore": 0.0,
-        "score": 0.0,
-        "companyId": 2,
-        "position": null,
-        "password": null,
-        "count": "0",
-        "hired": true,
-        "ceoVote": true,
-        "ceoVoted": false,
-        "companyVoted": false
-    },
-    {
-        "id": 3,
-        "userId": "2022222222",
-        "userName": "测试2",
-        "academy": null,
-        "clazz": null,
-        "discipline": null,
-        "teacherClass": "SJ00201A2031780001",
-        "personalScore": 0.0,
-        "companyScore": 0.0,
-        "ceoScore": 0.0,
-        "memberScore": 0.0,
-        "signScore": 0.0,
-        "score": 0.0,
-        "companyId": 2,
-        "position": null,
-        "password": null,
-        "count": "0",
-        "hired": true,
-        "ceoVote": true,
-        "ceoVoted": false,
-        "companyVoted": false
-    },
-    {
-        "id": 4,
-        "userId": "2019210861",
-        "userName": "55",
-        "academy": null,
-        "clazz": null,
-        "discipline": null,
-        "teacherClass": "SJ00201A2031780001",
-        "personalScore": 0.0,
-        "companyScore": 0.0,
-        "ceoScore": 0.0,
-        "memberScore": 0.0,
-        "signScore": 0.0,
-        "score": 0.0,
-        "companyId": 2,
-        "position": "副总裁",
-        "password": null,
-        "count": "0",
-        "hired": true,
-        "ceoVote": false,
-        "ceoVoted": false,
-        "companyVoted": false
-    },
-    {
-        "id": 957,
-        "userId": "2017211019",
-        "userName": "唐薇",
-        "academy": null,
-        "clazz": null,
-        "discipline": null,
-        "teacherClass": "SJ00201A2031780001",
-        "personalScore": 0.0,
-        "companyScore": 0.0,
-        "ceoScore": 0.0,
-        "memberScore": 0.0,
-        "signScore": 0.0,
-        "score": 0.0,
-        "companyId": 2,
-        "position": "CEO",
-        "password": null,
-        "count": "0",
-        "hired": true,
-        "ceoVote": false,
-        "ceoVoted": false,
-        "companyVoted": false
-    }
-]
 const login_data = JSON.parse(localStorage.getItem("login_data")).data;
 let rateData = {};
 let rateList = [];
@@ -133,23 +38,20 @@ export class Members extends React.Component {
     }
 
     async componentDidMount() {
-        showCompanyMembers().then(data => {
-            // console.log(data)
+        showCompanyMembers().then(response => {
+            let { data } = response;
+            if (data.flag) {
+                // eslint-disable-next-line
+                data.data.list.map((item, index) => {   // 给列表每个对象加上 key
+                    item.key = index;
+                });
+                this.setState({
+                    members: data.data.list,
+                })
+            } else {
+                message.warning(`查看公司成员失败: ${data?.msg}`)
+            }
         })
-
-        // const { data } = await showCompanyMembers();
-
-        // if (data?.flag) {
-        //     // eslint-disable-next-line
-        //     data.data.list.map((item, index) => {   // 给列表每个对象加上 key
-        //         item.key = index;
-        //     });
-        //     this.setState({
-        //         members: data.data.list,
-        //     })
-        // } else {
-        //     message.warning(data.msg)
-        // }
     }
 
     render() {
@@ -195,7 +97,7 @@ export class Members extends React.Component {
             <div className='site-page-header-ghost-wrapper'>
                 <Table
                     columns={columns}
-                    dataSource={mockData}
+                    dataSource={members}
                 />
             </div>
         )

@@ -55,7 +55,7 @@ export const voteCeo = (votedUserId) => studentAxios({
 export const showCompany = () => studentAxios({
     data: {
         start:"1", 
-        pageSize:"9",
+        pageSize:"6",
         teacherClass: "SJ00201A2031780001",
     },
     url: '/showCompanies',
@@ -101,7 +101,7 @@ export const showCompanyMembers = () => studentAxios({
     data: {
         start:"1",
         pageSize:"9",
-        userId,
+        userId:"2019210861",    // 暂时用这个学号
     },
     url: '/showCompanyMembers',
 }).catch(err => {

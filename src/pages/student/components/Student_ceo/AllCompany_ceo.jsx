@@ -77,7 +77,7 @@ export class AllCompanyComponent extends React.Component {
         const paginationProps = {
             total: companyTotal,
             showTotal: (companyTotal => `共${companyTotal}条`),
-            pageSize: 4,
+            pageSize: 6,
         }
 
         return (

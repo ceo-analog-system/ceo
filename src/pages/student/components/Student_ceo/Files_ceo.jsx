@@ -12,7 +12,7 @@ export class Files extends Component {
             accept: ".ppt",
             action: '/file/uploadFile',
             headers: {
-                "token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyODA3MDA0fQ.VahDN0p-b3xAXjljyeqDpMC-LQ5_suVhn2wnPqDgQ6U'
+                // "token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyODA3MDA0fQ.VahDN0p-b3xAXjljyeqDpMC-LQ5_suVhn2wnPqDgQ6U'
             },
             data: {
                 userId: JSON.parse(localStorage.getItem("login_data")).data.userId
