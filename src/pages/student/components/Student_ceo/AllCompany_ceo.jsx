@@ -33,12 +33,9 @@ export class AllCompanyComponent extends React.Component {
     //     console.log(companyId, score)
     // }  
     onChange = (companyId, score) => {
-        // this.setState({rateData: {}});
-        this.state.rateData[companyId] = score;
-        console.log(this.state.rateData)
+        this.setState({rateData: {companyId: score}});
     }
     handleRate = (companyId) => {
-        // console.log(companyId, +this.state.rateData[companyId])
         scoreCompany(companyId, 1.0*this.state.rateData[companyId]);
     }
     render() {
@@ -68,7 +65,7 @@ export class AllCompanyComponent extends React.Component {
                 key: 'action',
                 render: (_, record) => (
                     <Space>
-                        <Input min={1} max={100} controls={false} onChange={(e) => this.onChange(record.companyId, e.target.value)} />
+                        <Input min={1} max={100} onChange={(e) => this.onChange(record.companyId, e.target.value)} />
                         <Button onClick={() => this.handleRate(record.companyId)}>提交</Button>
                     </Space>
                 )
@@ -80,7 +77,7 @@ export class AllCompanyComponent extends React.Component {
         const paginationProps = {
             total: companyTotal,
             showTotal: (companyTotal => `共${companyTotal}条`),
-            pageSize: 4,
+            pageSize: 6,
         }
 
         return (

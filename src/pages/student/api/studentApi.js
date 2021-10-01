@@ -5,6 +5,7 @@ const login_data = JSON.parse(localStorage.getItem("login_data")).data;
 const userId = login_data.userId;
 const teacherClass = login_data.teacherClass;
 // const teacherClass = "SJ00201A2031780001";
+const companyId = login_data.companyId;
 
 // 申请CEO竞选
 export const applyCeo = () => studentAxios({
@@ -12,7 +13,7 @@ export const applyCeo = () => studentAxios({
         userId,
         teacherClass,
     },
-    url: "/student/addCeoVote"
+    url: "/addCeoVote"
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -29,7 +30,7 @@ export const showCeoVoter = () => studentAxios({
         pageSize: "8",
         teacherClass: "SJ00201A2031780001",
     },
-    url: '/student/voteCeoList',
+    url: '/voteCeoList',
 }).catch(err => {
     message.warning(`查看CEO竞选名单失败：${err}`)
 })
@@ -40,7 +41,7 @@ export const voteCeo = (votedUserId) => studentAxios({
         votedUserId,
         teacherClass: "SJ00201A2031780001",
     },
-    url: "/student/voteForCeo",
+    url: "/voteForCeo",
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -54,17 +55,17 @@ export const voteCeo = (votedUserId) => studentAxios({
 export const showCompany = () => studentAxios({
     data: {
         start:"1", 
-        pageSize:"9",
+        pageSize:"6",
         teacherClass: "SJ00201A2031780001",
     },
-    url: '/student/showCompanies',
+    url: '/showCompanies',
 }).catch(err => {
     message.warning(`查看公司失败：${err}`);
 });
 // 提交公司申请
 export const applyJoinCompany = (data) => studentAxios({
     data,   // 列表型
-    url: './student/addApplication',
+    url: '/addApplication',
 }).then((data) => {
     if (data.data.flag) {
         message.success("投票成功！");
@@ -83,7 +84,7 @@ export const voteCompany = (companyId) => {
                 companyId: companyId,
                 teacherClass,
             },
-            url: '/student/voteForCompany',
+            url: '/voteForCompany',
         }).then((data) => {
             if (data.data.flag) {
                 message.success("投票成功！");
@@ -100,35 +101,52 @@ export const showCompanyMembers = () => studentAxios({
     data: {
         start:"1",
         pageSize:"9",
-        userId,
+        userId:"2019210861",    // 暂时用这个学号
     },
-    url: '/student/showCompanyMembers',
+    url: '/showCompanyMembers',
 }).catch(err => {
     message.warning(`查看公司成员失败：${err}`);
 })
-// 为公司其他成员打分
-export const scoreMember = (scoredUserId, score) => studentAxios({
+// 为公司其他成员打分的要求
+export const scoreRequired = () => studentAxios({
     data: {
-        scoreUserId: userId,
-        scoredUserId,
-        score,
+        companyId,
     },
-    url: '/student/scoreForCompanyMember',
-}).then((data) => {
-    if (data.data.flag) {
-        message.success("投票成功！");
-    } else {
-        message.error(data.data.msg)
-    }
-}).catch((err) => {
-    message.error(`打分失败：${err}`);
+    url: '/scoreRequired'
+}).catch(err => {
+    console.log("查看为公司其他成员打分失败：", err);
 })
+// 为公司其他成员打分
+export const scoreMember = async (rateList) => {
+    const { data } = await scoreRequired();
+    if (data.flag) {
+        return studentAxios({
+            data: {
+                excellentNum: data.excellentNum,
+                goodNum: data.goodNum,
+                mediumNum: data.mediumNum,
+                scoreList: rateList,
+            },
+            url: '/scoreForCompanyMembers',
+        }).then((data) => {
+            if (data.data.flag) {
+                message.success("投票成功！");
+            } else {
+                message.error(data.data.msg)
+            }
+        }).catch((err) => {
+            message.error(`打分失败：${err}`);
+        })
+    } else {
+        message.error(data.msg);
+    }
+}
 // 公司申请状态
 export const showApplication = () => studentAxios({
     data: {
         userId:"2017211037",
     },
-    url: 'student/showApplicationState',
+    url: '/showApplicationState',
 }).catch(err => {
     message.warning(`查看公司申请失败：${err}`);
 })
