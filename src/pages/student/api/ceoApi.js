@@ -30,7 +30,7 @@ export const createCompany = (typeCode, companyName) => {
         if (res.data.flag) {
             message.success(`成功创建公司！`);
         } else {
-            message.error(res.data.msg)
+            message.error(res.data["msg"])
         }
     })
 }
@@ -60,6 +60,20 @@ export const agreeApplication = (studentId) => ceoAxios({
         message.error(data.data.msg)
     }
 })
+
+// 设置职位
+export const setPosition = (userId, position) => ceoAxios({
+    data: {
+        userId,
+        position,
+    },url:`/setPosition`,
+}).then(data => {
+    if (data.data.flag) {
+        message.success(data.data.data);
+    } else {
+        message.error(data.data.msg);
+    }
+}).catch(err => {console.log(`设置职位出错：${err}`)})
 
 // 为其他公司打分
 export const scoreCompany = (companyId, score) => ceoAxios({
