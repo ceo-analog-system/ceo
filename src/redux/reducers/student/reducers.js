@@ -1,11 +1,10 @@
 import { 
     SHOW_COMPANIES_SUCCESS,
-    ADD_COMPANY_APPLICATION,
 } from '../../constant';
 
 const defaultState = {
     company: [],
-    companyApplication: [],
+    companyTotal: 0,
 }
 
 function reducer(state = defaultState, action) {
@@ -13,12 +12,9 @@ function reducer(state = defaultState, action) {
         // 查看公司
         case SHOW_COMPANIES_SUCCESS:
             return Object.assign({}, state, {
-                loading: false,
                 company: action.payload.list,
+                companyTotal:action.payload.total
             })
-        // 提交公司申请
-        case ADD_COMPANY_APPLICATION:
-            return { ...state, companyApplication: action.payload }
         default:
             return state;
     }

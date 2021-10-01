@@ -1,9 +1,9 @@
-import React from "react";
-import { Table } from "antd"
-import '../../../../style/Student.css';
-import { showCompaniesActionCreator,  } from '../../../../../../redux/actions/student/actionCreators';
+import React from 'react';
+import { Table, Input, Button, Space } from 'antd';
+import { showCompaniesActionCreator, } from '../../../../redux/actions/student/actionCreators';
 import { connect } from 'react-redux';
-import { voteCompany } from "../../../../api/studentApi";
+import '../../style/Student_ceo/Company_ceo.css'
+import { scoreCompany } from '../../api/ceoApi';
 
 const mapStateToProps = (state) => {
     return {
@@ -19,15 +19,28 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export class CompanyCompoent extends React.Component {    
+export class AllCompanyComponent extends React.Component {
     state = {
-        page: '1',
+        rateData: {},
     }
-
+    
     componentDidMount() {
         this.props.showCompany();
     }
-
+    
+    // rate = () => {
+    //     this.state.rateData.push({companyId, score})
+    //     console.log(companyId, score)
+    // }  
+    onChange = (companyId, score) => {
+        // this.setState({rateData: {}});
+        this.state.rateData[companyId] = score;
+        console.log(this.state.rateData)
+    }
+    handleRate = (companyId) => {
+        // console.log(companyId, +this.state.rateData[companyId])
+        scoreCompany(companyId, 1.0*this.state.rateData[companyId]);
+    }
     render() {
         const columns = [
             {
@@ -54,26 +67,29 @@ export class CompanyCompoent extends React.Component {
                 title: 'Action',
                 key: 'action',
                 render: (_, record) => (
-                    // companyId数字转字符串
-                    // eslint-disable-next-line
-                    <a onClick={voteCompany(record.companyId + "")}>为 {record.companyName} 投票</a>
-                    // onClick={() => voteCompany(record.companyId)}
+                    <Space>
+                        <Input min={1} max={100} controls={false} onChange={(e) => this.onChange(record.companyId, e.target.value)} />
+                        <Button onClick={() => this.handleRate(record.companyId)}>提交</Button>
+                    </Space>
                 )
             },
         ]
 
         const { company, companyTotal } = this.props;
+
         const paginationProps = {
             total: companyTotal,
             showTotal: (companyTotal => `共${companyTotal}条`),
-            pageSize: 8,
+            pageSize: 4,
         }
+
         return (
-            <div className='site-page-header-ghost-wrapper'>
+            <div className="site-page-header-ghost-wrapper">
+                <span className='Student-ceo_application'>所有公司</span>
                 <Table 
                     columns={columns} 
-                    dataSource={company}
-                    bordered
+                    dataSource={company} 
+                    style={{margin:'15px'}}
                     pagination={paginationProps}
                 />
             </div>
@@ -81,4 +97,4 @@ export class CompanyCompoent extends React.Component {
     }
 }
 
-export const Company = connect(mapStateToProps, mapDispatchToProps)(CompanyCompoent);
+export const AllCompany = connect(mapStateToProps, mapDispatchToProps)(AllCompanyComponent);
