@@ -16,6 +16,7 @@ export const createCompany = (typeCode, companyName) => {
         case 5: typeName = '新闻机构';break;
         case 6: typeName = '工商局';break;
         case 7: typeName = '税务局';break;
+        default: break;
     }
     ceoAxios({
         data: {

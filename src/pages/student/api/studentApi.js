@@ -5,6 +5,7 @@ const login_data = JSON.parse(localStorage.getItem("login_data")).data;
 const userId = login_data.userId;
 const teacherClass = login_data.teacherClass;
 // const teacherClass = "SJ00201A2031780001";
+const companyId = login_data.companyId;
 
 // 申请CEO竞选
 export const applyCeo = () => studentAxios({
@@ -106,26 +107,40 @@ export const showCompanyMembers = () => studentAxios({
 }).catch(err => {
     message.warning(`查看公司成员失败：${err}`);
 })
-// 为公司其他成员打分
-export const scoreMember = (scoredUserId, score, excellentNum, goodNum, mediumNum) => studentAxios({
+// 为公司其他成员打分的要求
+export const scoreRequired = () => studentAxios({
     data: {
-        scoreUserId: userId,
-        scoredUserId,
-        score,
-        excellentNum,
-        goodNum,
-        mediumNum
+        companyId,
     },
-    url: '/scoreForCompanyMember',
-}).then((data) => {
-    if (data.data.flag) {
-        message.success("投票成功！");
-    } else {
-        message.error(data.data.msg)
-    }
-}).catch((err) => {
-    message.error(`打分失败：${err}`);
+    url: '/scoreRequired'
+}).catch(err => {
+    console.log("查看为公司其他成员打分失败：", err);
 })
+// 为公司其他成员打分
+export const scoreMember = async (rateList) => {
+    const { data } = await scoreRequired();
+    if (data.flag) {
+        return studentAxios({
+            data: {
+                excellentNum: data.excellentNum,
+                goodNum: data.goodNum,
+                mediumNum: data.mediumNum,
+                scoreList: rateList,
+            },
+            url: '/scoreForCompanyMembers',
+        }).then((data) => {
+            if (data.data.flag) {
+                message.success("投票成功！");
+            } else {
+                message.error(data.data.msg)
+            }
+        }).catch((err) => {
+            message.error(`打分失败：${err}`);
+        })
+    } else {
+        message.error(data.msg);
+    }
+}
 // 公司申请状态
 export const showApplication = () => studentAxios({
     data: {
