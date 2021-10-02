@@ -66,12 +66,6 @@ export const showCompany = () => studentAxios({
 export const applyJoinCompany = (data) => studentAxios({
     data,   // 列表型
     url: '/addApplication',
-}).then((data) => {
-    if (data.data.flag) {
-        message.success("投票成功！");
-    } else {
-        message.error(data.data.msg)
-    }
 }).catch(err => {
     message.error(`提交失败：${err}`);
 })
@@ -110,7 +104,8 @@ export const showCompanyMembers = () => studentAxios({
 // 为公司其他成员打分的要求
 export const scoreRequired = () => studentAxios({
     data: {
-        companyId,
+        // companyId,
+        companyId:7,
     },
     url: '/scoreRequired'
 }).catch(err => {
@@ -130,7 +125,7 @@ export const scoreMember = async (rateList) => {
             url: '/scoreForCompanyMembers',
         }).then((data) => {
             if (data.data.flag) {
-                message.success("投票成功！");
+                message.success("打分成功！");
             } else {
                 message.error(data.data.msg)
             }

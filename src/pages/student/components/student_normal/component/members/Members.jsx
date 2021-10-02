@@ -15,26 +15,24 @@ export class Members extends React.Component {
     }
 
     rate = (scoredUserId, score) => {   // 储存对每个成员的打分情况
-        console.log(score)
         rateData = {
-            scoreUserId: login_data.userId,
+            // scoreUserId: login_data.userId,
+            scoreUserId: "2019210861", // 暂时
             scoredUserId,
             score,
         }
-        console.log("rateData:", rateData)
     }
     handleRate = (scoredUserId) => {
         if (scoredUserId !== rateData["scoredUserId"]) {
             message.warning("刚才的打分与确认不匹配！");
         } else {
-            console.log("push:")
             rateList.push(rateData);
             rateData = {};  // 重置对单个成员打分信息
         }
         console.log("rateList:", rateList)
     }
     submitFinal = () => {
-        scoreMember(this.rateList);
+        scoreMember(rateList);
     }
 
     async componentDidMount() {
@@ -52,6 +50,9 @@ export class Members extends React.Component {
                 message.warning(`查看公司成员失败: ${data?.msg}`)
             }
         })
+    }
+    componentWillUnmount() {
+        this.setState = () => false;
     }
 
     render() {
@@ -85,7 +86,9 @@ export class Members extends React.Component {
                     <Space>
                         <Input min={1} max={100} onChange={(e) => this.rate(record.userId, e.target.value)}/>
                         <Button
-                            onClick={() => this.handleRate(record.userId,)}>
+                            onClick={() => this.handleRate(record.userId,)}
+                            disabled={record.userId === login_data.userId}
+                        >
                             确认
                         </Button>
                     </Space>
