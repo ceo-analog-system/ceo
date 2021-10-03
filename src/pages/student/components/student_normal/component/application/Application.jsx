@@ -28,13 +28,16 @@ export class ApplicationComponent extends React.Component {
 
     async componentDidMount() {
         this.props.showCompany();
-        const { data } = await showApplication() 
+        const { data } = await showApplication()
+        data.data.map((item, index) => {
+            item["key"] = index;
+            return item;
+        })
         this.setState({applicationData: data.data});
     }
     // 增加志愿填报
     addApplication = (key) => { 
         const login_data = JSON.parse(localStorage.getItem("login_data")).data
-
         this.props.company[key].userId = login_data.userId;
         this.props.company[key].level = this.state.level;   // 志愿顺序
         this.state.applicationData.push(this.props.company[key]);
@@ -43,8 +46,14 @@ export class ApplicationComponent extends React.Component {
     // 提交所有志愿
     apply = () => {
         if (this.state.level > 1) {
-            applyJoinCompany(this.state.applicationData);
-            this.props.addCompanyApplication(this.state.applicationData);
+            applyJoinCompany(this.state.applicationData).then((data) => {
+                if (data.data.flag) {
+                    message.success("投票成功！");
+                } else {
+                    message.error(data.data.msg)
+                }
+                this.setState({level: 1, applicationData: []})
+            });
         } else {
             message.error(`请至少申请一个志愿`)
         }

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {checkApplication} from '../../../../redux/actions/ceo/Application_ceo.js'
 import { agreeApplication, showApplication } from '../../api/ceoApi';
 
-const agree =true
+// const agree =true
 const columns = [
     {
       title: '申请人',

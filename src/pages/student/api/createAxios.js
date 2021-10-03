@@ -35,11 +35,11 @@ ceoAxios.interceptors.response.use(response => {
 
 
 export const studentAxios = axios.create({
-    baseURL:'http://localhost:3000/api/',
+    baseURL:'http://localhost:3000/api/student',
     timeout:2000,   
     method: 'post',
     headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMyOTExODM1fQ.cldaUXogt6tnf3oA5aZc_uDT85MkfiL9UGCAehIb3f4'
+        // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMzMTY4MjQ1fQ.89bA-SwZnZnv_JcRFUJoxf003nCWqAyd2ALsOI1M3TA'
     }
 })
 
