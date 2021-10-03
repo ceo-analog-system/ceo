@@ -4,9 +4,6 @@ import axios from "axios"
     baseURL:'http://localhost:3000/api/ceo/',
     timeout:2000,
     method: 'post',
-    headers: {
-        // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMzMTY4MzM1fQ.2tLP0zovGsGCtjzOjVHlZxxiDww_HIm3RenEEW0bDO4'
-    }
 })
 
 ceoAxios.interceptors.request.use(
@@ -41,16 +38,13 @@ export const studentAxios = axios.create({
     baseURL:'http://localhost:3000/api/student',
     timeout:2000,   
     method: 'post',
-    headers: {
-        // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMzMTY4MjQ1fQ.89bA-SwZnZnv_JcRFUJoxf003nCWqAyd2ALsOI1M3TA'
-    }
 })
 
 studentAxios.interceptors.request.use(  // 拦截器
     (config) => {
         const token =localStorage.getItem('login_token')
         if(token){
-            config.headers.accessToken = token
+            config.headers.token = token
             return config
         }
     },(error)=>{
