@@ -4,9 +4,6 @@ import axios from "axios"
     baseURL:'http://localhost:3000/api/ceo/',
     timeout:2000,
     method: 'post',
-    headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE5IiwiZXhwIjoxNjMyOTExNzA2fQ.HzR7ZXZPudHPZvwmeV-L77L8_UMJG_2bz6t98PG_-7k'
-    }
 })
 
 ceoAxios.interceptors.request.use(

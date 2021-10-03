@@ -27,7 +27,6 @@ const enhancer = composeEnhancers(
 const allReducers = combineReducers({
   student:  studentReducer,
   reducer: reducer,   // ?
-  
   applicationCeo:applicationCeoReducer,
 })
 
