@@ -105,21 +105,21 @@ export const showCompanyMembers = () => studentAxios({
 export const scoreRequired = () => studentAxios({
     data: {
         // companyId,
-        companyId:7,
+        companyId:2,
     },
     url: '/scoreRequired'
 }).catch(err => {
     console.log("查看为公司其他成员打分失败：", err);
 })
 // 为公司其他成员打分
-export const scoreMember = async (rateList) => {
+export const scoreMember = async (excellentNum, goodNum, mediumNum, rateList) => {
     const { data } = await scoreRequired();
     if (data.flag) {
         return studentAxios({
             data: {
-                excellentNum: data.excellentNum,
-                goodNum: data.goodNum,
-                mediumNum: data.mediumNum,
+                excellentNum,
+                goodNum,
+                mediumNum,
                 scoreList: rateList,
             },
             url: '/scoreForCompanyMembers',
