@@ -1,0 +1,79 @@
+.Admin_Teacher{
+    background: #f0f2f5 !important;
+    position: relative;
+}
+
+.Admin_Teacher .ant-layout-content{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+    
+}
+
+.Admin_Teacher .ant-layout-content .big-teacher{
+    min-height: 370px;
+    padding: 24px;
+    border-radius: 10px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.Admin_Teacher .ant-layout-content .big-teacher .header{
+    margin-bottom: 30px;
+}
+
+.Admin_Teacher .ant-layout-content .big-teacher .search{
+    float: right;
+}
+
+.Admin_Teacher .big-teacher  h1{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.Admin_Teacher .big-teacher  input{
+    width: 164px !important;
+   
+}
+
+.Admin_Teacher .big-teacher  tr{
+    text-align: center;
+    display: flex;
+    height: 65px !important;
+    line-height: 32px !important;
+    
+}
+
+
+.Admin_Teacher .big-teacher th{
+    text-align: center ;
+    flex: 1 ;
+    
+}
+
+.Admin_Teacher .big-teacher td{
+    text-align: center ;
+    flex: 1 ;
+}
+
+.Admin_Teacher .big-teacher  th::before{
+    content: none !important;
+}
+
+.Admin_Teacher .big-teacher  .ant-pagination{
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.Admin_Teacher .ant-spin-dot.ant-spin-dot-spin{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    
+}
+

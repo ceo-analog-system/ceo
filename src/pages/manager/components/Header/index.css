@@ -1,0 +1,14 @@
+.Admin_Header header {
+  background-color: white;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.Admin_Header .ant-layout-header{
+  background-color: white;
+}
+
+
+.Admin_Header a {
+  color: #1890ff;
+}
