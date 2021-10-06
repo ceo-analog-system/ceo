@@ -27,6 +27,7 @@ import { connect } from 'react-redux'
 const { Header, Footer, Sider, Content } = Layout;
 class SiderDemo extends React.Component {
   state = {
+    hasError:'',
     collapsed: false,
     isModalVisible: false,
     showClassVisible:false,
@@ -63,11 +64,11 @@ class SiderDemo extends React.Component {
 
   selectedClass=(values)=>{
     this.setState({ openClassVisible: false })
+    // console.log(this.props)
     this.props.storeSelectedClass(values)
-    this.props.history.replace(`/user_teacher/students/${values}`)
+    // this.props.history.replace(`/user_teacher/students/${values}`)
+    this.props.history.replace(`/user_teacher/students`)
   }
-
-
 
   //更改班级的对话框
   showClass=()=>{
@@ -80,8 +81,18 @@ class SiderDemo extends React.Component {
   componentDidMount(){
     this.props.getExitClass()
   }
+
+  static getDerivedStateFromError(error){
+    console.log(error)
+    return {hasError:error}
+}
+componentDidCatch(error, errorInfo) {
+    console.log(error)
+}
+
   render() {
     const { collapsed } = this.state;
+    // console.log(JSON.parse(JSON.stringify(this.props)))
     const columns=[
       {
         title:'teachclass',
@@ -178,18 +189,32 @@ class SiderDemo extends React.Component {
           <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
             <p>您确定要退出吗？</p>
           </Modal>
-          <Content className='teacher-content' >
-          <Switch>
-            <Route path="/user_teacher/students" component={Students} name="123456"/>
-            <Route path="/user_teacher/company" component={Company}/>
-            <Route path="/user_teacher/vote" component={Vote}/>
-            <Route path="/user_teacher/message" component={Message}/>
-            <Route path="/user_teacher/sign" component={Sign}/>
-            <Route path="/user_teacher/modify" component={Modify}/>
-            <Route path="/user_teacher/check" component={Check}/>
-            {/* <Redirect to="/user_teacher/students"/> */}
+          {this.state.hasError?<h1>网络出错,请稍后再试</h1>:[
+            <Content className='teacher-content' key={"content"}>
+              <Switch>
+                <Route path="/user_teacher/students" component={Students} name="123456"/>
+                <Route path="/user_teacher/company" component={Company}/>
+                <Route path="/user_teacher/vote" component={Vote}/>
+                <Route path="/user_teacher/message" component={Message}/>
+                <Route path="/user_teacher/sign" component={Sign}/>
+                <Route path="/user_teacher/modify" component={Modify}/>
+                <Route path="/user_teacher/check" component={Check}/>
+
             </Switch>
           </Content>
+          ]}
+        {/*<Content className='teacher-content' >*/}
+        {/*  <Switch>*/}
+        {/*    <Route path="/user_teacher/students" component={Students} name="123456"/>*/}
+        {/*    <Route path="/user_teacher/company" component={Company}/>*/}
+        {/*    <Route path="/user_teacher/vote" component={Vote}/>*/}
+        {/*    <Route path="/user_teacher/message" component={Message}/>*/}
+        {/*    <Route path="/user_teacher/sign" component={Sign}/>*/}
+        {/*    <Route path="/user_teacher/modify" component={Modify}/>*/}
+        {/*    <Route path="/user_teacher/check" component={Check}/>*/}
+
+        {/*    </Switch>*/}
+        {/*  </Content> */}
           <Footer id="teacher-footer">
             版权所有 勤奋蜂&极客工作室
           </Footer>
@@ -199,9 +224,10 @@ class SiderDemo extends React.Component {
   }
 }
 const mapStateToProps=(state)=>{
+    const {reducer:{exitClass,selectedClass}} =state
     return {
-        exitClass:state.exitClass,
-        selectedClass:state.selectedClass
+        exitClass:exitClass,
+        selectedClass:selectedClass
     }
 }
 const mapDispatchToProps=(dispatch)=>{

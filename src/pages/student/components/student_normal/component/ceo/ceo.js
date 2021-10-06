@@ -1,115 +1,67 @@
 import React from 'react';
-import { Button, Table } from 'antd';
-// import '../../../../style/Student.css';
-
-const columns = [
-    {
-        title: '票数',
-        dataIndex: 'votes',
-        key: 'votes',
-    },
-    {
-        title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: '学号',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: '分数',
-        dataIndex: 'score',
-        key: 'score',
-    },
-    {
-        title: '操作',
-        dataIndex: 'do',
-        key: 'do',
-    },
-];
-const data = [
-    {
-        key: '1',
-        votes: '20',
-        id: 2020,
-        do: '暂无',
-      },
-      {
-        key: '2',
-        votes: '220',
-        id: 2021,
-        do: '暂无',
-      },
-]
-
-// const { voteUserId } = localStorage.getItem("login_data")
+import {Button, message, Table} from 'antd';
+import { showCeoVoter, applyCeo, voteCeo } from '../../../../../../pages/student/api/studentApi';
 
 export class Ceo extends React.Component {
     constructor(props) {
         super(props);
-            this.state = {
-                selectedRowKeys: [], // Check here to configure the default column
-                loading: false,
-                data: [],
-            }
+        this.state = {
+            voter: [],
+        }
     }
 
-    start = () => {
-        this.setState({ loading: true });
-        // ajax request after empty completing
-        // const { flag } = await axios.post(
-        //     `120.79.147.32:8089/student/voteForCeo`, {
-        //         voteUserId: voteUserId,
-        //         // votedUserId: ,
-        //         // teacherClass: ,
-        //     }
-        // )
-        setTimeout(() => {
-          this.setState({
-            selectedRowKeys: [],
-            loading: false,
-          });
-        }, 1000);
-    };
-
-    onSelectChange = selectedRowKeys => {
-        this.setState({ selectedRowKeys });
-    };
-    
-
-    beCeo = () => {
-        console.log('Want to be CEO')
-    };
+    async componentDidMount() {    
+        const { data } =await showCeoVoter();
+        if (data?.flag) {
+            // eslint-disable-next-line
+            data.data.list.map((item, index) => {   // 给列表每个对象加上 key
+                item.key = index;
+            });
+            this.setState({
+                voter: data.data.list,
+            })
+        } else {
+            message.warning(data.msg);
+        }
+    }
 
     render() {
-        const { loading, selectedRowKeys } = this.state;
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-          };
-        const hasSelected = selectedRowKeys.length > 0;
-        
+        const { voter } = this.state;
+        const columns = [
+            {
+                title: '姓名',
+                dataIndex: 'userName',
+                key: 'userName',
+            },
+            {
+                title: '票数',
+                dataIndex: 'count',
+                key: 'count',
+                sorter: {
+                    compare: (a, b) => a.count - b.count,
+                    multiple: 1,
+                }
+            },
+            {
+                title: 'Action',
+                key: 'vote',
+                render: (_, record) => (
+                    // eslint-disable-next-line
+                    <a onClick={() => voteCeo(record.userName)}>为 {record.userName} 投票</a>
+                )
+            }
+        ];
+
         return (
             <div className='site-page-header-ghost-wrapper'>
-                <Button type="primary" onClick={this.beCeo}>
+                <Button type="primary" onClick={() => applyCeo()} style={{marginBottom: 20}}>
                     竞选CEO
                 </Button>
-                <div style={{ marginBottom: 16, marginTop: 20 }}>
-                    <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                        投票
-                    </Button>
-                    <span style={{ marginLeft: 8 }}>
-                        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-                    </span>
-                </div>
-                <Table 
-                    rowSelection={rowSelection}
-                    columns={columns} 
-                    dataSource={data}
-                    bordered
-                />
+                    <Table 
+                        columns={columns} 
+                        dataSource={voter}
+                        bordered
+                    />
             </div>
         )
     }

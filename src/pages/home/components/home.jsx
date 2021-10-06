@@ -124,7 +124,7 @@ export default function Home(props) {
                     else if(mes === "老师登录")path = "teacher"
                     else path = "student"
                     //登录成功将返回的token放到localStorage当中
-                    localStorage.setItem("login_token", JSON.stringify(data.token))
+                    localStorage.setItem("login_token", data.token)
                     //登录成功将返回的数据放到localStorage当中
                     localStorage.setItem("login_data", JSON.stringify(data))
                     //关闭等待动画
@@ -217,9 +217,7 @@ export default function Home(props) {
                             placeholder="请输入用户名"
                             onChange={checkUser_change()}
                             onBlur={checkUser_blur()}
-                            ref={username} /
-
-                        >
+                            ref={username} />
                         <p style={{ visibility: pas_user.username ? "" : "hidden" }}>用户名不能为空</p>
                         <div>密码</div>
                         <input
@@ -229,15 +227,11 @@ export default function Home(props) {
                             onChange={checkPassword_change()}
                             onBlur={checkPassword_blur()}
                             ref={password}
-                        /
-                        >
+                        />
                         <p style={{ visibility: pas_user.password ? "" : "hidden" }}>密码不能为空</p>
                         <div onClick={login} >登录</div>
                         <h6>版权所有  勤奋蜂&极客工作室</h6>
                     </div>
-
-
-
                 </div>
 
             </div>

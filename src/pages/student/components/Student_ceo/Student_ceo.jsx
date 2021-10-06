@@ -3,23 +3,25 @@ import { Route, Link, Redirect,withRouter } from "react-router-dom"
 import { Layout, Menu, Button, Modal } from 'antd';
 import Application from "./Application_ceo"
 import Company from './Company_ceo';
-import Files from './Files_ceo';
-import { ceoAxios,studentAxios } from '../../api/createAxios';
+import { Files } from './Files_ceo';
 import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
   //TeamOutlined,
   //UserOutlined,
-  PoweroffOutlined
+  PoweroffOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/All.css"
-import axios from 'axios';
-
+import { AllCompany } from './AllCompany_ceo';
+import "../../style/All.css";
 
 
 const { Sider } = Layout;
+
+
 
  class Student_ceo extends React.Component {
     state = {
@@ -64,10 +66,15 @@ const { Sider } = Layout;
                   申请
                 </Link>
               </Menu.Item>
-              <Menu.Item key="2" icon={<DesktopOutlined />}>
+              <Menu.Item key="2" icon={<TeamOutlined />}>
               <Link to="/user_student/company_ceo">
-                  公司
+                  我的公司
                 </Link>
+              </Menu.Item>
+              <Menu.Item key="4" icon={<DesktopOutlined />}>
+                    <Link to="/user_student/allCompany_ceo">
+                        所有公司
+                    </Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<FileOutlined />}>
               <Link to="/user_student/files_ceo">
@@ -84,10 +91,12 @@ const { Sider } = Layout;
             <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
               <p>您确定要退出吗？</p>
             </Modal>
+
             <section id="section">
               <Route path="/user_student/application_ceo" component={Application} />
               <Route path="/user_student/company_ceo" component={Company}/>
               <Route path="/user_student/files_ceo" component={Files}/>
+              <Route path="/user_student/allCompany_ceo" component={AllCompany} />
               <Redirect to="/user_student/application_ceo"/>
             </section>
             <footer id="footer">
