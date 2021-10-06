@@ -3,6 +3,7 @@ import { message } from "antd";
 
 const login_data = JSON.parse(localStorage.getItem("login_data")).data;
 const userId = login_data.userId;
+const companyId = login_data.companyId;
 
 // 创建公司
 export const createCompany = (typeCode, companyName) => {
@@ -78,8 +79,8 @@ export const setPosition = (userId, position) => ceoAxios({
 // 为其他公司打分
 export const scoreCompany = (companyId, score) => ceoAxios({
     data: {
-        // scoreCompanyId: 3,
-        scoreCompanyId: login_data.companyId,    // 会请求400
+        scoreCompanyId: 3,
+        // scoreCompanyId: login_data.companyId,    // 暂时是0_请求400
         scoredCompanyId: companyId,
         score,
     },
@@ -94,7 +95,37 @@ export const scoreCompany = (companyId, score) => ceoAxios({
     message.error(err)
 })
 
+// 为公司其他成员打分的要求
+export const scoreRequired = () => ceoAxios({
+    data: {
+        // companyId,
+        companyId: 7,
+    },
+    url: `/scoreRequired`,
+}).catch(err => {
+    message.error(err)
+})
 
+// 为公司其他成员打分
+export const scoreMembers = (scoredUserId, score, excellentNum, goodNum, mediumNum) => ceoAxios({
+    data: {
+        scoreUserId: userId,
+        scoredUserId,
+        score,
+        excellentNum,
+        goodNum,
+        mediumNum,
+    },
+    url: `/scoreForCompanyMembers`,
+}).then(data => {
+    if (data.data.flag) {
+        message.success(data.data.data);
+    } else {
+        message.error(data.data.msg);
+    }
+}).catch(err => {
+    message.error(err)
+})
 // 查看公司的成员
 export const showCompanyMembers = () => ceoAxios({
     data: {
@@ -106,3 +137,11 @@ export const showCompanyMembers = () => ceoAxios({
 }).catch(err => {
     message.warning(`查看公司成员失败：${err}`);
 })
+// 检查公司是否满人或者同一个班级人数已经满了
+export const isAdd = (userId) => ceoAxios({
+    data: {
+        userId,
+        ceoId: login_data.userId,
+    },
+    url:`/isAdd`,
+}).catch(err => message.warning(`查询添加条件失败：${err}`));

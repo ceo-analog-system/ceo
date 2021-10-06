@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
-import {Tabs, Table, Input, Radio, Button, Space} from "antd";
+import {Tabs, Table, Input, Radio, Button, Space, message, Tag, Card} from "antd";
 import '../../style/Student_ceo/Company_ceo.css'
 import 'antd/dist/antd.css'
-import {connect} from 'react-redux'
 import {createCompany, setPosition, showCompanyMembers} from '../../api/ceoApi'
+import { scoreRequired } from "../../api/ceoApi";
+import { scoreMembers } from "../../api/ceoApi";
 
-class Company extends Component {
+const login_data = JSON.parse(localStorage.getItem("login_data")).data;
+let rateData = {};
+let rateList = [];
+export default class Company extends Component {
     state = {
         members: [],
         companyName: '初始化',
@@ -13,6 +17,9 @@ class Company extends Component {
         create: false,
         position: '',
         chosenMember: '',
+        excellentNum: 0,
+        goodNum: 0,
+        mediumNum: 0,
     }
 
     changeCompanyType = (e) => {
@@ -33,15 +40,56 @@ class Company extends Component {
         setPosition(this.state.chosenMember, this.state.position);
     }
 
-    async componentDidMount() {
-        const {data} = await showCompanyMembers();
+    // 打分
+    rate = (scoredUserId, score) => {   // 储存对每个成员的打分情况
+        rateData = {
+            scoreUserId: login_data.userId,
+            // scoreUserId: "2019210861", // 暂时
+            scoredUserId,
+            score,
+        }
+    }
+    handleRate = (scoredUserId) => {
+        if (scoredUserId !== rateData["scoredUserId"]) {
+            message.warning("刚才的打分与确认不匹配！");
+        } else {
+            rateList.push(rateData);
+            rateData = {};  // 重置对单个成员打分信息
+        }
+        console.log("rateList:", rateList)
+    }
+    submitFinal = () => {
+        scoreMembers(this.state.excellentNum, this.state.goodNum, this.state.mediumNum, rateList);
+        rateList = [];
+        rateData = {};
+    }
 
+    async componentDidMount() {
+        // 显示公司成员
+        const {data} = await showCompanyMembers();
         if (data.flag) {
             data.data.list.map((item, index) => {
                 item["key"] = index;
+                return item;
             })
             this.setState({members: data.data.list})
         }
+
+        // 显示打分要求
+        const scoreRequiredData = await scoreRequired().data;
+        if (scoreRequiredData?.flag) {
+            const { excellentNum, goodNum, mediumNum } = scoreRequiredData.data;
+            this.setState({
+                excellentNum,
+                goodNum,
+                mediumNum
+            })
+        } else {
+            message.warning(`打分要求显示错误：${scoreRequiredData?.msg}`);
+        }
+
+        // 为公司其他成员打分
+
     }
 
     componentWillUnmount() {
@@ -50,7 +98,7 @@ class Company extends Component {
     }
 
     render() {
-        const {companyType, members, create} = this.state
+        const {companyType, members, create, excellentNum, goodNum, mediumNum } = this.state
         const {TabPane} = Tabs;
         const columns = [
             {
@@ -69,10 +117,20 @@ class Company extends Component {
                 key: 'position',
             },
             {
-                title: '分数',
-                dataIndex: 'score',
-                key: 'score',
-            },
+                title: <Button type="primary" onClick={this.submitFinal}>提交打分</Button>,
+                key: 'action',
+                render: (_, record) => (
+                    <Space>
+                        <Input min={1} max={100} onChange={(e) => this.rate(record.userId, e.target.value)}/>
+                        <Button
+                            onClick={() => this.handleRate(record.userId,)}
+                            disabled={record.userId === login_data.userId}
+                        >
+                            确认
+                        </Button>
+                    </Space>
+                )
+    }
         ];
         const options = [
             {label: '贸易公司', value: 0},
@@ -86,12 +144,14 @@ class Company extends Component {
         ];
         let membersToChose = [];
         for (let item of members) {
-            membersToChose.push(<Radio.Button value={item.userId}>{item.userName}</Radio.Button>)
+            if (item.userId !== login_data.userId) {
+                membersToChose.push(<Radio.Button value={item.userId}>{item.userName}</Radio.Button>)
+            }
         }
 
         return (
             <div className="site-page-header-ghost-wrapper">
-                <Tabs size="large" defaultActiveKey="3">
+                <Tabs size="large" defaultActiveKey="2">
                     <TabPane tab="创建公司" key="1">
                         <Input
                             placeholder='公司名'
@@ -117,6 +177,13 @@ class Company extends Component {
                         </Button>
                     </TabPane>
                     <TabPane tab="我的公司" key="2">
+                        <Card title={"请按要求打分"}>
+                            <Space size={"large"}>
+                                <Tag color="#f50">优秀人数：{excellentNum}（100~90）</Tag>
+                                <Tag color="#2db7f5">良好人数：{goodNum}（90~80）</Tag>
+                                <Tag color="#87d068">中等人数：{mediumNum}（80~70）</Tag>
+                            </Space>
+                        </Card>
                         <Table
                             columns={columns}
                             dataSource={members}
@@ -150,8 +217,3 @@ class Company extends Component {
         )
     }
 }
-
-export default connect(
-    state => ({}),
-    {}
-)(Company)

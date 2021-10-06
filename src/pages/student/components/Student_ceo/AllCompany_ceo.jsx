@@ -19,24 +19,18 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+let rateData = new Map();
 export class AllCompanyComponent extends React.Component {
-    state = {
-        rateData: {},
-    }
-    
     componentDidMount() {
         this.props.showCompany();
     }
-    
-    // rate = () => {
-    //     this.state.rateData.push({companyId, score})
-    //     console.log(companyId, score)
-    // }  
+
     onChange = (companyId, score) => {
-        this.setState({rateData: {companyId: score}});
+        rateData.set(companyId, score)
     }
     handleRate = (companyId) => {
-        scoreCompany(companyId, 1.0*this.state.rateData[companyId]);
+        console.log(companyId, rateData.get(companyId))
+        scoreCompany(companyId, rateData.get(companyId));
     }
     render() {
         const columns = [
