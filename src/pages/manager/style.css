@@ -1,0 +1,17 @@
+*{
+    padding: 0;
+    margin: 0;
+  }
+  #Admin {
+    height: auto;
+    min-height: 100%;
+    padding-right: 10px;
+  }
+  
+  #Admin .ant-layout.ant-layout-has-sider{
+    background-color: white;
+  }
+
+  #Admin .ant-layout-sider{
+    background-color: white !important
+  }

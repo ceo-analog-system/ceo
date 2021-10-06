@@ -1,0 +1,18 @@
+.Admin_Sider .ant-menu-item-group-list{
+  width: 234px;
+  
+}
+
+.Admin_Sider{
+  width: 234px;
+  margin-right: 10px;
+  
+}
+
+.Admin_Sider .ant-menu-item-group-title {
+  padding: 0;
+}
+
+.Admin_Sider .ant-menu-item-group-list{
+  border-right: 1px solid #f0f0f0;
+}
