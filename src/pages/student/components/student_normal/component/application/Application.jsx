@@ -24,12 +24,13 @@ export class ApplicationComponent extends React.Component {
     state = {
         applicationData: [],
         level: 1,
+        currentApplication: [],
     }
 
     async componentDidMount() {
         this.props.showCompany();
         const { data } = await showApplication()
-        data.data.map((item, index) => {
+        data.data?.map((item, index) => {
             item["key"] = index;
             return item;
         })
@@ -40,24 +41,24 @@ export class ApplicationComponent extends React.Component {
         const login_data = JSON.parse(localStorage.getItem("login_data")).data
         this.props.company[key].userId = login_data.userId;
         this.props.company[key].level = this.state.level;   // 志愿顺序
-        this.state.applicationData.push(this.props.company[key]);
+        this.state.currentApplication.push(this.props.company[key]);
         this.setState({level: this.state.level+1})
     };
     // 提交所有志愿
     apply = () => {
         if (this.state.level > 1) {
-            applyJoinCompany(this.state.applicationData).then((data) => {
+            applyJoinCompany(this.state.currentApplication).then((data) => {
                 if (data.data.flag) {
                     message.success("投票成功！");
                 } else {
                     message.error(data.data.msg)
                 }
-                this.setState({level: 1, applicationData: []})
+                this.setState({level: 1, currentApplication: []})
             });
         } else {
             message.error(`请至少申请一个志愿`)
         }
-    } 
+    }
 
     render() {
         const { company, companyTotal } = this.props;
@@ -102,7 +103,7 @@ export class ApplicationComponent extends React.Component {
                 dataIndex: 'companyName',
                 key: 'companyName',
             },{
-                title: '志愿等级',
+                title: '志愿顺序',
                 dataIndex: 'level',
                 key: 'level',
             },{
@@ -115,12 +116,12 @@ export class ApplicationComponent extends React.Component {
         return (            
             <div className='site-page-header-ghost-wrapper'>
                 <Tabs defaultActiveKey="2">
-                <TabPane tab="我的申请" key="2">
-                    <Table
-                        columns={applicationColumns}
-                        dataSource={this.state.applicationData}
-                        bordered
-                    />
+                    <TabPane tab="我的申请" key="2">
+                        <Table
+                            columns={applicationColumns}
+                            dataSource={this.state.applicationData}
+                            bordered
+                        />
                     </TabPane>
                     <TabPane tab="申请加入公司" key="1">
                         <div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Upload, message, } from 'antd';
+import { Upload, message, } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import "../../style/Student_ceo/Files_ceo.css"

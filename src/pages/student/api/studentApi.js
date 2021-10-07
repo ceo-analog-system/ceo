@@ -56,7 +56,7 @@ export const showCompany = () => studentAxios({
     data: {
         start:"1", 
         pageSize:"6",
-        teacherClass: "SJ00201A2031780001",
+        teacherClass,
     },
     url: '/showCompanies',
 }).catch(err => {
@@ -74,7 +74,7 @@ export const voteCompany = (companyId) => {
     return function fn(e) { // 点击事件传来的事件参数
         studentAxios({
             data: {
-                voteUserId: "2017211018",
+                voteUserId: userId,
                 companyId: companyId,
                 teacherClass,
             },
@@ -95,7 +95,8 @@ export const showCompanyMembers = () => studentAxios({
     data: {
         start:"1",
         pageSize:"9",
-        userId:"2019210861",    // 暂时用这个学号
+        userId,
+        // userId:"2019210861",    // 暂时用这个学号
     },
     url: '/showCompanyMembers',
 }).catch(err => {
@@ -104,22 +105,22 @@ export const showCompanyMembers = () => studentAxios({
 // 为公司其他成员打分的要求
 export const scoreRequired = () => studentAxios({
     data: {
-        // companyId,
-        companyId:7,
+        companyId,
+        // companyId:2,
     },
     url: '/scoreRequired'
 }).catch(err => {
-    console.log("查看为公司其他成员打分失败：", err);
+    message.warning("查看为公司其他成员打分失败：", err);
 })
 // 为公司其他成员打分
-export const scoreMember = async (rateList) => {
+export const scoreMember = async (excellentNum, goodNum, mediumNum, rateList) => {
     const { data } = await scoreRequired();
     if (data.flag) {
         return studentAxios({
             data: {
-                excellentNum: data.excellentNum,
-                goodNum: data.goodNum,
-                mediumNum: data.mediumNum,
+                excellentNum,
+                goodNum,
+                mediumNum,
                 scoreList: rateList,
             },
             url: '/scoreForCompanyMembers',
@@ -139,7 +140,8 @@ export const scoreMember = async (rateList) => {
 // 公司申请状态
 export const showApplication = () => studentAxios({
     data: {
-        userId:"2017211037",
+        userId,
+        // userId:"2017211037",
     },
     url: '/showApplicationState',
 }).catch(err => {

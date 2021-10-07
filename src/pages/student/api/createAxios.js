@@ -22,7 +22,7 @@ ceoAxios.interceptors.response.use(response => {
     console.log("response.data: ", response.data)
     switch (response.data.message) {
         case "资源访问受限!请重新登录！":
-            message.warning("请提供有效Token！");
+            message.warning("请重新登录！");
             break;
         default:
             break;
@@ -38,16 +38,13 @@ export const studentAxios = axios.create({
     baseURL:'http://localhost:3000/api/student',
     timeout:2000,   
     method: 'post',
-    headers: {
-        // token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZW8iLCJhdWQiOiIyMDE3MjExMDE4IiwiZXhwIjoxNjMzMTY4MjQ1fQ.89bA-SwZnZnv_JcRFUJoxf003nCWqAyd2ALsOI1M3TA'
-    }
 })
 
 studentAxios.interceptors.request.use(  // 拦截器
     (config) => {
         const token =localStorage.getItem('login_token')
         if(token){
-            config.headers.accessToken = token
+            config.headers.acessToken = token
             return config
         }
     },(error)=>{
@@ -59,7 +56,7 @@ studentAxios.interceptors.response.use(response => {
     console.log("response.data: ", response.data)
     switch (response.data.message) {
         case "资源访问受限!请重新登录！":
-            message.warning("请提供有效Token！");
+            message.warning("请重新登录！");
             break;
         default:
             break;

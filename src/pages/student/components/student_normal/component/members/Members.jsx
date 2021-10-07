@@ -1,6 +1,6 @@
 import React from 'react';
-import {message, Table, Button, Input, Space,} from "antd";
-import {scoreMember, showCompanyMembers} from '../../../../api/studentApi';
+import {message, Table, Button, Input, Space, Card, Tag } from "antd";
+import {scoreMember, scoreRequired, showCompanyMembers} from '../../../../api/studentApi';
 
 const login_data = JSON.parse(localStorage.getItem("login_data")).data;
 let rateData = {};
@@ -11,6 +11,9 @@ export class Members extends React.Component {
         super(props);
         this.state = {
             members: [],
+            excellentNum: 0,
+            goodNum: 0,
+            mediumNum: 0,
         }
     }
 
@@ -29,10 +32,12 @@ export class Members extends React.Component {
             rateList.push(rateData);
             rateData = {};  // 重置对单个成员打分信息
         }
-        console.log("rateList:", rateList)
+
     }
     submitFinal = () => {
-        scoreMember(rateList);
+        scoreMember(this.state.excellentNum, this.state.goodNum, this.state.mediumNum, rateList);
+        rateList = [];
+        rateData = {};
     }
 
     async componentDidMount() {
@@ -50,13 +55,25 @@ export class Members extends React.Component {
                 message.warning(`查看公司成员失败: ${data?.msg}`)
             }
         })
+        // 显示打分要求
+        const { data } = await scoreRequired();
+        if (data.flag) {
+            const { excellentNum, goodNum, mediumNum } = data.data;
+            this.setState({
+                excellentNum,
+                goodNum,
+                mediumNum
+            })
+        } else {
+            message.warning(data.msg);
+        }
     }
     componentWillUnmount() {
         this.setState = () => false;
     }
 
     render() {
-        const {members} = this.state;
+        const {members, excellentNum, goodNum, mediumNum } = this.state;
 
         const columns = [
             {
@@ -98,6 +115,13 @@ export class Members extends React.Component {
 
         return (
             <div className='site-page-header-ghost-wrapper'>
+                <Card title={"请按要求打分"}>
+                    <Space size={"large"}>
+                        <Tag color="#f50">优秀人数：{excellentNum}（100~90）</Tag>
+                        <Tag color="#2db7f5">良好人数：{goodNum}（90~80）</Tag>
+                        <Tag color="#87d068">中等人数：{mediumNum}（80~70）</Tag>
+                    </Space>
+                </Card>
                 <Table
                     columns={columns}
                     dataSource={members}

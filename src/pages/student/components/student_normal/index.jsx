@@ -11,7 +11,7 @@ import {
 import 'antd/dist/antd.css'
 import { Application, Company, Ceo, Members } from "./component";
 import localStorage_login from '../../../../guard/localStorage';
-
+import "../../style/Student.css"
 
 const { Sider } = Layout;
 
@@ -69,7 +69,7 @@ const { Sider } = Layout;
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <header id="header">
+          <header id="student_header">
             <Button type="primary" size="large" shape="round" icon={<PoweroffOutlined />} onClick={this.open_model}>退出登录</Button>
           </header>
           <Modal title="退出登录提示" cancelText="取消" okText="确定" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
