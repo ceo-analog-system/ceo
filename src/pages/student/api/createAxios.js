@@ -22,7 +22,7 @@ ceoAxios.interceptors.response.use(response => {
     console.log("response.data: ", response.data)
     switch (response.data.message) {
         case "资源访问受限!请重新登录！":
-            message.warning("请提供有效Token！");
+            message.warning("请重新登录！");
             break;
         default:
             break;
@@ -44,7 +44,7 @@ studentAxios.interceptors.request.use(  // 拦截器
     (config) => {
         const token =localStorage.getItem('login_token')
         if(token){
-            config.headers.token = token
+            config.headers.acessToken = token
             return config
         }
     },(error)=>{
@@ -56,7 +56,7 @@ studentAxios.interceptors.response.use(response => {
     console.log("response.data: ", response.data)
     switch (response.data.message) {
         case "资源访问受限!请重新登录！":
-            message.warning("请提供有效Token！");
+            message.warning("请重新登录！");
             break;
         default:
             break;

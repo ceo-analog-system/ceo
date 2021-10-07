@@ -29,7 +29,6 @@ export class AllCompanyComponent extends React.Component {
         rateData.set(companyId, score)
     }
     handleRate = (companyId) => {
-        console.log(companyId, rateData.get(companyId))
         scoreCompany(companyId, rateData.get(companyId));
     }
     render() {

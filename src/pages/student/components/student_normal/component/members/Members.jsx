@@ -32,7 +32,7 @@ export class Members extends React.Component {
             rateList.push(rateData);
             rateData = {};  // 重置对单个成员打分信息
         }
-        console.log("rateList:", rateList)
+
     }
     submitFinal = () => {
         scoreMember(this.state.excellentNum, this.state.goodNum, this.state.mediumNum, rateList);

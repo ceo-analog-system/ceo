@@ -14,7 +14,6 @@ export default class Company extends Component {
         members: [],
         companyName: '初始化',
         companyType: 0,
-        create: false,
         position: '',
         chosenMember: '',
         excellentNum: 0,
@@ -27,13 +26,11 @@ export default class Company extends Component {
     }
     setUpCompany = async () => {
         createCompany(this.state.companyType, this.state.companyName);
-        this.setState({create: true})
     }
     changePosition = (value) => {   // 更新职位名
         this.setState({position: value});
     }
     changeMember = (value) => {
-        console.log("changeMember")
         this.setState({chosenMember: value})
     }
     setPosition = () => {
@@ -56,7 +53,6 @@ export default class Company extends Component {
             rateList.push(rateData);
             rateData = {};  // 重置对单个成员打分信息
         }
-        console.log("rateList:", rateList)
     }
     submitFinal = () => {
         scoreMembers(this.state.excellentNum, this.state.goodNum, this.state.mediumNum, rateList);
@@ -145,7 +141,7 @@ export default class Company extends Component {
         let membersToChose = [];
         for (let item of members) {
             if (item.userId !== login_data.userId) {
-                membersToChose.push(<Radio.Button value={item.userId}>{item.userName}</Radio.Button>)
+                membersToChose.push(<Radio.Button key={item.userId} value={item.userId}>{item.userName}</Radio.Button>)
             }
         }
 

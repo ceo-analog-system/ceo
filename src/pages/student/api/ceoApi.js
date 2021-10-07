@@ -79,8 +79,8 @@ export const setPosition = (userId, position) => ceoAxios({
 // 为其他公司打分
 export const scoreCompany = (companyId, score) => ceoAxios({
     data: {
-        scoreCompanyId: 3,
-        // scoreCompanyId: login_data.companyId,    // 暂时是0_请求400
+        // scoreCompanyId: 3,
+        scoreCompanyId: login_data.companyId,    // 暂时是0_请求400
         scoredCompanyId: companyId,
         score,
     },
@@ -98,8 +98,8 @@ export const scoreCompany = (companyId, score) => ceoAxios({
 // 为公司其他成员打分的要求
 export const scoreRequired = () => ceoAxios({
     data: {
-        // companyId,
-        companyId: 7,
+        companyId,
+        // companyId: 7,
     },
     url: `/scoreRequired`,
 }).catch(err => {

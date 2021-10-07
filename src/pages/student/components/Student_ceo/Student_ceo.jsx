@@ -16,7 +16,6 @@ import {
 import 'antd/dist/antd.css'
 import "../../style/All.css"
 import { AllCompany } from './AllCompany_ceo';
-import "../../style/All.css";
 
 
 const { Sider } = Layout;
@@ -36,7 +35,7 @@ const { Sider } = Layout;
     }
 
     onCollapse = collapsed => {
-      console.log(collapsed);
+      // console.log(collapsed);
       this.setState({ collapsed });
     };
     //点击退出登录打开询问面板
