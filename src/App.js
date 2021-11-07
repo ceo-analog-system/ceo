@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
     <Switch>
-        <Guard path="/user_student" component={IsCeo()} />
+        <Guard path="/user_student" component={IsCeo} />
         <Guard path="/user_teacher" component={teacher} />
         <Guard path="/user_manager" component={manager} />
         <Guard path="/login" component={Home} auth="student" />
