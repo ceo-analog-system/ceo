@@ -81,7 +81,7 @@ export default class Company extends Component {
                 mediumNum
             })
         } else {
-            message.warning(`打分要求显示错误：${scoreRequiredData?.msg}`);
+            // message.warning(`打分要求显示错误：${scoreRequiredData?.msg}`);
         }
 
         // 为公司其他成员打分

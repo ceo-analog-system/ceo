@@ -28,6 +28,7 @@ export const createCompany = (typeCode, companyName) => {
         },
         url: '/createCompany'
     }).then(res => {
+        console.log(res)
         if (res.data.flag) {
             message.success(`成功创建公司！`);
         } else {
